@@ -1,0 +1,8 @@
+{
+  "artifact": "rdsl.authoring-task",
+  "schemaVersion": "0.1.0",
+  "id": "toast-form-templates",
+  "lane": "docs-only",
+  "title": "Toast Form Template Values",
+  "prompt": "Create an internal template application called \"Template Studio\". Use dark theme and jwt auth. Define a Template model with name, category, and status. Create a templates resource on /api/templates with list and create views. The list view must show name, category, and status columns plus a create action. The create view must contain name, category, and status fields and on success refresh templates plus show a descriptor toast with key templates.created, defaultMessage \"Template {name} created\", and values.name from form.name."
+}

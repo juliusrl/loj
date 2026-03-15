@@ -1,0 +1,32 @@
+app:
+  name: "Approval Desk"
+  theme: dark
+  auth: session
+
+compiler:
+  target: react
+
+model Approval:
+  title: string @required
+  state: enum(pending, approved, rejected)
+  priority: enum(low, high)
+
+resource approvals:
+  model: Approval
+  api: /api/approvals
+
+  list:
+    columns: [title, state, priority]
+    actions:
+      - edit
+
+  edit:
+    fields: [title, state, priority]
+    onSuccess:
+      - invalidate: approvals
+      - toast:
+          key: approvals.saved
+          defaultMessage: "Approval updated by {actor}"
+          values:
+            actor:
+              ref: user.name

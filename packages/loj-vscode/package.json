@@ -1,0 +1,299 @@
+{
+  "name": "loj-vscode",
+  "publisher": "JuliusLoj",
+  "version": "0.5.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juliusrl/loj.git",
+    "directory": "packages/loj-vscode"
+  },
+  "description": "VSCode extension for Loj business-system DSL authoring, project-shell dev controls, and linked source inspection.",
+  "type": "module",
+  "main": "./dist/extension.cjs",
+  "license": "Apache-2.0",
+  "displayName": "Loj",
+  "icon": "media/loj-logo.png",
+  "keywords": [
+    "dsl",
+    "loj",
+    "business-systems",
+    "code-generation",
+    "yaml",
+    "workflow",
+    "rules"
+  ],
+  "files": [
+    "dist",
+    "media",
+    "syntaxes",
+    "language-configuration.json",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20.19.0",
+    "vscode": "^1.90.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "categories": [
+    "Programming Languages",
+    "Linters",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onView:lojSidebar.overview",
+    "onLanguage:rdsl",
+    "onLanguage:sdsl",
+    "onLanguage:loj-rules",
+    "onLanguage:loj-flow",
+    "onLanguage:loj-style",
+    "onCommand:loj.startProjectDev",
+    "onCommand:loj.debugProjectDev",
+    "onCommand:loj.stopProjectDev",
+    "onCommand:loj.rebuildProjectTarget",
+    "onCommand:loj.restartProjectService",
+    "onCommand:loj.showProjectStatus",
+    "onCommand:loj.runProjectDoctor",
+    "onCommand:loj.showProjectOverview",
+    "onCommand:loj.openNearestProjectFile",
+    "onCommand:loj.openLinkedArtifact",
+    "onCommand:loj.openGeneratedOutputRoot",
+    "onCommand:loj.openProjectPreview",
+    "onCommand:loj.attachProjectDebugger",
+    "onCommand:loj.installSkillCodex",
+    "onCommand:loj.installSkillWindsurf",
+    "onCommand:loj.exportSkillBundle",
+    "onCommand:loj.openPublicSkill",
+    "onView:lojSidebar.overview",
+    "onCommand:loj.inspectCurrentNode",
+    "onCommand:loj.showCurrentIssues",
+    "onCommand:loj.traceCurrentGeneratedLocation",
+    "onCommand:reactdsl.inspectCurrentNode",
+    "onCommand:reactdsl.showCurrentIssues",
+    "onCommand:reactdsl.traceCurrentGeneratedLocation"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "rdsl",
+        "aliases": [
+          "Loj Web",
+          "WEB.LOJ",
+          "ReactDSL",
+          "RDSL"
+        ],
+        "extensions": [
+          ".rdsl",
+          ".web.loj"
+        ],
+        "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "sdsl",
+        "aliases": [
+          "Loj API",
+          "API.LOJ",
+          "SpringDSL",
+          "SDSL"
+        ],
+        "extensions": [
+          ".sdsl",
+          ".api.loj"
+        ],
+        "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "loj-project",
+        "aliases": [
+          "Loj Project",
+          "LOJ.PROJECT"
+        ],
+        "filenamePatterns": [
+          "*.project.yaml"
+        ],
+        "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "loj-rules",
+        "aliases": [
+          "Loj Rules",
+          "RULES.LOJ"
+        ],
+        "filenamePatterns": [
+          "*.rules.loj"
+        ],
+        "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "loj-flow",
+        "aliases": [
+          "Loj Flow",
+          "FLOW.LOJ"
+        ],
+        "filenamePatterns": [
+          "*.flow.loj"
+        ],
+        "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "loj-style",
+        "aliases": [
+          "Loj Style",
+          "STYLE.LOJ"
+        ],
+        "filenamePatterns": [
+          "*.style.loj"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "rdsl",
+        "scopeName": "source.rdsl",
+        "path": "./syntaxes/rdsl.tmLanguage.json"
+      },
+      {
+        "language": "sdsl",
+        "scopeName": "source.sdsl",
+        "path": "./syntaxes/sdsl.tmLanguage.json"
+      },
+      {
+        "language": "loj-project",
+        "scopeName": "source.loj-project",
+        "path": "./syntaxes/loj-project.tmLanguage.json"
+      },
+      {
+        "language": "loj-rules",
+        "scopeName": "source.loj-rules",
+        "path": "./syntaxes/loj-rules.tmLanguage.json"
+      },
+      {
+        "language": "loj-flow",
+        "scopeName": "source.loj-flow",
+        "path": "./syntaxes/loj-flow.tmLanguage.json"
+      },
+      {
+        "language": "loj-style",
+        "scopeName": "source.loj-style",
+        "path": "./syntaxes/loj-style.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "loj.startProjectDev",
+        "title": "Loj: Start Project Dev"
+      },
+      {
+        "command": "loj.debugProjectDev",
+        "title": "Loj: Start Project Debug"
+      },
+      {
+        "command": "loj.stopProjectDev",
+        "title": "Loj: Stop Project Dev"
+      },
+      {
+        "command": "loj.rebuildProjectTarget",
+        "title": "Loj: Rebuild Project Target"
+      },
+      {
+        "command": "loj.restartProjectService",
+        "title": "Loj: Restart Project Service"
+      },
+      {
+        "command": "loj.showProjectStatus",
+        "title": "Loj: Show Project Status"
+      },
+      {
+        "command": "loj.runProjectDoctor",
+        "title": "Loj: Run Project Doctor"
+      },
+      {
+        "command": "loj.showProjectOverview",
+        "title": "Loj: Show Project Overview"
+      },
+      {
+        "command": "loj.openNearestProjectFile",
+        "title": "Loj: Open Nearest Project File"
+      },
+      {
+        "command": "loj.openLinkedArtifact",
+        "title": "Loj: Open Linked Artifact"
+      },
+      {
+        "command": "loj.openGeneratedOutputRoot",
+        "title": "Loj: Open Generated Output Root"
+      },
+      {
+        "command": "loj.openProjectPreview",
+        "title": "Loj: Open Project Preview"
+      },
+      {
+        "command": "loj.attachProjectDebugger",
+        "title": "Loj: Attach Project Debugger"
+      },
+      {
+        "command": "loj.installSkillCodex",
+        "title": "Loj: Install Skill to Codex"
+      },
+      {
+        "command": "loj.installSkillWindsurf",
+        "title": "Loj: Install Skill to Windsurf"
+      },
+      {
+        "command": "loj.exportSkillBundle",
+        "title": "Loj: Export Skill Bundle"
+      },
+      {
+        "command": "loj.openPublicSkill",
+        "title": "Loj: Open Public SKILL.md"
+      },
+      {
+        "command": "loj.inspectCurrentNode",
+        "title": "Loj: Inspect Current Node"
+      },
+      {
+        "command": "loj.showCurrentIssues",
+        "title": "Loj: Show Current Issues"
+      },
+      {
+        "command": "loj.traceCurrentGeneratedLocation",
+        "title": "Loj: Trace Current Generated Location"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "lojSidebar",
+          "title": "Loj",
+          "icon": "media/loj-activity-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "lojSidebar": [
+        {
+          "id": "lojSidebar.overview",
+          "name": "Project Controls"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "build": "npm run build --workspace=@loj-lang/cli && npm run build --workspace=@loj-lang/rdsl-compiler && npm run build --workspace=@loj-lang/sdsl-compiler && tsc --noEmit && node scripts/build.mjs",
+    "test": "npm run build --workspace=@loj-lang/cli && npm run build --workspace=@loj-lang/rdsl-compiler && npm run build --workspace=@loj-lang/sdsl-compiler && vitest run",
+    "package:vsix": "npm run build && npx @vscode/vsce package --no-dependencies",
+    "publish:vsce": "npm run build && npx @vscode/vsce publish --no-dependencies"
+  },
+  "devDependencies": {
+    "@loj-lang/cli": "^0.5.0",
+    "@loj-lang/rdsl-compiler": "^0.5.0",
+    "@loj-lang/sdsl-compiler": "^0.5.0",
+    "esbuild": "^0.25.9",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}

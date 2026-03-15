@@ -1,0 +1,7 @@
+app:
+  name: "Invoice Back Office Service"
+  package: "com.example.invoicebackoffice"
+
+imports:
+  - ./models/
+  - ./resources/

@@ -1,0 +1,2495 @@
+{
+  "artifact": "rdsl.authoring-report",
+  "schemaVersion": "0.1.0",
+  "generatedAt": "2026-03-11T11:23:41.503Z",
+  "run": {
+    "artifact": "rdsl.authoring-run",
+    "schemaVersion": "0.1.0",
+    "runId": "docs-only-golden",
+    "lane": "docs-only",
+    "model": "fixture-manual",
+    "provider": "local",
+    "wrapper": "docs-only",
+    "referenceDocs": "/mnt/e/dsl/subprojects/rdsl/docs/llm-reference.md"
+  },
+  "corpusDir": "/mnt/e/dsl/benchmarks/authoring",
+  "submissionsDir": "/mnt/e/dsl/benchmarks/authoring/fixtures/docs-only-golden",
+  "reportDir": "/mnt/e/dsl/benchmarks/reports/local-fixture",
+  "referenceDocs": "/mnt/e/dsl/subprojects/rdsl/docs/llm-reference.md",
+  "tasks": [
+    {
+      "taskId": "inventory-catalog",
+      "title": "Inventory catalog CRUD",
+      "expectedCheckCount": 45,
+      "firstPassValid": true,
+      "winningAttempt": 1,
+      "repairsBeforeFirstValid": 0,
+      "status": "first-pass-valid",
+      "attempts": [
+        {
+          "attempt": 1,
+          "sourceFile": "/mnt/e/dsl/benchmarks/authoring/fixtures/docs-only-golden/inventory-catalog/attempt-1.rdsl",
+          "compileSuccess": true,
+          "warningCount": 0,
+          "errors": [],
+          "warnings": [],
+          "checks": [
+            {
+              "id": "app.name",
+              "type": "appNameEquals",
+              "status": "passed",
+              "message": "App name is \"Inventory Catalog\"."
+            },
+            {
+              "id": "compiler.target",
+              "type": "compilerTargetEquals",
+              "status": "passed",
+              "message": "Compiler target is \"react\"."
+            },
+            {
+              "id": "page.dashboard",
+              "type": "pageExists",
+              "status": "passed",
+              "message": "Page \"dashboard\" matches."
+            },
+            {
+              "id": "page.dashboard.metric",
+              "type": "pageBlockExists",
+              "status": "passed",
+              "message": "Block \"Total Products\" exists on page \"dashboard\"."
+            },
+            {
+              "id": "page.dashboard.chart",
+              "type": "pageBlockExists",
+              "status": "passed",
+              "message": "Block \"Stock Movement\" exists on page \"dashboard\"."
+            },
+            {
+              "id": "nav.dashboard",
+              "type": "navItemExists",
+              "status": "passed",
+              "message": "Navigation target \"page.dashboard\" exists."
+            },
+            {
+              "id": "nav.products",
+              "type": "navItemExists",
+              "status": "passed",
+              "message": "Navigation target \"resource.products.list\" exists."
+            },
+            {
+              "id": "model.product",
+              "type": "modelExists",
+              "status": "passed",
+              "message": "Model \"Product\" exists."
+            },
+            {
+              "id": "model.product.name",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"name\" on model \"Product\" matches."
+            },
+            {
+              "id": "model.product.sku",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"sku\" on model \"Product\" matches."
+            },
+            {
+              "id": "model.product.category",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"category\" on model \"Product\" matches."
+            },
+            {
+              "id": "model.product.status",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"status\" on model \"Product\" matches."
+            },
+            {
+              "id": "model.product.updatedAt",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"updatedAt\" on model \"Product\" matches."
+            },
+            {
+              "id": "resource.products",
+              "type": "resourceExists",
+              "status": "passed",
+              "message": "Resource \"products\" matches."
+            },
+            {
+              "id": "resource.products.filter.sku",
+              "type": "listFilterExists",
+              "status": "passed",
+              "message": "List filter \"sku\" exists on \"products\"."
+            },
+            {
+              "id": "resource.products.filter.category",
+              "type": "listFilterExists",
+              "status": "passed",
+              "message": "List filter \"category\" exists on \"products\"."
+            },
+            {
+              "id": "resource.products.filter.status",
+              "type": "listFilterExists",
+              "status": "passed",
+              "message": "List filter \"status\" exists on \"products\"."
+            },
+            {
+              "id": "resource.products.column.name",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"name\" exists on \"products\"."
+            },
+            {
+              "id": "resource.products.column.sku",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"sku\" exists on \"products\"."
+            },
+            {
+              "id": "resource.products.column.category",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"category\" exists on \"products\"."
+            },
+            {
+              "id": "resource.products.column.status",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"status\" exists on \"products\"."
+            },
+            {
+              "id": "resource.products.column.updatedAt",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"updatedAt\" exists on \"products\"."
+            },
+            {
+              "id": "resource.products.action.create",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"create\" exists on \"products\"."
+            },
+            {
+              "id": "resource.products.action.edit",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"edit\" exists on \"products\"."
+            },
+            {
+              "id": "resource.products.action.delete",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"delete\" exists on \"products\"."
+            },
+            {
+              "id": "resource.products.pagination",
+              "type": "paginationEquals",
+              "status": "passed",
+              "message": "Pagination is 40/numbered."
+            },
+            {
+              "id": "resource.products.edit.name",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"name\" exists in edit view \"products\"."
+            },
+            {
+              "id": "resource.products.edit.sku",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"sku\" exists in edit view \"products\"."
+            },
+            {
+              "id": "resource.products.edit.category",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"category\" exists in edit view \"products\"."
+            },
+            {
+              "id": "resource.products.edit.status",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"status\" exists in edit view \"products\"."
+            },
+            {
+              "id": "resource.products.edit.allowIf",
+              "type": "viewRuleEquals",
+              "status": "passed",
+              "message": "Rule \"allowIf\" matches on \"products\"."
+            },
+            {
+              "id": "resource.products.edit.enforce",
+              "type": "viewRuleEquals",
+              "status": "passed",
+              "message": "Rule \"enforce\" matches on \"products\"."
+            },
+            {
+              "id": "resource.products.edit.invalidate",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"invalidate\" exists on \"products.edit\"."
+            },
+            {
+              "id": "resource.products.edit.toast",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"toast\" exists on \"products.edit\"."
+            },
+            {
+              "id": "resource.products.create.name",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"name\" exists in create view \"products\"."
+            },
+            {
+              "id": "resource.products.create.sku",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"sku\" exists in create view \"products\"."
+            },
+            {
+              "id": "resource.products.create.category",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"category\" exists in create view \"products\"."
+            },
+            {
+              "id": "resource.products.create.status",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"status\" exists in create view \"products\"."
+            },
+            {
+              "id": "resource.products.create.redirect",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"redirect\" exists on \"products.create\"."
+            },
+            {
+              "id": "resource.products.create.toast",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"toast\" exists on \"products.create\"."
+            },
+            {
+              "id": "budget.maxWarnings",
+              "type": "budget",
+              "status": "passed",
+              "message": "Warnings 0/0."
+            },
+            {
+              "id": "budget.maxEscapePercent",
+              "type": "budget",
+              "status": "passed",
+              "message": "Escape percent 0%/20%."
+            },
+            {
+              "id": "budget.maxExprCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@expr count 0/0."
+            },
+            {
+              "id": "budget.maxFnCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@fn count 0/0."
+            },
+            {
+              "id": "budget.maxCustomCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@custom count 0/0."
+            }
+          ],
+          "valid": true,
+          "escapeStats": {
+            "totalNodes": 22,
+            "exprCount": 0,
+            "fnCount": 0,
+            "customCount": 0,
+            "escapePercent": 0,
+            "overBudget": false
+          }
+        }
+      ],
+      "failureArtifacts": []
+    },
+    {
+      "taskId": "moderation-queue",
+      "title": "Moderation queue CRUD",
+      "expectedCheckCount": 45,
+      "firstPassValid": true,
+      "winningAttempt": 1,
+      "repairsBeforeFirstValid": 0,
+      "status": "first-pass-valid",
+      "attempts": [
+        {
+          "attempt": 1,
+          "sourceFile": "/mnt/e/dsl/benchmarks/authoring/fixtures/docs-only-golden/moderation-queue/attempt-1.rdsl",
+          "compileSuccess": true,
+          "warningCount": 0,
+          "errors": [],
+          "warnings": [],
+          "checks": [
+            {
+              "id": "app.name",
+              "type": "appNameEquals",
+              "status": "passed",
+              "message": "App name is \"Moderation Queue\"."
+            },
+            {
+              "id": "compiler.target",
+              "type": "compilerTargetEquals",
+              "status": "passed",
+              "message": "Compiler target is \"react\"."
+            },
+            {
+              "id": "page.dashboard",
+              "type": "pageExists",
+              "status": "passed",
+              "message": "Page \"dashboard\" matches."
+            },
+            {
+              "id": "page.dashboard.metric",
+              "type": "pageBlockExists",
+              "status": "passed",
+              "message": "Block \"Pending Reviews\" exists on page \"dashboard\"."
+            },
+            {
+              "id": "page.dashboard.chart",
+              "type": "pageBlockExists",
+              "status": "passed",
+              "message": "Block \"Review Volume\" exists on page \"dashboard\"."
+            },
+            {
+              "id": "nav.dashboard",
+              "type": "navItemExists",
+              "status": "passed",
+              "message": "Navigation target \"page.dashboard\" exists."
+            },
+            {
+              "id": "nav.reviews",
+              "type": "navItemExists",
+              "status": "passed",
+              "message": "Navigation target \"resource.reviews.list\" exists."
+            },
+            {
+              "id": "model.review",
+              "type": "modelExists",
+              "status": "passed",
+              "message": "Model \"Review\" exists."
+            },
+            {
+              "id": "model.review.title",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"title\" on model \"Review\" matches."
+            },
+            {
+              "id": "model.review.authorEmail",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"authorEmail\" on model \"Review\" matches."
+            },
+            {
+              "id": "model.review.state",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"state\" on model \"Review\" matches."
+            },
+            {
+              "id": "model.review.priority",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"priority\" on model \"Review\" matches."
+            },
+            {
+              "id": "model.review.submittedAt",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"submittedAt\" on model \"Review\" matches."
+            },
+            {
+              "id": "resource.reviews",
+              "type": "resourceExists",
+              "status": "passed",
+              "message": "Resource \"reviews\" matches."
+            },
+            {
+              "id": "resource.reviews.filter.authorEmail",
+              "type": "listFilterExists",
+              "status": "passed",
+              "message": "List filter \"authorEmail\" exists on \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.filter.state",
+              "type": "listFilterExists",
+              "status": "passed",
+              "message": "List filter \"state\" exists on \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.filter.priority",
+              "type": "listFilterExists",
+              "status": "passed",
+              "message": "List filter \"priority\" exists on \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.column.title",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"title\" exists on \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.column.authorEmail",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"authorEmail\" exists on \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.column.state",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"state\" exists on \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.column.priority",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"priority\" exists on \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.column.submittedAt",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"submittedAt\" exists on \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.action.create",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"create\" exists on \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.action.edit",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"edit\" exists on \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.action.delete",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"delete\" exists on \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.pagination",
+              "type": "paginationEquals",
+              "status": "passed",
+              "message": "Pagination is 25/numbered."
+            },
+            {
+              "id": "resource.reviews.edit.title",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"title\" exists in edit view \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.edit.authorEmail",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"authorEmail\" exists in edit view \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.edit.state",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"state\" exists in edit view \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.edit.priority",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"priority\" exists in edit view \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.edit.allowIf",
+              "type": "viewRuleEquals",
+              "status": "passed",
+              "message": "Rule \"allowIf\" matches on \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.edit.enforce",
+              "type": "viewRuleEquals",
+              "status": "passed",
+              "message": "Rule \"enforce\" matches on \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.edit.refresh",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"refresh\" exists on \"reviews.edit\"."
+            },
+            {
+              "id": "resource.reviews.edit.toast",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"toast\" exists on \"reviews.edit\"."
+            },
+            {
+              "id": "resource.reviews.create.title",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"title\" exists in create view \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.create.authorEmail",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"authorEmail\" exists in create view \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.create.state",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"state\" exists in create view \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.create.priority",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"priority\" exists in create view \"reviews\"."
+            },
+            {
+              "id": "resource.reviews.create.redirect",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"redirect\" exists on \"reviews.create\"."
+            },
+            {
+              "id": "resource.reviews.create.toast",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"toast\" exists on \"reviews.create\"."
+            },
+            {
+              "id": "budget.maxWarnings",
+              "type": "budget",
+              "status": "passed",
+              "message": "Warnings 0/0."
+            },
+            {
+              "id": "budget.maxEscapePercent",
+              "type": "budget",
+              "status": "passed",
+              "message": "Escape percent 0%/20%."
+            },
+            {
+              "id": "budget.maxExprCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@expr count 0/0."
+            },
+            {
+              "id": "budget.maxFnCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@fn count 0/0."
+            },
+            {
+              "id": "budget.maxCustomCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@custom count 0/0."
+            }
+          ],
+          "valid": true,
+          "escapeStats": {
+            "totalNodes": 22,
+            "exprCount": 0,
+            "fnCount": 0,
+            "customCount": 0,
+            "escapePercent": 0,
+            "overBudget": false
+          }
+        }
+      ],
+      "failureArtifacts": []
+    },
+    {
+      "taskId": "plan-console",
+      "title": "Subscription plan CRUD",
+      "expectedCheckCount": 46,
+      "firstPassValid": true,
+      "winningAttempt": 1,
+      "repairsBeforeFirstValid": 0,
+      "status": "first-pass-valid",
+      "attempts": [
+        {
+          "attempt": 1,
+          "sourceFile": "/mnt/e/dsl/benchmarks/authoring/fixtures/docs-only-golden/plan-console/attempt-1.rdsl",
+          "compileSuccess": true,
+          "warningCount": 0,
+          "errors": [],
+          "warnings": [],
+          "checks": [
+            {
+              "id": "app.name",
+              "type": "appNameEquals",
+              "status": "passed",
+              "message": "App name is \"Plan Console\"."
+            },
+            {
+              "id": "compiler.target",
+              "type": "compilerTargetEquals",
+              "status": "passed",
+              "message": "Compiler target is \"react\"."
+            },
+            {
+              "id": "page.dashboard",
+              "type": "pageExists",
+              "status": "passed",
+              "message": "Page \"dashboard\" matches."
+            },
+            {
+              "id": "page.dashboard.metric",
+              "type": "pageBlockExists",
+              "status": "passed",
+              "message": "Block \"Active Plans\" exists on page \"dashboard\"."
+            },
+            {
+              "id": "page.dashboard.chart",
+              "type": "pageBlockExists",
+              "status": "passed",
+              "message": "Block \"Subscription Upgrades\" exists on page \"dashboard\"."
+            },
+            {
+              "id": "nav.dashboard",
+              "type": "navItemExists",
+              "status": "passed",
+              "message": "Navigation target \"page.dashboard\" exists."
+            },
+            {
+              "id": "nav.plans",
+              "type": "navItemExists",
+              "status": "passed",
+              "message": "Navigation target \"resource.plans.list\" exists."
+            },
+            {
+              "id": "model.plan",
+              "type": "modelExists",
+              "status": "passed",
+              "message": "Model \"Plan\" exists."
+            },
+            {
+              "id": "model.plan.name",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"name\" on model \"Plan\" matches."
+            },
+            {
+              "id": "model.plan.code",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"code\" on model \"Plan\" matches."
+            },
+            {
+              "id": "model.plan.billingCycle",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"billingCycle\" on model \"Plan\" matches."
+            },
+            {
+              "id": "model.plan.status",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"status\" on model \"Plan\" matches."
+            },
+            {
+              "id": "model.plan.updatedAt",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"updatedAt\" on model \"Plan\" matches."
+            },
+            {
+              "id": "resource.plans",
+              "type": "resourceExists",
+              "status": "passed",
+              "message": "Resource \"plans\" matches."
+            },
+            {
+              "id": "resource.plans.filter.code",
+              "type": "listFilterExists",
+              "status": "passed",
+              "message": "List filter \"code\" exists on \"plans\"."
+            },
+            {
+              "id": "resource.plans.filter.billingCycle",
+              "type": "listFilterExists",
+              "status": "passed",
+              "message": "List filter \"billingCycle\" exists on \"plans\"."
+            },
+            {
+              "id": "resource.plans.filter.status",
+              "type": "listFilterExists",
+              "status": "passed",
+              "message": "List filter \"status\" exists on \"plans\"."
+            },
+            {
+              "id": "resource.plans.column.name",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"name\" exists on \"plans\"."
+            },
+            {
+              "id": "resource.plans.column.code",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"code\" exists on \"plans\"."
+            },
+            {
+              "id": "resource.plans.column.billingCycle",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"billingCycle\" exists on \"plans\"."
+            },
+            {
+              "id": "resource.plans.column.status",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"status\" exists on \"plans\"."
+            },
+            {
+              "id": "resource.plans.column.updatedAt",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"updatedAt\" exists on \"plans\"."
+            },
+            {
+              "id": "resource.plans.action.create",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"create\" exists on \"plans\"."
+            },
+            {
+              "id": "resource.plans.action.edit",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"edit\" exists on \"plans\"."
+            },
+            {
+              "id": "resource.plans.action.delete",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"delete\" exists on \"plans\"."
+            },
+            {
+              "id": "resource.plans.pagination",
+              "type": "paginationEquals",
+              "status": "passed",
+              "message": "Pagination is 15/numbered."
+            },
+            {
+              "id": "resource.plans.edit.name",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"name\" exists in edit view \"plans\"."
+            },
+            {
+              "id": "resource.plans.edit.code",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"code\" exists in edit view \"plans\"."
+            },
+            {
+              "id": "resource.plans.edit.billingCycle",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"billingCycle\" exists in edit view \"plans\"."
+            },
+            {
+              "id": "resource.plans.edit.status",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"status\" exists in edit view \"plans\"."
+            },
+            {
+              "id": "resource.plans.edit.visibleIf",
+              "type": "viewRuleEquals",
+              "status": "passed",
+              "message": "Rule \"visibleIf\" matches on \"plans\"."
+            },
+            {
+              "id": "resource.plans.edit.allowIf",
+              "type": "viewRuleEquals",
+              "status": "passed",
+              "message": "Rule \"allowIf\" matches on \"plans\"."
+            },
+            {
+              "id": "resource.plans.edit.enforce",
+              "type": "viewRuleEquals",
+              "status": "passed",
+              "message": "Rule \"enforce\" matches on \"plans\"."
+            },
+            {
+              "id": "resource.plans.edit.refresh",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"refresh\" exists on \"plans.edit\"."
+            },
+            {
+              "id": "resource.plans.edit.toast",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"toast\" exists on \"plans.edit\"."
+            },
+            {
+              "id": "resource.plans.create.name",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"name\" exists in create view \"plans\"."
+            },
+            {
+              "id": "resource.plans.create.code",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"code\" exists in create view \"plans\"."
+            },
+            {
+              "id": "resource.plans.create.billingCycle",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"billingCycle\" exists in create view \"plans\"."
+            },
+            {
+              "id": "resource.plans.create.status",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"status\" exists in create view \"plans\"."
+            },
+            {
+              "id": "resource.plans.create.redirect",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"redirect\" exists on \"plans.create\"."
+            },
+            {
+              "id": "resource.plans.create.toast",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"toast\" exists on \"plans.create\"."
+            },
+            {
+              "id": "budget.maxWarnings",
+              "type": "budget",
+              "status": "passed",
+              "message": "Warnings 0/0."
+            },
+            {
+              "id": "budget.maxEscapePercent",
+              "type": "budget",
+              "status": "passed",
+              "message": "Escape percent 0%/20%."
+            },
+            {
+              "id": "budget.maxExprCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@expr count 0/0."
+            },
+            {
+              "id": "budget.maxFnCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@fn count 0/0."
+            },
+            {
+              "id": "budget.maxCustomCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@custom count 0/0."
+            }
+          ],
+          "valid": true,
+          "escapeStats": {
+            "totalNodes": 23,
+            "exprCount": 0,
+            "fnCount": 0,
+            "customCount": 0,
+            "escapePercent": 0,
+            "overBudget": false
+          }
+        }
+      ],
+      "failureArtifacts": []
+    },
+    {
+      "taskId": "support-tickets",
+      "title": "Support tickets CRUD",
+      "expectedCheckCount": 47,
+      "firstPassValid": true,
+      "winningAttempt": 1,
+      "repairsBeforeFirstValid": 0,
+      "status": "first-pass-valid",
+      "attempts": [
+        {
+          "attempt": 1,
+          "sourceFile": "/mnt/e/dsl/benchmarks/authoring/fixtures/docs-only-golden/support-tickets/attempt-1.rdsl",
+          "compileSuccess": true,
+          "warningCount": 0,
+          "errors": [],
+          "warnings": [],
+          "checks": [
+            {
+              "id": "app.name",
+              "type": "appNameEquals",
+              "status": "passed",
+              "message": "App name is \"Support Tickets\"."
+            },
+            {
+              "id": "compiler.target",
+              "type": "compilerTargetEquals",
+              "status": "passed",
+              "message": "Compiler target is \"react\"."
+            },
+            {
+              "id": "page.dashboard",
+              "type": "pageExists",
+              "status": "passed",
+              "message": "Page \"dashboard\" matches."
+            },
+            {
+              "id": "page.dashboard.metric",
+              "type": "pageBlockExists",
+              "status": "passed",
+              "message": "Block \"Open Tickets\" exists on page \"dashboard\"."
+            },
+            {
+              "id": "page.dashboard.chart",
+              "type": "pageBlockExists",
+              "status": "passed",
+              "message": "Block \"Resolution Trend\" exists on page \"dashboard\"."
+            },
+            {
+              "id": "nav.dashboard",
+              "type": "navItemExists",
+              "status": "passed",
+              "message": "Navigation target \"page.dashboard\" exists."
+            },
+            {
+              "id": "nav.tickets",
+              "type": "navItemExists",
+              "status": "passed",
+              "message": "Navigation target \"resource.tickets.list\" exists."
+            },
+            {
+              "id": "model.ticket",
+              "type": "modelExists",
+              "status": "passed",
+              "message": "Model \"Ticket\" exists."
+            },
+            {
+              "id": "model.ticket.subject",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"subject\" on model \"Ticket\" matches."
+            },
+            {
+              "id": "model.ticket.requesterEmail",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"requesterEmail\" on model \"Ticket\" matches."
+            },
+            {
+              "id": "model.ticket.priority",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"priority\" on model \"Ticket\" matches."
+            },
+            {
+              "id": "model.ticket.state",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"state\" on model \"Ticket\" matches."
+            },
+            {
+              "id": "model.ticket.createdAt",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"createdAt\" on model \"Ticket\" matches."
+            },
+            {
+              "id": "resource.tickets",
+              "type": "resourceExists",
+              "status": "passed",
+              "message": "Resource \"tickets\" matches."
+            },
+            {
+              "id": "resource.tickets.filter.requesterEmail",
+              "type": "listFilterExists",
+              "status": "passed",
+              "message": "List filter \"requesterEmail\" exists on \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.filter.priority",
+              "type": "listFilterExists",
+              "status": "passed",
+              "message": "List filter \"priority\" exists on \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.filter.state",
+              "type": "listFilterExists",
+              "status": "passed",
+              "message": "List filter \"state\" exists on \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.column.subject",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"subject\" exists on \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.column.requesterEmail",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"requesterEmail\" exists on \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.column.priority",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"priority\" exists on \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.column.state",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"state\" exists on \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.column.createdAt",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"createdAt\" exists on \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.action.create",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"create\" exists on \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.action.edit",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"edit\" exists on \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.action.delete",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"delete\" exists on \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.pagination",
+              "type": "paginationEquals",
+              "status": "passed",
+              "message": "Pagination is 50/numbered."
+            },
+            {
+              "id": "resource.tickets.edit.subject",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"subject\" exists in edit view \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.edit.requesterEmail",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"requesterEmail\" exists in edit view \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.edit.priority",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"priority\" exists in edit view \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.edit.state",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"state\" exists in edit view \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.edit.enabledIf",
+              "type": "viewRuleEquals",
+              "status": "passed",
+              "message": "Rule \"enabledIf\" matches on \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.edit.allowIf",
+              "type": "viewRuleEquals",
+              "status": "passed",
+              "message": "Rule \"allowIf\" matches on \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.edit.enforce",
+              "type": "viewRuleEquals",
+              "status": "passed",
+              "message": "Rule \"enforce\" matches on \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.edit.refresh",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"refresh\" exists on \"tickets.edit\"."
+            },
+            {
+              "id": "resource.tickets.edit.emitEvent",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"emitEvent\" exists on \"tickets.edit\"."
+            },
+            {
+              "id": "resource.tickets.edit.toast",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"toast\" exists on \"tickets.edit\"."
+            },
+            {
+              "id": "resource.tickets.create.subject",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"subject\" exists in create view \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.create.requesterEmail",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"requesterEmail\" exists in create view \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.create.priority",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"priority\" exists in create view \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.create.state",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"state\" exists in create view \"tickets\"."
+            },
+            {
+              "id": "resource.tickets.create.redirect",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"redirect\" exists on \"tickets.create\"."
+            },
+            {
+              "id": "resource.tickets.create.toast",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"toast\" exists on \"tickets.create\"."
+            },
+            {
+              "id": "budget.maxWarnings",
+              "type": "budget",
+              "status": "passed",
+              "message": "Warnings 0/0."
+            },
+            {
+              "id": "budget.maxEscapePercent",
+              "type": "budget",
+              "status": "passed",
+              "message": "Escape percent 0%/20%."
+            },
+            {
+              "id": "budget.maxExprCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@expr count 0/0."
+            },
+            {
+              "id": "budget.maxFnCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@fn count 0/0."
+            },
+            {
+              "id": "budget.maxCustomCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@custom count 0/0."
+            }
+          ],
+          "valid": true,
+          "escapeStats": {
+            "totalNodes": 23,
+            "exprCount": 0,
+            "fnCount": 0,
+            "customCount": 0,
+            "escapePercent": 0,
+            "overBudget": false
+          }
+        }
+      ],
+      "failureArtifacts": []
+    },
+    {
+      "taskId": "team-directory",
+      "title": "Team directory CRUD",
+      "expectedCheckCount": 46,
+      "firstPassValid": true,
+      "winningAttempt": 1,
+      "repairsBeforeFirstValid": 0,
+      "status": "first-pass-valid",
+      "attempts": [
+        {
+          "attempt": 1,
+          "sourceFile": "/mnt/e/dsl/benchmarks/authoring/fixtures/docs-only-golden/team-directory/attempt-1.rdsl",
+          "compileSuccess": true,
+          "warningCount": 0,
+          "errors": [],
+          "warnings": [],
+          "checks": [
+            {
+              "id": "app.name",
+              "type": "appNameEquals",
+              "status": "passed",
+              "message": "App name is \"Team Directory\"."
+            },
+            {
+              "id": "compiler.target",
+              "type": "compilerTargetEquals",
+              "status": "passed",
+              "message": "Compiler target is \"react\"."
+            },
+            {
+              "id": "page.dashboard",
+              "type": "pageExists",
+              "status": "passed",
+              "message": "Page \"dashboard\" matches."
+            },
+            {
+              "id": "page.dashboard.metric",
+              "type": "pageBlockExists",
+              "status": "passed",
+              "message": "Block \"Total Members\" exists on page \"dashboard\"."
+            },
+            {
+              "id": "page.dashboard.chart",
+              "type": "pageBlockExists",
+              "status": "passed",
+              "message": "Block \"New Hires\" exists on page \"dashboard\"."
+            },
+            {
+              "id": "nav.dashboard",
+              "type": "navItemExists",
+              "status": "passed",
+              "message": "Navigation target \"page.dashboard\" exists."
+            },
+            {
+              "id": "nav.members",
+              "type": "navItemExists",
+              "status": "passed",
+              "message": "Navigation target \"resource.members.list\" exists."
+            },
+            {
+              "id": "model.member",
+              "type": "modelExists",
+              "status": "passed",
+              "message": "Model \"Member\" exists."
+            },
+            {
+              "id": "model.member.fullName",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"fullName\" on model \"Member\" matches."
+            },
+            {
+              "id": "model.member.email",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"email\" on model \"Member\" matches."
+            },
+            {
+              "id": "model.member.role",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"role\" on model \"Member\" matches."
+            },
+            {
+              "id": "model.member.status",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"status\" on model \"Member\" matches."
+            },
+            {
+              "id": "model.member.joinedAt",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"joinedAt\" on model \"Member\" matches."
+            },
+            {
+              "id": "resource.members",
+              "type": "resourceExists",
+              "status": "passed",
+              "message": "Resource \"members\" matches."
+            },
+            {
+              "id": "resource.members.filter.email",
+              "type": "listFilterExists",
+              "status": "passed",
+              "message": "List filter \"email\" exists on \"members\"."
+            },
+            {
+              "id": "resource.members.filter.role",
+              "type": "listFilterExists",
+              "status": "passed",
+              "message": "List filter \"role\" exists on \"members\"."
+            },
+            {
+              "id": "resource.members.filter.status",
+              "type": "listFilterExists",
+              "status": "passed",
+              "message": "List filter \"status\" exists on \"members\"."
+            },
+            {
+              "id": "resource.members.column.fullName",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"fullName\" exists on \"members\"."
+            },
+            {
+              "id": "resource.members.column.email",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"email\" exists on \"members\"."
+            },
+            {
+              "id": "resource.members.column.role",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"role\" exists on \"members\"."
+            },
+            {
+              "id": "resource.members.column.status",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"status\" exists on \"members\"."
+            },
+            {
+              "id": "resource.members.column.joinedAt",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"joinedAt\" exists on \"members\"."
+            },
+            {
+              "id": "resource.members.action.create",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"create\" exists on \"members\"."
+            },
+            {
+              "id": "resource.members.action.edit",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"edit\" exists on \"members\"."
+            },
+            {
+              "id": "resource.members.action.delete",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"delete\" exists on \"members\"."
+            },
+            {
+              "id": "resource.members.pagination",
+              "type": "paginationEquals",
+              "status": "passed",
+              "message": "Pagination is 30/numbered."
+            },
+            {
+              "id": "resource.members.edit.fullName",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"fullName\" exists in edit view \"members\"."
+            },
+            {
+              "id": "resource.members.edit.email",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"email\" exists in edit view \"members\"."
+            },
+            {
+              "id": "resource.members.edit.role",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"role\" exists in edit view \"members\"."
+            },
+            {
+              "id": "resource.members.edit.status",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"status\" exists in edit view \"members\"."
+            },
+            {
+              "id": "resource.members.edit.enabledIf",
+              "type": "viewRuleEquals",
+              "status": "passed",
+              "message": "Rule \"enabledIf\" matches on \"members\"."
+            },
+            {
+              "id": "resource.members.edit.allowIf",
+              "type": "viewRuleEquals",
+              "status": "passed",
+              "message": "Rule \"allowIf\" matches on \"members\"."
+            },
+            {
+              "id": "resource.members.edit.refresh",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"refresh\" exists on \"members.edit\"."
+            },
+            {
+              "id": "resource.members.edit.toast",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"toast\" exists on \"members.edit\"."
+            },
+            {
+              "id": "resource.members.create.fullName",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"fullName\" exists in create view \"members\"."
+            },
+            {
+              "id": "resource.members.create.email",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"email\" exists in create view \"members\"."
+            },
+            {
+              "id": "resource.members.create.role",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"role\" exists in create view \"members\"."
+            },
+            {
+              "id": "resource.members.create.status",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"status\" exists in create view \"members\"."
+            },
+            {
+              "id": "resource.members.create.redirect",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"redirect\" exists on \"members.create\"."
+            },
+            {
+              "id": "resource.members.create.openDialog",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"openDialog\" exists on \"members.create\"."
+            },
+            {
+              "id": "resource.members.create.toast",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"toast\" exists on \"members.create\"."
+            },
+            {
+              "id": "budget.maxWarnings",
+              "type": "budget",
+              "status": "passed",
+              "message": "Warnings 0/0."
+            },
+            {
+              "id": "budget.maxEscapePercent",
+              "type": "budget",
+              "status": "passed",
+              "message": "Escape percent 0%/20%."
+            },
+            {
+              "id": "budget.maxExprCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@expr count 0/0."
+            },
+            {
+              "id": "budget.maxFnCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@fn count 0/0."
+            },
+            {
+              "id": "budget.maxCustomCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@custom count 0/0."
+            }
+          ],
+          "valid": true,
+          "escapeStats": {
+            "totalNodes": 22,
+            "exprCount": 0,
+            "fnCount": 0,
+            "customCount": 0,
+            "escapePercent": 0,
+            "overBudget": false
+          }
+        }
+      ],
+      "failureArtifacts": []
+    },
+    {
+      "taskId": "toast-create-invites",
+      "title": "Toast Create View Safe Refs",
+      "expectedCheckCount": 21,
+      "firstPassValid": true,
+      "winningAttempt": 1,
+      "repairsBeforeFirstValid": 0,
+      "status": "first-pass-valid",
+      "attempts": [
+        {
+          "attempt": 1,
+          "sourceFile": "/mnt/e/dsl/benchmarks/authoring/fixtures/docs-only-golden/toast-create-invites/attempt-1.rdsl",
+          "compileSuccess": true,
+          "warningCount": 0,
+          "errors": [],
+          "warnings": [],
+          "checks": [
+            {
+              "id": "app.name",
+              "type": "appNameEquals",
+              "status": "passed",
+              "message": "App name is \"Invite Console\"."
+            },
+            {
+              "id": "compiler.target",
+              "type": "compilerTargetEquals",
+              "status": "passed",
+              "message": "Compiler target is \"react\"."
+            },
+            {
+              "id": "model.invite",
+              "type": "modelExists",
+              "status": "passed",
+              "message": "Model \"Invite\" exists."
+            },
+            {
+              "id": "model.invite.email",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"email\" on model \"Invite\" matches."
+            },
+            {
+              "id": "model.invite.role",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"role\" on model \"Invite\" matches."
+            },
+            {
+              "id": "model.invite.status",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"status\" on model \"Invite\" matches."
+            },
+            {
+              "id": "resource.invites",
+              "type": "resourceExists",
+              "status": "passed",
+              "message": "Resource \"invites\" matches."
+            },
+            {
+              "id": "resource.invites.column.email",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"email\" exists on \"invites\"."
+            },
+            {
+              "id": "resource.invites.column.role",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"role\" exists on \"invites\"."
+            },
+            {
+              "id": "resource.invites.column.status",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"status\" exists on \"invites\"."
+            },
+            {
+              "id": "resource.invites.action.create",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"create\" exists on \"invites\"."
+            },
+            {
+              "id": "resource.invites.create.email",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"email\" exists in create view \"invites\"."
+            },
+            {
+              "id": "resource.invites.create.role",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"role\" exists in create view \"invites\"."
+            },
+            {
+              "id": "resource.invites.create.status",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"status\" exists in create view \"invites\"."
+            },
+            {
+              "id": "resource.invites.create.redirect",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"redirect\" exists on \"invites.create\"."
+            },
+            {
+              "id": "resource.invites.create.toast",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"toast\" exists on \"invites.create\"."
+            },
+            {
+              "id": "budget.maxWarnings",
+              "type": "budget",
+              "status": "passed",
+              "message": "Warnings 0/0."
+            },
+            {
+              "id": "budget.maxEscapePercent",
+              "type": "budget",
+              "status": "passed",
+              "message": "Escape percent 0%/20%."
+            },
+            {
+              "id": "budget.maxExprCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@expr count 0/0."
+            },
+            {
+              "id": "budget.maxFnCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@fn count 0/0."
+            },
+            {
+              "id": "budget.maxCustomCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@custom count 0/0."
+            }
+          ],
+          "valid": true,
+          "escapeStats": {
+            "totalNodes": 9,
+            "exprCount": 0,
+            "fnCount": 0,
+            "customCount": 0,
+            "escapePercent": 0,
+            "overBudget": false
+          }
+        }
+      ],
+      "failureArtifacts": []
+    },
+    {
+      "taskId": "toast-form-templates",
+      "title": "Toast Form Template Values",
+      "expectedCheckCount": 21,
+      "firstPassValid": true,
+      "winningAttempt": 1,
+      "repairsBeforeFirstValid": 0,
+      "status": "first-pass-valid",
+      "attempts": [
+        {
+          "attempt": 1,
+          "sourceFile": "/mnt/e/dsl/benchmarks/authoring/fixtures/docs-only-golden/toast-form-templates/attempt-1.rdsl",
+          "compileSuccess": true,
+          "warningCount": 0,
+          "errors": [],
+          "warnings": [],
+          "checks": [
+            {
+              "id": "app.name",
+              "type": "appNameEquals",
+              "status": "passed",
+              "message": "App name is \"Template Studio\"."
+            },
+            {
+              "id": "compiler.target",
+              "type": "compilerTargetEquals",
+              "status": "passed",
+              "message": "Compiler target is \"react\"."
+            },
+            {
+              "id": "model.template",
+              "type": "modelExists",
+              "status": "passed",
+              "message": "Model \"Template\" exists."
+            },
+            {
+              "id": "model.template.name",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"name\" on model \"Template\" matches."
+            },
+            {
+              "id": "model.template.category",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"category\" on model \"Template\" matches."
+            },
+            {
+              "id": "model.template.status",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"status\" on model \"Template\" matches."
+            },
+            {
+              "id": "resource.templates",
+              "type": "resourceExists",
+              "status": "passed",
+              "message": "Resource \"templates\" matches."
+            },
+            {
+              "id": "resource.templates.column.name",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"name\" exists on \"templates\"."
+            },
+            {
+              "id": "resource.templates.column.category",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"category\" exists on \"templates\"."
+            },
+            {
+              "id": "resource.templates.column.status",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"status\" exists on \"templates\"."
+            },
+            {
+              "id": "resource.templates.action.create",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"create\" exists on \"templates\"."
+            },
+            {
+              "id": "resource.templates.create.name",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"name\" exists in create view \"templates\"."
+            },
+            {
+              "id": "resource.templates.create.category",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"category\" exists in create view \"templates\"."
+            },
+            {
+              "id": "resource.templates.create.status",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"status\" exists in create view \"templates\"."
+            },
+            {
+              "id": "resource.templates.create.refresh",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"refresh\" exists on \"templates.create\"."
+            },
+            {
+              "id": "resource.templates.create.toast",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"toast\" exists on \"templates.create\"."
+            },
+            {
+              "id": "budget.maxWarnings",
+              "type": "budget",
+              "status": "passed",
+              "message": "Warnings 0/0."
+            },
+            {
+              "id": "budget.maxEscapePercent",
+              "type": "budget",
+              "status": "passed",
+              "message": "Escape percent 0%/20%."
+            },
+            {
+              "id": "budget.maxExprCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@expr count 0/0."
+            },
+            {
+              "id": "budget.maxFnCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@fn count 0/0."
+            },
+            {
+              "id": "budget.maxCustomCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@custom count 0/0."
+            }
+          ],
+          "valid": true,
+          "escapeStats": {
+            "totalNodes": 9,
+            "exprCount": 0,
+            "fnCount": 0,
+            "customCount": 0,
+            "escapePercent": 0,
+            "overBudget": false
+          }
+        }
+      ],
+      "failureArtifacts": []
+    },
+    {
+      "taskId": "toast-static-preferences",
+      "title": "Static Toast Preferences",
+      "expectedCheckCount": 21,
+      "firstPassValid": true,
+      "winningAttempt": 1,
+      "repairsBeforeFirstValid": 0,
+      "status": "first-pass-valid",
+      "attempts": [
+        {
+          "attempt": 1,
+          "sourceFile": "/mnt/e/dsl/benchmarks/authoring/fixtures/docs-only-golden/toast-static-preferences/attempt-1.rdsl",
+          "compileSuccess": true,
+          "warningCount": 0,
+          "errors": [],
+          "warnings": [],
+          "checks": [
+            {
+              "id": "app.name",
+              "type": "appNameEquals",
+              "status": "passed",
+              "message": "App name is \"Preference Center\"."
+            },
+            {
+              "id": "compiler.target",
+              "type": "compilerTargetEquals",
+              "status": "passed",
+              "message": "Compiler target is \"react\"."
+            },
+            {
+              "id": "model.preference",
+              "type": "modelExists",
+              "status": "passed",
+              "message": "Model \"Preference\" exists."
+            },
+            {
+              "id": "model.preference.label",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"label\" on model \"Preference\" matches."
+            },
+            {
+              "id": "model.preference.channel",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"channel\" on model \"Preference\" matches."
+            },
+            {
+              "id": "model.preference.status",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"status\" on model \"Preference\" matches."
+            },
+            {
+              "id": "resource.preferences",
+              "type": "resourceExists",
+              "status": "passed",
+              "message": "Resource \"preferences\" matches."
+            },
+            {
+              "id": "resource.preferences.column.label",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"label\" exists on \"preferences\"."
+            },
+            {
+              "id": "resource.preferences.column.channel",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"channel\" exists on \"preferences\"."
+            },
+            {
+              "id": "resource.preferences.column.status",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"status\" exists on \"preferences\"."
+            },
+            {
+              "id": "resource.preferences.action.create",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"create\" exists on \"preferences\"."
+            },
+            {
+              "id": "resource.preferences.create.label",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"label\" exists in create view \"preferences\"."
+            },
+            {
+              "id": "resource.preferences.create.channel",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"channel\" exists in create view \"preferences\"."
+            },
+            {
+              "id": "resource.preferences.create.status",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"status\" exists in create view \"preferences\"."
+            },
+            {
+              "id": "resource.preferences.create.refresh",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"refresh\" exists on \"preferences.create\"."
+            },
+            {
+              "id": "resource.preferences.create.toast",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"toast\" exists on \"preferences.create\"."
+            },
+            {
+              "id": "budget.maxWarnings",
+              "type": "budget",
+              "status": "passed",
+              "message": "Warnings 0/0."
+            },
+            {
+              "id": "budget.maxEscapePercent",
+              "type": "budget",
+              "status": "passed",
+              "message": "Escape percent 0%/20%."
+            },
+            {
+              "id": "budget.maxExprCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@expr count 0/0."
+            },
+            {
+              "id": "budget.maxFnCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@fn count 0/0."
+            },
+            {
+              "id": "budget.maxCustomCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@custom count 0/0."
+            }
+          ],
+          "valid": true,
+          "escapeStats": {
+            "totalNodes": 9,
+            "exprCount": 0,
+            "fnCount": 0,
+            "customCount": 0,
+            "escapePercent": 0,
+            "overBudget": false
+          }
+        }
+      ],
+      "failureArtifacts": []
+    },
+    {
+      "taskId": "toast-user-approvals",
+      "title": "Toast User Actor Values",
+      "expectedCheckCount": 21,
+      "firstPassValid": true,
+      "winningAttempt": 1,
+      "repairsBeforeFirstValid": 0,
+      "status": "first-pass-valid",
+      "attempts": [
+        {
+          "attempt": 1,
+          "sourceFile": "/mnt/e/dsl/benchmarks/authoring/fixtures/docs-only-golden/toast-user-approvals/attempt-1.rdsl",
+          "compileSuccess": true,
+          "warningCount": 0,
+          "errors": [],
+          "warnings": [],
+          "checks": [
+            {
+              "id": "app.name",
+              "type": "appNameEquals",
+              "status": "passed",
+              "message": "App name is \"Approval Desk\"."
+            },
+            {
+              "id": "compiler.target",
+              "type": "compilerTargetEquals",
+              "status": "passed",
+              "message": "Compiler target is \"react\"."
+            },
+            {
+              "id": "model.approval",
+              "type": "modelExists",
+              "status": "passed",
+              "message": "Model \"Approval\" exists."
+            },
+            {
+              "id": "model.approval.title",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"title\" on model \"Approval\" matches."
+            },
+            {
+              "id": "model.approval.state",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"state\" on model \"Approval\" matches."
+            },
+            {
+              "id": "model.approval.priority",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"priority\" on model \"Approval\" matches."
+            },
+            {
+              "id": "resource.approvals",
+              "type": "resourceExists",
+              "status": "passed",
+              "message": "Resource \"approvals\" matches."
+            },
+            {
+              "id": "resource.approvals.column.title",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"title\" exists on \"approvals\"."
+            },
+            {
+              "id": "resource.approvals.column.state",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"state\" exists on \"approvals\"."
+            },
+            {
+              "id": "resource.approvals.column.priority",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"priority\" exists on \"approvals\"."
+            },
+            {
+              "id": "resource.approvals.action.edit",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"edit\" exists on \"approvals\"."
+            },
+            {
+              "id": "resource.approvals.edit.title",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"title\" exists in edit view \"approvals\"."
+            },
+            {
+              "id": "resource.approvals.edit.state",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"state\" exists in edit view \"approvals\"."
+            },
+            {
+              "id": "resource.approvals.edit.priority",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"priority\" exists in edit view \"approvals\"."
+            },
+            {
+              "id": "resource.approvals.edit.invalidate",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"invalidate\" exists on \"approvals.edit\"."
+            },
+            {
+              "id": "resource.approvals.edit.toast",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"toast\" exists on \"approvals.edit\"."
+            },
+            {
+              "id": "budget.maxWarnings",
+              "type": "budget",
+              "status": "passed",
+              "message": "Warnings 0/0."
+            },
+            {
+              "id": "budget.maxEscapePercent",
+              "type": "budget",
+              "status": "passed",
+              "message": "Escape percent 0%/20%."
+            },
+            {
+              "id": "budget.maxExprCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@expr count 0/0."
+            },
+            {
+              "id": "budget.maxFnCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@fn count 0/0."
+            },
+            {
+              "id": "budget.maxCustomCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@custom count 0/0."
+            }
+          ],
+          "valid": true,
+          "escapeStats": {
+            "totalNodes": 9,
+            "exprCount": 0,
+            "fnCount": 0,
+            "customCount": 0,
+            "escapePercent": 0,
+            "overBudget": false
+          }
+        }
+      ],
+      "failureArtifacts": []
+    },
+    {
+      "taskId": "user-admin-crud",
+      "title": "User administration CRUD",
+      "expectedCheckCount": 44,
+      "firstPassValid": true,
+      "winningAttempt": 1,
+      "repairsBeforeFirstValid": 0,
+      "status": "first-pass-valid",
+      "attempts": [
+        {
+          "attempt": 1,
+          "sourceFile": "/mnt/e/dsl/benchmarks/authoring/fixtures/docs-only-golden/user-admin-crud/attempt-1.rdsl",
+          "compileSuccess": true,
+          "warningCount": 0,
+          "errors": [],
+          "warnings": [],
+          "checks": [
+            {
+              "id": "app.name",
+              "type": "appNameEquals",
+              "status": "passed",
+              "message": "App name is \"User Management\"."
+            },
+            {
+              "id": "compiler.target",
+              "type": "compilerTargetEquals",
+              "status": "passed",
+              "message": "Compiler target is \"react\"."
+            },
+            {
+              "id": "page.dashboard",
+              "type": "pageExists",
+              "status": "passed",
+              "message": "Page \"dashboard\" matches."
+            },
+            {
+              "id": "page.dashboard.metric",
+              "type": "pageBlockExists",
+              "status": "passed",
+              "message": "Block \"Total Users\" exists on page \"dashboard\"."
+            },
+            {
+              "id": "page.dashboard.chart",
+              "type": "pageBlockExists",
+              "status": "passed",
+              "message": "Block \"Active Sessions\" exists on page \"dashboard\"."
+            },
+            {
+              "id": "nav.dashboard",
+              "type": "navItemExists",
+              "status": "passed",
+              "message": "Navigation target \"page.dashboard\" exists."
+            },
+            {
+              "id": "nav.users",
+              "type": "navItemExists",
+              "status": "passed",
+              "message": "Navigation target \"resource.users.list\" exists."
+            },
+            {
+              "id": "model.user",
+              "type": "modelExists",
+              "status": "passed",
+              "message": "Model \"User\" exists."
+            },
+            {
+              "id": "model.user.name",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"name\" on model \"User\" matches."
+            },
+            {
+              "id": "model.user.email",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"email\" on model \"User\" matches."
+            },
+            {
+              "id": "model.user.role",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"role\" on model \"User\" matches."
+            },
+            {
+              "id": "model.user.status",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"status\" on model \"User\" matches."
+            },
+            {
+              "id": "model.user.createdAt",
+              "type": "modelFieldExists",
+              "status": "passed",
+              "message": "Field \"createdAt\" on model \"User\" matches."
+            },
+            {
+              "id": "resource.users",
+              "type": "resourceExists",
+              "status": "passed",
+              "message": "Resource \"users\" matches."
+            },
+            {
+              "id": "resource.users.filter.email",
+              "type": "listFilterExists",
+              "status": "passed",
+              "message": "List filter \"email\" exists on \"users\"."
+            },
+            {
+              "id": "resource.users.filter.role",
+              "type": "listFilterExists",
+              "status": "passed",
+              "message": "List filter \"role\" exists on \"users\"."
+            },
+            {
+              "id": "resource.users.filter.status",
+              "type": "listFilterExists",
+              "status": "passed",
+              "message": "List filter \"status\" exists on \"users\"."
+            },
+            {
+              "id": "resource.users.column.name",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"name\" exists on \"users\"."
+            },
+            {
+              "id": "resource.users.column.email",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"email\" exists on \"users\"."
+            },
+            {
+              "id": "resource.users.column.role",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"role\" exists on \"users\"."
+            },
+            {
+              "id": "resource.users.column.status",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"status\" exists on \"users\"."
+            },
+            {
+              "id": "resource.users.column.createdAt",
+              "type": "listColumnExists",
+              "status": "passed",
+              "message": "Column \"createdAt\" exists on \"users\"."
+            },
+            {
+              "id": "resource.users.action.create",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"create\" exists on \"users\"."
+            },
+            {
+              "id": "resource.users.action.edit",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"edit\" exists on \"users\"."
+            },
+            {
+              "id": "resource.users.action.delete",
+              "type": "actionExists",
+              "status": "passed",
+              "message": "Action \"delete\" exists on \"users\"."
+            },
+            {
+              "id": "resource.users.pagination",
+              "type": "paginationEquals",
+              "status": "passed",
+              "message": "Pagination is 20/numbered."
+            },
+            {
+              "id": "resource.users.edit.name",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"name\" exists in edit view \"users\"."
+            },
+            {
+              "id": "resource.users.edit.email",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"email\" exists in edit view \"users\"."
+            },
+            {
+              "id": "resource.users.edit.role",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"role\" exists in edit view \"users\"."
+            },
+            {
+              "id": "resource.users.edit.enabledIf",
+              "type": "viewRuleEquals",
+              "status": "passed",
+              "message": "Rule \"enabledIf\" matches on \"users\"."
+            },
+            {
+              "id": "resource.users.edit.allowIf",
+              "type": "viewRuleEquals",
+              "status": "passed",
+              "message": "Rule \"allowIf\" matches on \"users\"."
+            },
+            {
+              "id": "resource.users.edit.enforce",
+              "type": "viewRuleEquals",
+              "status": "passed",
+              "message": "Rule \"enforce\" matches on \"users\"."
+            },
+            {
+              "id": "resource.users.edit.refresh",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"refresh\" exists on \"users.edit\"."
+            },
+            {
+              "id": "resource.users.edit.toast",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"toast\" exists on \"users.edit\"."
+            },
+            {
+              "id": "resource.users.create.name",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"name\" exists in create view \"users\"."
+            },
+            {
+              "id": "resource.users.create.email",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"email\" exists in create view \"users\"."
+            },
+            {
+              "id": "resource.users.create.role",
+              "type": "viewFieldExists",
+              "status": "passed",
+              "message": "Field \"role\" exists in create view \"users\"."
+            },
+            {
+              "id": "resource.users.create.redirect",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"redirect\" exists on \"users.create\"."
+            },
+            {
+              "id": "resource.users.create.toast",
+              "type": "effectExists",
+              "status": "passed",
+              "message": "Effect \"toast\" exists on \"users.create\"."
+            },
+            {
+              "id": "budget.maxWarnings",
+              "type": "budget",
+              "status": "passed",
+              "message": "Warnings 0/0."
+            },
+            {
+              "id": "budget.maxEscapePercent",
+              "type": "budget",
+              "status": "passed",
+              "message": "Escape percent 0%/20%."
+            },
+            {
+              "id": "budget.maxExprCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@expr count 0/0."
+            },
+            {
+              "id": "budget.maxFnCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@fn count 0/0."
+            },
+            {
+              "id": "budget.maxCustomCount",
+              "type": "budget",
+              "status": "passed",
+              "message": "@custom count 0/0."
+            }
+          ],
+          "valid": true,
+          "escapeStats": {
+            "totalNodes": 21,
+            "exprCount": 0,
+            "fnCount": 0,
+            "customCount": 0,
+            "escapePercent": 0,
+            "overBudget": false
+          }
+        }
+      ],
+      "failureArtifacts": []
+    }
+  ],
+  "summary": {
+    "taskCount": 10,
+    "attemptedTaskCount": 10,
+    "solvedTaskCount": 10,
+    "failedTaskCount": 0,
+    "firstPassValidCount": 10,
+    "firstPassValidRate": 1,
+    "solvedRate": 1,
+    "averageRepairsBeforeFirstValid": 0,
+    "totalAttemptCount": 10,
+    "tokenUsage": {
+      "promptTokens": 0,
+      "completionTokens": 0,
+      "totalTokens": 0
+    },
+    "winningAttemptEscapeUsage": {
+      "exprCount": 0,
+      "fnCount": 0,
+      "customCount": 0,
+      "averagePercent": 0
+    }
+  }
+}

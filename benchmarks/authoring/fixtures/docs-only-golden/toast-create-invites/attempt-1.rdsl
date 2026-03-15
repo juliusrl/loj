@@ -1,0 +1,34 @@
+app:
+  name: "Invite Console"
+  theme: light
+  auth: jwt
+
+compiler:
+  target: react
+
+model Invite:
+  email: string @required @email
+  role: enum(admin, editor, viewer)
+  status: enum(pending, sent)
+
+resource invites:
+  model: Invite
+  api: /api/invites
+
+  list:
+    columns: [email, role, status]
+    actions:
+      - create
+
+  create:
+    fields: [email, role, status]
+    onSuccess:
+      - redirect: invites.list
+      - toast:
+          key: invites.sent
+          defaultMessage: "Invite for {email} sent by {actor}"
+          values:
+            email:
+              ref: form.email
+            actor:
+              ref: user.name

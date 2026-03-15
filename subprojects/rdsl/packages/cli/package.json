@@ -1,0 +1,40 @@
+{
+  "name": "@loj-lang/rdsl-cli",
+  "version": "0.5.0",
+  "description": "ReactDSL developer CLI",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "rdsl": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "npm run build --workspace=@loj-lang/rdsl-compiler && npm run build --workspace=@loj-lang/rdsl-host-react && tsc",
+    "exec": "node scripts/exec-from-init-cwd.mjs",
+    "test": "npm run build --workspace=@loj-lang/rdsl-compiler && npm run build --workspace=@loj-lang/rdsl-host-react && vitest run"
+  },
+  "dependencies": {
+    "@loj-lang/rdsl-compiler": "^0.5.0",
+    "@loj-lang/rdsl-host-react": "^0.5.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}

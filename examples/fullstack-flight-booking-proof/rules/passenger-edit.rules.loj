@@ -1,0 +1,24 @@
+rules passengerEdit:
+  eligibility editable:
+    when: record.status != TICKETED
+    message: "Ticketed bookings cannot change passenger rows directly"
+
+  eligibility business-member-email:
+    when: formData.cabin != BUSINESS || isNotEmpty(item.memberEmail)
+    message: "Business-cabin passengers need a member email in this proof"
+
+  validate passenger-age:
+    when: item.age >= 0
+    message: "Passenger age must be zero or greater"
+
+  validate child-member-contact:
+    when: item.age >= 12 || isEmpty(item.memberEmail) || item.memberEmail == formData.contactEmail
+    message: "Child passengers with a member email must use the representative contact email in this proof"
+
+  validate infant-seat:
+    when: item.age >= 2 || isEmpty(item.seatPreference) || item.seatPreference == MIDDLE
+    message: "Infants cannot request window or aisle seats"
+
+  validate child-middle-seat:
+    when: item.age >= 12 || isEmpty(item.seatPreference) || item.seatPreference != MIDDLE
+    message: "Child passengers in this proof may request window or aisle seats only"

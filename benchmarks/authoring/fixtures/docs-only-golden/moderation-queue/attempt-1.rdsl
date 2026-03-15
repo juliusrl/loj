@@ -1,0 +1,77 @@
+app:
+  name: "Moderation Queue"
+  theme: light
+  auth: session
+  navigation:
+    - group: "Moderation"
+      items:
+        - label: "Overview"
+          icon: dashboard
+          target: page.dashboard
+        - label: "Reviews"
+          icon: flag
+          target: resource.reviews.list
+
+compiler:
+  target: react
+
+page dashboard:
+  title: "Review Overview"
+  type: dashboard
+  layout: grid(2)
+  blocks:
+    - type: metric
+      title: "Pending Reviews"
+      data: query.reviews.pendingCount
+    - type: chart
+      title: "Review Volume"
+      data: query.reviews.daily
+
+model Review:
+  title: string @required @minLen(3)
+  authorEmail: string @required @email
+  state: enum(pending, approved, rejected)
+  priority: enum(low, normal, high)
+  submittedAt: datetime @auto
+
+resource reviews:
+  model: Review
+  api: /api/reviews
+
+  list:
+    title: "Review Queue"
+    filters: [authorEmail, state, priority]
+    columns:
+      - title @sortable
+      - authorEmail @sortable
+      - state @badge(pending:yellow, approved:green, rejected:red)
+      - priority @tag(low:gray, normal:blue, high:red)
+      - submittedAt @date
+    actions:
+      - create
+      - edit
+      - delete @confirm("Remove this review?")
+    pagination: { size: 25, style: numbered }
+
+  edit:
+    fields:
+      - title
+      - authorEmail @disabled
+      - state @select
+      - priority @select
+    rules:
+      allowIf: hasRole(currentUser, "moderator")
+      enforce: hasRole(currentUser, "moderator")
+    onSuccess:
+      - refresh: reviews
+      - toast: "Review updated"
+
+  create:
+    fields:
+      - title
+      - authorEmail
+      - state @select
+      - priority @select
+    onSuccess:
+      - redirect: reviews.list
+      - toast: "Review created"

@@ -1,0 +1,178 @@
+{
+  "releasePackages": [
+    {
+      "path": "subprojects/rdsl/packages/compiler",
+      "kind": "npm",
+      "currentName": "@loj-lang/rdsl-compiler",
+      "family": "rdsl",
+      "phase3PackageName": "@loj-lang/rdsl-compiler",
+      "phase3MoveGroup": "rdsl-subproject",
+      "phase3PackagePath": "subprojects/rdsl/packages/compiler",
+      "allowedPrefixes": [
+        "dist/"
+      ],
+      "requiredFiles": [
+        "README.md",
+        "dist/index.js",
+        "dist/index.d.ts"
+      ]
+    },
+    {
+      "path": "subprojects/rdsl/packages/runtime",
+      "kind": "npm",
+      "currentName": "@loj-lang/rdsl-runtime",
+      "family": "rdsl",
+      "phase3PackageName": "@loj-lang/rdsl-runtime",
+      "phase3MoveGroup": "rdsl-subproject",
+      "phase3PackagePath": "subprojects/rdsl/packages/runtime",
+      "allowedPrefixes": [
+        "dist/"
+      ],
+      "requiredFiles": [
+        "README.md",
+        "dist/index.js",
+        "dist/index.d.ts"
+      ]
+    },
+    {
+      "path": "subprojects/rdsl/packages/host-react",
+      "kind": "npm",
+      "currentName": "@loj-lang/rdsl-host-react",
+      "family": "rdsl",
+      "phase3PackageName": "@loj-lang/rdsl-host-react",
+      "phase3MoveGroup": "rdsl-subproject",
+      "phase3PackagePath": "subprojects/rdsl/packages/host-react",
+      "allowedPrefixes": [
+        "dist/"
+      ],
+      "requiredFiles": [
+        "README.md",
+        "dist/index.js",
+        "dist/vite.js",
+        "dist/template.js"
+      ]
+    },
+    {
+      "path": "subprojects/rdsl/packages/cli",
+      "kind": "npm",
+      "currentName": "@loj-lang/rdsl-cli",
+      "family": "rdsl",
+      "phase3PackageName": "@loj-lang/rdsl-cli",
+      "phase3MoveGroup": "rdsl-subproject",
+      "phase3PackagePath": "subprojects/rdsl/packages/cli",
+      "allowedPrefixes": [
+        "dist/"
+      ],
+      "requiredFiles": [
+        "README.md",
+        "dist/index.js",
+        "dist/index.d.ts"
+      ]
+    },
+    {
+      "path": "subprojects/sdsl/packages/compiler",
+      "kind": "npm",
+      "currentName": "@loj-lang/sdsl-compiler",
+      "family": "sdsl",
+      "phase3PackageName": "@loj-lang/sdsl-compiler",
+      "phase3MoveGroup": "sdsl-subproject",
+      "phase3PackagePath": "subprojects/sdsl/packages/compiler",
+      "allowedPrefixes": [
+        "dist/"
+      ],
+      "requiredFiles": [
+        "README.md",
+        "dist/index.js",
+        "dist/index.d.ts"
+      ]
+    },
+    {
+      "path": "subprojects/sdsl/packages/cli",
+      "kind": "npm",
+      "currentName": "@loj-lang/sdsl-cli",
+      "family": "sdsl",
+      "phase3PackageName": "@loj-lang/sdsl-cli",
+      "phase3MoveGroup": "sdsl-subproject",
+      "phase3PackagePath": "subprojects/sdsl/packages/cli",
+      "allowedPrefixes": [
+        "dist/"
+      ],
+      "requiredFiles": [
+        "README.md",
+        "dist/index.js",
+        "dist/index.d.ts"
+      ]
+    },
+    {
+      "path": "packages/loj-benchmark-core",
+      "kind": "npm",
+      "currentName": "@loj-lang/benchmark-core",
+      "family": "loj",
+      "phase3PackageName": "@loj-lang/benchmark-core",
+      "phase3MoveGroup": "loj-root",
+      "phase3PackagePath": "packages/loj-benchmark-core",
+      "allowedPrefixes": [
+        "dist/"
+      ],
+      "requiredFiles": [
+        "README.md",
+        "dist/index.js",
+        "dist/index.d.ts"
+      ]
+    },
+    {
+      "path": "packages/loj-cli",
+      "kind": "npm",
+      "currentName": "@loj-lang/cli",
+      "family": "loj",
+      "phase3PackageName": "@loj-lang/cli",
+      "phase3MoveGroup": "loj-root",
+      "phase3PackagePath": "packages/loj-cli",
+      "allowedPrefixes": [
+        "dist/"
+      ],
+      "requiredFiles": [
+        "README.md",
+        "dist/index.js",
+        "dist/index.d.ts"
+      ]
+    },
+    {
+      "path": "packages/loj-vscode",
+      "kind": "vscode-extension",
+      "currentName": "loj-vscode",
+      "family": "loj",
+      "phase3PackageName": "loj-vscode",
+      "phase3MoveGroup": "loj-root",
+      "phase3PackagePath": "packages/loj-vscode",
+      "allowedPrefixes": [
+        "dist/",
+        "syntaxes/",
+        "language-configuration.json"
+      ],
+      "requiredFiles": [
+        "README.md",
+        "dist/extension.js",
+        "syntaxes/rdsl.tmLanguage.json",
+        "syntaxes/sdsl.tmLanguage.json",
+        "language-configuration.json"
+      ]
+    },
+    {
+      "path": "packages/loj-shared-contracts",
+      "kind": "npm",
+      "currentName": "@loj-lang/shared-contracts",
+      "family": "loj",
+      "phase3PackageName": "@loj-lang/shared-contracts",
+      "phase3MoveGroup": "loj-root",
+      "phase3PackagePath": "packages/loj-shared-contracts",
+      "allowedPrefixes": [
+        "dist/"
+      ],
+      "requiredFiles": [
+        "dist/index.js",
+        "dist/index.d.ts"
+      ]
+    }
+  ]
+}

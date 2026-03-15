@@ -1,0 +1,77 @@
+app:
+  name: "Inventory Catalog"
+  theme: dark
+  auth: jwt
+  navigation:
+    - group: "Catalog"
+      items:
+        - label: "Overview"
+          icon: dashboard
+          target: page.dashboard
+        - label: "Products"
+          icon: box
+          target: resource.products.list
+
+compiler:
+  target: react
+
+page dashboard:
+  title: "Catalog Overview"
+  type: dashboard
+  layout: grid(2)
+  blocks:
+    - type: metric
+      title: "Total Products"
+      data: query.products.count
+    - type: chart
+      title: "Stock Movement"
+      data: query.products.stockTrend
+
+model Product:
+  name: string @required @minLen(2)
+  sku: string @required @unique
+  category: enum(software, hardware, service)
+  status: enum(active, archived)
+  updatedAt: datetime @auto
+
+resource products:
+  model: Product
+  api: /api/products
+
+  list:
+    title: "Products"
+    filters: [sku, category, status]
+    columns:
+      - name @sortable
+      - sku @sortable
+      - category @tag(software:blue, hardware:orange, service:gray)
+      - status @badge(active:green, archived:red)
+      - updatedAt @date
+    actions:
+      - create
+      - edit
+      - delete @confirm("Archive this product?")
+    pagination: { size: 40, style: numbered }
+
+  edit:
+    fields:
+      - name
+      - sku @disabled
+      - category @select
+      - status @select
+    rules:
+      allowIf: hasRole(currentUser, "catalog_manager")
+      enforce: hasRole(currentUser, "catalog_manager")
+    onSuccess:
+      - invalidate: products
+      - toast: "Product saved"
+
+  create:
+    fields:
+      - name
+      - sku
+      - category @select
+      - status @select
+    onSuccess:
+      - redirect: products.list
+      - toast: "Product created"

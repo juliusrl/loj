@@ -1,0 +1,49 @@
+{
+  "name": "@loj-lang/cli",
+  "version": "0.5.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juliusrl/loj.git",
+    "directory": "packages/loj-cli"
+  },
+  "description": "Loj project orchestration CLI",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "files": [
+    "dist",
+    "agent-assets"
+  ],
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "loj": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "npm run build --workspace=@loj-lang/rdsl-cli && npm run build --workspace=@loj-lang/sdsl-cli && tsc && node scripts/copy-agent-assets.mjs",
+    "exec": "node scripts/exec-from-init-cwd.mjs",
+    "test": "npm run build --workspace=@loj-lang/rdsl-cli && npm run build --workspace=@loj-lang/sdsl-cli && vitest run"
+  },
+  "dependencies": {
+    "@loj-lang/rdsl-compiler": "^0.5.0",
+    "@loj-lang/rdsl-cli": "^0.5.0",
+    "@loj-lang/sdsl-compiler": "^0.5.0",
+    "@loj-lang/sdsl-cli": "^0.5.0",
+    "yaml": "^2.7.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}

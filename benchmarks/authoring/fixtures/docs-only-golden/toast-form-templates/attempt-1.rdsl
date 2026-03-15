@@ -1,0 +1,32 @@
+app:
+  name: "Template Studio"
+  theme: dark
+  auth: jwt
+
+compiler:
+  target: react
+
+model Template:
+  name: string @required
+  category: string
+  status: enum(draft, active)
+
+resource templates:
+  model: Template
+  api: /api/templates
+
+  list:
+    columns: [name, category, status]
+    actions:
+      - create
+
+  create:
+    fields: [name, category, status]
+    onSuccess:
+      - refresh: templates
+      - toast:
+          key: templates.created
+          defaultMessage: "Template {name} created"
+          values:
+            name:
+              ref: form.name

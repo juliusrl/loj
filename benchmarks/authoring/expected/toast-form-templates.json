@@ -1,0 +1,43 @@
+{
+  "artifact": "rdsl.authoring-expected",
+  "schemaVersion": "0.1.0",
+  "taskId": "toast-form-templates",
+  "budgets": {
+    "maxWarnings": 0,
+    "maxEscapePercent": 20,
+    "maxExprCount": 0,
+    "maxFnCount": 0,
+    "maxCustomCount": 0
+  },
+  "checks": [
+    { "id": "app.name", "type": "appNameEquals", "value": "Template Studio" },
+    { "id": "compiler.target", "type": "compilerTargetEquals", "value": "react" },
+    { "id": "model.template", "type": "modelExists", "model": "Template" },
+    { "id": "model.template.name", "type": "modelFieldExists", "model": "Template", "field": "name", "fieldType": "string", "decorators": ["required"] },
+    { "id": "model.template.category", "type": "modelFieldExists", "model": "Template", "field": "category", "fieldType": "string" },
+    { "id": "model.template.status", "type": "modelFieldExists", "model": "Template", "field": "status", "fieldType": "enum", "enumValues": ["draft", "active"] },
+    { "id": "resource.templates", "type": "resourceExists", "resource": "templates", "model": "Template", "api": "/api/templates", "views": ["list", "create"] },
+    { "id": "resource.templates.column.name", "type": "listColumnExists", "resource": "templates", "field": "name" },
+    { "id": "resource.templates.column.category", "type": "listColumnExists", "resource": "templates", "field": "category" },
+    { "id": "resource.templates.column.status", "type": "listColumnExists", "resource": "templates", "field": "status" },
+    { "id": "resource.templates.action.create", "type": "actionExists", "resource": "templates", "action": "create" },
+    { "id": "resource.templates.create.name", "type": "viewFieldExists", "resource": "templates", "view": "create", "field": "name" },
+    { "id": "resource.templates.create.category", "type": "viewFieldExists", "resource": "templates", "view": "create", "field": "category" },
+    { "id": "resource.templates.create.status", "type": "viewFieldExists", "resource": "templates", "view": "create", "field": "status" },
+    { "id": "resource.templates.create.refresh", "type": "effectExists", "resource": "templates", "view": "create", "effectType": "refresh", "target": "templates" },
+    {
+      "id": "resource.templates.create.toast",
+      "type": "effectExists",
+      "resource": "templates",
+      "view": "create",
+      "effectType": "toast",
+      "message": {
+        "key": "templates.created",
+        "defaultMessage": "Template {name} created",
+        "values": {
+          "name": { "ref": "form.name" }
+        }
+      }
+    }
+  ]
+}

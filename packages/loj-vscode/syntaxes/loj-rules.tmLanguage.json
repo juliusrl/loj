@@ -1,0 +1,96 @@
+{
+  "scopeName": "source.loj-rules",
+  "name": "Loj Rules",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#entities" },
+    { "include": "#keywords" },
+    { "include": "#operators" },
+    { "include": "#escapeHatches" },
+    { "include": "#scalars" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.loj-rules",
+          "match": "#.*$"
+        }
+      ]
+    },
+    "entities": {
+      "patterns": [
+        {
+          "name": "entity.name.rules.loj-rules",
+          "match": "^(\\s*)(rules)(\\s+)([A-Za-z_][A-Za-z0-9_-]*)(\\s*:)",
+          "captures": {
+            "2": { "name": "storage.type.definition.loj-rules" },
+            "4": { "name": "entity.name.section.loj-rules" }
+          }
+        },
+        {
+          "name": "entity.name.rule.loj-rules",
+          "match": "^(\\s*)(validate|derive|eligibility)(\\s+)([A-Za-z_][A-Za-z0-9_-]*)(\\s*:)",
+          "captures": {
+            "2": { "name": "storage.type.rule.loj-rules" },
+            "4": { "name": "entity.name.rule.loj-rules" }
+          }
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.section.loj-rules",
+          "match": "^(\\s*)(when|message|value)(\\s*:)"
+        },
+        {
+          "name": "support.function.builtin.loj-rules",
+          "match": "\\b(count|isEmpty|isNotEmpty|min|max|sum|avg|contains|startsWith|endsWith|today|now)\\b"
+        },
+        {
+          "name": "constant.language.boolean.loj-rules",
+          "match": "\\b(true|false)\\b"
+        },
+        {
+          "name": "constant.language.enum-like.loj-rules",
+          "match": "\\b[A-Z][A-Z0-9_]*\\b"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.comparison.loj-rules",
+          "match": "(==|!=|>=|<=|>|<|\\|\\||&&|\\+|\\-|\\*|/)"
+        }
+      ]
+    },
+    "escapeHatches": {
+      "patterns": [
+        {
+          "name": "support.function.escape-hatch.loj-rules",
+          "match": "@(fn|sql)\\([^\\n]*\\)"
+        }
+      ]
+    },
+    "scalars": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.loj-rules",
+          "begin": "\"",
+          "end": "\""
+        },
+        {
+          "name": "string.quoted.single.loj-rules",
+          "begin": "'",
+          "end": "'"
+        },
+        {
+          "name": "constant.numeric.loj-rules",
+          "match": "\\b\\d+(?:\\.\\d+)?\\b"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "artifact": "rdsl.authoring-task",
+  "schemaVersion": "0.1.0",
+  "id": "user-admin-crud",
+  "lane": "docs-only",
+  "title": "User administration CRUD",
+  "prompt": "Create an internal admin application called \"User Management\". Use dark theme and jwt auth. Add a dashboard page titled \"System Overview\" with a metric block for total users and a chart block for active sessions. Add navigation entries for the dashboard and the users resource. Define a User model with name, email, role, status, and createdAt. Create a users resource on /api/users with list, edit, and create views. The list view must support filters for email, role, and status; columns for name, email, role, status, and createdAt; create/edit/delete actions; and numbered pagination of 20 rows. The edit view must contain name, email, and role fields, disable email while editing, require hasRole(currentUser, \"admin\") for enabledIf/allowIf/enforce, and on success refresh users plus toast \"User saved successfully\". The create view must contain name, email, and role and on success redirect to users.list plus toast \"User created\"."
+}

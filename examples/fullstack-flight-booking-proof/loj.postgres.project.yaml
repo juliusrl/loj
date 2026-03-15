@@ -1,0 +1,58 @@
+app:
+  name: flight-booking-proof
+
+targets:
+  frontend:
+    type: web
+    entry: frontend/app.web.loj
+    outDir: generated/frontend
+  backend:
+    type: api
+    entry: backend/app.api.loj
+    outDir: generated/backend-postgres
+    database:
+      vendor: postgres
+      mode: docker-compose
+      name: flight_booking_proof
+      username: loj
+      password: loj
+      autoProvision: true
+      migrations: flyway
+    runtime:
+      shutdown:
+        mode: graceful
+        timeout: 30s
+      cors:
+        origins:
+          - http://127.0.0.1:5173
+        methods:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+          - OPTIONS
+        headers:
+          - Authorization
+          - Content-Type
+        credentials: true
+      forwardedHeaders:
+        mode: standard
+      trustedProxy:
+        mode: local
+      health:
+        path: /healthz
+      readiness:
+        path: /readyz
+      drain:
+        path: /drainz
+
+dev:
+  host:
+    type: react-vite
+    target: frontend
+    dir: ../../subprojects/rdsl/examples/user-admin/host
+    apiBase: /api
+    proxyTarget: backend
+  server:
+    target: backend

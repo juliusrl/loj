@@ -1,0 +1,19 @@
+{
+  "name": "@loj/example-fullstack-user-admin",
+  "private": true,
+  "version": "0.5.0",
+  "type": "module",
+  "scripts": {
+    "validate": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- validate loj.project.yaml",
+    "build:generated": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- build loj.project.yaml",
+    "dev": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- dev loj.project.yaml",
+    "e2e": "npm run build --workspace=@loj-lang/cli && node e2e.mjs",
+    "validate:fastapi": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- validate loj.fastapi.project.yaml",
+    "build:generated:fastapi": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- build loj.fastapi.project.yaml",
+    "dev:fastapi": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- dev loj.fastapi.project.yaml",
+    "e2e:fastapi": "npm run build --workspace=@loj-lang/cli && LOJ_PROJECT_FILE=loj.fastapi.project.yaml node e2e.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.50.1"
+  }
+}

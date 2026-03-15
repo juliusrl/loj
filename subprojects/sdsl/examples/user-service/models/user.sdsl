@@ -1,0 +1,7 @@
+model User:
+  name: string @required @minLen(2)
+  email: string @required @email @unique
+  role: enum(admin, editor, viewer) @required
+  status: enum(active, suspended) @required
+  createdAt: datetime @createdAt
+  updatedAt: datetime @updatedAt

@@ -1,0 +1,8 @@
+app:
+  name: "Flight Booking Proof Service"
+  package: "com.example.flightbookingproof"
+
+imports:
+  - ./models/
+  - ./resources/
+  - ./read-models/

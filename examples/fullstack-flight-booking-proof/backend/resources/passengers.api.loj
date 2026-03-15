@@ -1,0 +1,6 @@
+resource passengers:
+  model: Passenger
+  api: /api/passengers
+  auth:
+    mode: authenticated
+    roles: [ADMIN, AGENT]

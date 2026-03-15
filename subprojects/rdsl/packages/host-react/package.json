@@ -1,0 +1,56 @@
+{
+  "name": "@loj-lang/rdsl-host-react",
+  "version": "0.5.0",
+  "description": "Reusable React host helpers for mounting generated ReactDSL apps",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./vite": {
+      "types": "./dist/vite.d.ts",
+      "default": "./dist/vite.js"
+    },
+    "./template": {
+      "types": "./dist/template.d.ts",
+      "default": "./dist/template.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "vite": [
+        "./dist/vite.d.ts"
+      ],
+      "template": [
+        "./dist/template.d.ts"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "npm run build --workspace=@loj-lang/rdsl-runtime && tsc",
+    "test": "npm run build --workspace=@loj-lang/rdsl-runtime && vitest run"
+  },
+  "dependencies": {
+    "@loj-lang/rdsl-runtime": "^0.5.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}

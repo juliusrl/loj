@@ -1,0 +1,72 @@
+rules bookingCreateApi:
+  eligibility agent-submission:
+    when: currentUser.role in [AGENT, ADMIN]
+    message: "Only agents may submit bookings"
+
+  validate representative-age:
+    when: payload.representativeAge >= 18
+    message: "Representative must be at least 18 years old"
+
+  validate passengers-present:
+    when: count(payload.passengers) > 0
+    message: "At least one passenger is required"
+
+  validate passenger-max:
+    when: count(payload.passengers) <= 6
+    message: "This proof keeps bookings at six passengers or fewer"
+
+  validate business-passenger-limit:
+    when: payload.cabin != BUSINESS || count(payload.passengers) <= 2
+    message: "Business cabin bookings in this proof are limited to two passengers"
+
+  validate segment-pair:
+    when: isNotEmpty(payload.outwardFlightNo) && isNotEmpty(payload.homewardFlightNo)
+    message: "Submitted booking must include both selected flights"
+
+  validate outward-capacity:
+    when: count(payload.passengers) <= payload.outwardSeatsRemaining
+    message: "Submitted outbound selection no longer has enough seats"
+
+  validate homeward-capacity:
+    when: count(payload.passengers) <= payload.homewardSeatsRemaining
+    message: "Submitted homeward selection no longer has enough seats"
+
+  validate outward-limited-band:
+    when: payload.outwardAvailabilityBand != "LIMITED" || count(payload.passengers) <= 2
+    message: "Limited outbound offers in this proof allow at most two passengers per booking"
+
+  validate homeward-limited-band:
+    when: payload.homewardAvailabilityBand != "LIMITED" || count(payload.passengers) <= 2
+    message: "Limited homeward offers in this proof allow at most two passengers per booking"
+
+  validate outward-limited-buffer:
+    when: payload.outwardAvailabilityBand != "LIMITED" || count(payload.passengers) < payload.outwardSeatsRemaining
+    message: "Limited outbound offers in this proof should leave at least one remaining seat after booking"
+
+  validate homeward-limited-buffer:
+    when: payload.homewardAvailabilityBand != "LIMITED" || count(payload.passengers) < payload.homewardSeatsRemaining
+    message: "Limited homeward offers in this proof should leave at least one remaining seat after booking"
+
+  validate agent-ticketing:
+    when: (payload.outwardTicketingAdvisory != "Agent ticketing only" && payload.homewardTicketingAdvisory != "Agent ticketing only") || currentUser.role in [AGENT, ADMIN]
+    message: "Agent-only ticketing offers require an agent session in this proof"
+
+  validate base-fare:
+    when: payload.baseFare == payload.outwardBaseFare + payload.homewardBaseFare
+    message: "Base fare must exactly match the two selected flights"
+
+  validate service-fee:
+    when: payload.serviceFee == count(payload.passengers) * 8
+    message: "Service fee must match the proof pricing formula"
+
+  validate tax-amount:
+    when: payload.taxAmount == count(payload.passengers) * 12
+    message: "Tax amount must match the proof pricing formula"
+
+  validate vacancy-surcharge:
+    when: payload.vacancySurcharge == count(payload.passengers) * 5
+    message: "Vacancy surcharge must match the proof pricing formula"
+
+  validate quoted-fare:
+    when: payload.quotedFare == ((payload.outwardBaseFare + payload.homewardBaseFare) * count(payload.passengers)) + payload.serviceFee + payload.taxAmount + payload.vacancySurcharge
+    message: "Quoted fare must match the proof pricing formula"

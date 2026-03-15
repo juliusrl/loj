@@ -1,0 +1,36 @@
+readModel homewardFlightAvailability:
+  api: /api/homeward-flight-availability
+  auth:
+    mode: public
+  inputs:
+    departureCode: string @required
+    arrivalCode: string @required
+    outwardDate: date @required
+    homewardDate: date @required
+    cabin: string
+    passengerCount: integer @required
+  result:
+    flightNo: string
+    routeCode: string
+    departureCode: string
+    arrivalCode: string
+    departureAirportName: string
+    arrivalAirportName: string
+    departureTime: string
+    arrivalTime: string
+    travelDate: date
+    cabin: string
+    fareBrand: string
+    baseFare: decimal
+    quotedFare: decimal
+    seatsRemaining: integer
+    availabilityBand: string
+    baggageSummary: string
+    changePolicySummary: string
+    ticketingAdvisory: string
+    vacancyMessage: string
+    fareRulesSummary: string
+    boardingSummary: string
+    refundPolicySummary: string
+  handler: '@fn("./homewardFlightAvailability")'
+  rules: '@rules("../../rules/flight-availability")'

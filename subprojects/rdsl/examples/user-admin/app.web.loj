@@ -1,0 +1,75 @@
+app:
+  name: "User Management"
+  theme: dark
+  auth: jwt
+  navigation:
+    - group: "System"
+      visibleIf: hasRole(currentUser, "admin")
+      items:
+        - label: "Overview"
+          icon: dashboard
+          target: page.dashboard
+        - label: "Users"
+          icon: users
+          target: resource.users.list
+
+compiler:
+  target: react
+
+page dashboard:
+  title: "System Overview"
+  type: dashboard
+  layout: grid(2)
+  blocks:
+    - type: metric
+      title: "Total Users"
+      data: query.users.count
+    - type: chart
+      title: "Active Sessions"
+      data: query.sessions.daily
+
+model User:
+  name: string @required @minLen(2)
+  email: string @required @email @unique
+  role: enum(admin, editor, viewer)
+  status: enum(active, suspended)
+  createdAt: datetime @auto
+
+resource users:
+  model: User
+  api: /api/users
+
+  list:
+    title: "User Management"
+    filters: [email, role, status]
+    columns:
+      - name @sortable
+      - email @sortable
+      - role @tag(admin:red, editor:blue, viewer:gray)
+      - status @badge(active:green, suspended:red)
+      - createdAt @date
+    actions:
+      - create
+      - edit
+      - delete @confirm("Delete this user?")
+    pagination: { size: 20, style: numbered }
+
+  edit:
+    fields:
+      - name
+      - email @disabled(mode == "edit")
+      - role @select
+      - status @select
+    rules:
+      enabledIf: hasRole(currentUser, "admin")
+      allowIf: hasRole(currentUser, "admin")
+      enforce: hasRole(currentUser, "admin")
+    onSuccess:
+      - refresh: users
+      - toast: "User saved successfully"
+
+  create:
+    fields: [name, email, role, status]
+    onSuccess:
+      - redirect: users.list
+      - toast: "User created"

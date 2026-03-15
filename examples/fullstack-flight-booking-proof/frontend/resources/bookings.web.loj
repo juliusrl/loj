@@ -1,0 +1,254 @@
+resource bookings:
+  model: Booking
+  api: /api/bookings
+  workflow:
+    source: '@flow("../../workflows/booking-lifecycle")'
+    style: bookingWorkflowShell
+
+  list:
+    title: "Bookings"
+    style: bookingListShell
+    filters: [reference, representativeName, member.name, status, outwardRouteCode, outwardTravelDate, homewardTravelDate]
+    columns:
+      - reference @sortable
+      - representativeName @sortable
+      - member.name @sortable
+      - status @badge(DRAFT:gray, READY:blue, FAILED:red, TICKETED:green)
+      - outwardFlightNo @sortable
+      - outwardRouteCode @sortable
+      - outwardTravelDate @date
+      - homewardFlightNo @sortable
+      - homewardTravelDate @date
+      - passengers.count @sortable
+      - quotedFare @sortable
+      - ticketingDeadlineSummary
+      - failureReasonSummary
+    actions:
+      - view
+      - edit
+    pagination: { size: 20, style: numbered }
+
+  read:
+    title: "Booking Detail"
+    style: bookingDetailShell
+    fields:
+      - reference
+      - representativeName
+      - representativeAge
+      - representativeGender
+      - contactPhone
+      - member.name
+      - member.email
+      - member.membershipNumber
+      - member.tier
+      - member.preferredAirport
+      - member.recoveryDeskChannel
+      - member.disruptionSupportTier
+      - member.historyServiceNote
+      - status
+      - contactEmail
+      - outwardFlightNo
+      - outwardTravelDate
+      - outwardRouteCode
+      - outwardDepartureAirportName
+      - outwardArrivalAirportName
+      - outwardDepartureTime
+      - outwardArrivalTime
+      - outwardFareBrand
+      - outwardAvailabilityBand
+      - outwardSeatsRemaining
+      - outwardBaggageSummary
+      - outwardChangePolicySummary
+      - outwardTicketingAdvisory
+      - outwardVacancyMessage
+      - outwardFareRulesSummary
+      - outwardBoardingSummary
+      - outwardRefundPolicySummary
+      - outwardBaseFare
+      - homewardFlightNo
+      - homewardTravelDate
+      - homewardRouteCode
+      - homewardDepartureAirportName
+      - homewardArrivalAirportName
+      - homewardDepartureTime
+      - homewardArrivalTime
+      - homewardFareBrand
+      - homewardAvailabilityBand
+      - homewardSeatsRemaining
+      - homewardBaggageSummary
+      - homewardChangePolicySummary
+      - homewardTicketingAdvisory
+      - homewardVacancyMessage
+      - homewardFareRulesSummary
+      - homewardBoardingSummary
+      - homewardRefundPolicySummary
+      - homewardBaseFare
+      - confirmationSummary
+      - failureRecoveryGuidance
+      - ticketingDeadlineSummary
+      - failureReasonSummary
+      - recoveryChannelSummary
+      - historyReviewSummary
+      - failureEscalationGuidance
+      - redoSearchGuidance
+      - cabin
+      - baseFare
+      - serviceFee
+      - taxAmount
+      - vacancySurcharge
+      - quotedFare
+      - passengers.count
+    related:
+      - passengers
+
+  create:
+    style: bookingFormShell
+    fields:
+      - reference
+      - representativeName
+      - representativeAge
+      - representativeGender @select
+      - contactPhone
+      - contactEmail
+      - outwardFlightNo @disabled(mode == "create")
+      - outwardTravelDate @disabled(mode == "create")
+      - outwardRouteCode @disabled(mode == "create")
+      - outwardDepartureAirportName @disabled(mode == "create")
+      - outwardArrivalAirportName @disabled(mode == "create")
+      - outwardDepartureTime @disabled(mode == "create")
+      - outwardArrivalTime @disabled(mode == "create")
+      - outwardFareBrand @disabled(mode == "create")
+      - outwardAvailabilityBand @disabled(mode == "create")
+      - outwardSeatsRemaining @disabled(mode == "create")
+      - outwardBaggageSummary @disabled(mode == "create")
+      - outwardChangePolicySummary @disabled(mode == "create")
+      - outwardTicketingAdvisory @disabled(mode == "create")
+      - outwardVacancyMessage @disabled(mode == "create")
+      - outwardFareRulesSummary @disabled(mode == "create")
+      - outwardBoardingSummary @disabled(mode == "create")
+      - outwardRefundPolicySummary @disabled(mode == "create")
+      - outwardBaseFare @disabled(mode == "create")
+      - homewardFlightNo @disabled(mode == "create")
+      - homewardTravelDate @disabled(mode == "create")
+      - homewardRouteCode @disabled(mode == "create")
+      - homewardDepartureAirportName @disabled(mode == "create")
+      - homewardArrivalAirportName @disabled(mode == "create")
+      - homewardDepartureTime @disabled(mode == "create")
+      - homewardArrivalTime @disabled(mode == "create")
+      - homewardFareBrand @disabled(mode == "create")
+      - homewardAvailabilityBand @disabled(mode == "create")
+      - homewardSeatsRemaining @disabled(mode == "create")
+      - homewardBaggageSummary @disabled(mode == "create")
+      - homewardChangePolicySummary @disabled(mode == "create")
+      - homewardTicketingAdvisory @disabled(mode == "create")
+      - homewardVacancyMessage @disabled(mode == "create")
+      - homewardFareRulesSummary @disabled(mode == "create")
+      - homewardBoardingSummary @disabled(mode == "create")
+      - homewardRefundPolicySummary @disabled(mode == "create")
+      - homewardBaseFare @disabled(mode == "create")
+      - confirmationSummary @disabled(mode == "create")
+      - failureRecoveryGuidance @disabled(mode == "create")
+      - ticketingDeadlineSummary @disabled(mode == "create")
+      - failureReasonSummary @disabled(mode == "create")
+      - recoveryChannelSummary @disabled(mode == "create")
+      - historyReviewSummary @disabled(mode == "create")
+      - failureEscalationGuidance @disabled(mode == "create")
+      - redoSearchGuidance @disabled(mode == "create")
+      - cabin @select @disabled(mode == "create")
+      - baseFare @disabled(mode == "create")
+      - serviceFee @disabled(mode == "create")
+      - taxAmount @disabled(mode == "create")
+      - vacancySurcharge @disabled(mode == "create")
+      - quotedFare @disabled(mode == "create")
+      - member @select
+    rules: '@rules("../../rules/booking-create")'
+    includes:
+      - field: passengers
+        minItems: 1
+        fields:
+          - fullName
+          - age
+          - gender @select
+          - memberEmail
+          - field: seatPreference @select
+            rules:
+              enabledIf: item.age >= 2
+        rules: '@rules("../../rules/passenger-create")'
+    onSuccess:
+      - toast: "Booking created"
+
+  edit:
+    style: bookingFormShell
+    fields:
+      - reference @disabled(mode == "edit")
+      - representativeName
+      - representativeAge
+      - representativeGender @select
+      - contactPhone
+      - contactEmail
+      - outwardFlightNo @disabled(mode == "edit")
+      - outwardTravelDate @disabled(mode == "edit")
+      - outwardRouteCode @disabled(mode == "edit")
+      - outwardDepartureAirportName @disabled(mode == "edit")
+      - outwardArrivalAirportName @disabled(mode == "edit")
+      - outwardDepartureTime @disabled(mode == "edit")
+      - outwardArrivalTime @disabled(mode == "edit")
+      - outwardFareBrand @disabled(mode == "edit")
+      - outwardAvailabilityBand @disabled(mode == "edit")
+      - outwardSeatsRemaining @disabled(mode == "edit")
+      - outwardBaggageSummary @disabled(mode == "edit")
+      - outwardChangePolicySummary @disabled(mode == "edit")
+      - outwardTicketingAdvisory @disabled(mode == "edit")
+      - outwardVacancyMessage @disabled(mode == "edit")
+      - outwardFareRulesSummary @disabled(mode == "edit")
+      - outwardBoardingSummary @disabled(mode == "edit")
+      - outwardRefundPolicySummary @disabled(mode == "edit")
+      - outwardBaseFare @disabled(mode == "edit")
+      - homewardFlightNo @disabled(mode == "edit")
+      - homewardTravelDate @disabled(mode == "edit")
+      - homewardRouteCode @disabled(mode == "edit")
+      - homewardDepartureAirportName @disabled(mode == "edit")
+      - homewardArrivalAirportName @disabled(mode == "edit")
+      - homewardDepartureTime @disabled(mode == "edit")
+      - homewardArrivalTime @disabled(mode == "edit")
+      - homewardFareBrand @disabled(mode == "edit")
+      - homewardAvailabilityBand @disabled(mode == "edit")
+      - homewardSeatsRemaining @disabled(mode == "edit")
+      - homewardBaggageSummary @disabled(mode == "edit")
+      - homewardChangePolicySummary @disabled(mode == "edit")
+      - homewardTicketingAdvisory @disabled(mode == "edit")
+      - homewardVacancyMessage @disabled(mode == "edit")
+      - homewardFareRulesSummary @disabled(mode == "edit")
+      - homewardBoardingSummary @disabled(mode == "edit")
+      - homewardRefundPolicySummary @disabled(mode == "edit")
+      - homewardBaseFare @disabled(mode == "edit")
+      - confirmationSummary @disabled(mode == "edit")
+      - failureRecoveryGuidance @disabled(mode == "edit")
+      - ticketingDeadlineSummary @disabled(mode == "edit")
+      - failureReasonSummary @disabled(mode == "edit")
+      - recoveryChannelSummary @disabled(mode == "edit")
+      - historyReviewSummary @disabled(mode == "edit")
+      - failureEscalationGuidance @disabled(mode == "edit")
+      - redoSearchGuidance @disabled(mode == "edit")
+      - cabin @select @disabled(mode == "edit")
+      - baseFare @disabled(mode == "edit")
+      - serviceFee @disabled(mode == "edit")
+      - taxAmount @disabled(mode == "edit")
+      - vacancySurcharge @disabled(mode == "edit")
+      - quotedFare @disabled(mode == "edit")
+      - member @select
+    rules: '@rules("../../rules/booking-edit")'
+    includes:
+      - field: passengers
+        minItems: 1
+        fields:
+          - fullName
+          - age
+          - gender @select
+          - memberEmail
+          - field: seatPreference @select
+            rules:
+              enabledIf: item.age >= 2
+        rules: '@rules("../../rules/passenger-edit")'
+    onSuccess:
+      - toast: "Booking saved"

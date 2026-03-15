@@ -1,0 +1,6 @@
+resource members:
+  model: Member
+  api: /api/members
+  auth:
+    mode: authenticated
+    roles: [ADMIN, AGENT]

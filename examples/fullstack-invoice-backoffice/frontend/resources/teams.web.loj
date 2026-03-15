@@ -1,0 +1,40 @@
+resource teams:
+  model: Team
+  api: /api/teams
+
+  list:
+    title: "Teams"
+    filters: [name, region]
+    columns:
+      - name @sortable
+      - region @tag(NA:blue, EMEA:green, APAC:yellow)
+      - customers.count @sortable
+    actions:
+      - create
+      - view
+      - edit
+      - delete @confirm("Delete this team?")
+    pagination: { size: 10, style: numbered }
+
+  read:
+    title: "Team Detail"
+    fields:
+      - name
+      - region
+      - customers.count
+    related:
+      - customers
+
+  edit:
+    fields:
+      - name
+      - region @select
+    onSuccess:
+      - refresh: teams
+      - toast: "Team saved"
+
+  create:
+    fields: [name, region]
+    onSuccess:
+      - redirect: teams.list
+      - toast: "Team created"

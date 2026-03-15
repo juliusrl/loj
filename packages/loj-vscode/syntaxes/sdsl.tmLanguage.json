@@ -1,0 +1,120 @@
+{
+  "scopeName": "source.sdsl",
+  "name": "SpringDSL",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#entities"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#escapeHatches"
+    },
+    {
+      "include": "#decorators"
+    },
+    {
+      "include": "#scalars"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.sdsl",
+          "match": "#.*$"
+        }
+      ]
+    },
+    "entities": {
+      "patterns": [
+        {
+          "name": "entity.name.type.model.sdsl",
+          "match": "^(\\s*)(model)(\\s+)([A-Za-z_][A-Za-z0-9_]*)(\\s*:)",
+          "captures": {
+            "2": { "name": "storage.type.model.sdsl" },
+            "4": { "name": "entity.name.type.sdsl" }
+          }
+        },
+        {
+          "name": "entity.name.resource.sdsl",
+          "match": "^(\\s*)(resource|readModel|workflow|rules)(\\s+)([A-Za-z_][A-Za-z0-9_-]*)(\\s*:)",
+          "captures": {
+            "2": { "name": "storage.type.definition.sdsl" },
+            "4": { "name": "entity.name.section.sdsl" }
+          }
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.top-level.sdsl",
+          "match": "^(\\s*)(app|compiler|imports)(\\s*:)"
+        },
+        {
+          "name": "keyword.control.section.sdsl",
+          "match": "^(\\s*)(auth|operations|workflow|wizard|steps|create|update|includes|rules|inputs|result|handler|api|mode|roles|policy|model|field|states|transitions|surface|completesWith|from|to|allow|validate|derive|eligibility|when|value|message|label)(\\s*:)"
+        },
+        {
+          "name": "keyword.other.copy.sdsl",
+          "match": "^(\\s*)(title|label|description)(\\s*:)"
+        },
+        {
+          "name": "support.type.scalar.sdsl",
+          "match": "\\b(string|text|integer|long|decimal|boolean|datetime|date)\\b"
+        },
+        {
+          "name": "support.type.enum.sdsl",
+          "match": "\\benum\\([^\\n)]*\\)"
+        },
+        {
+          "name": "support.type.relation.sdsl",
+          "match": "\\b(belongsTo|hasMany)\\([^\\n)]*\\)"
+        },
+        {
+          "name": "constant.language.boolean.sdsl",
+          "match": "\\b(true|false)\\b"
+        }
+      ]
+    },
+    "escapeHatches": {
+      "patterns": [
+        {
+          "name": "support.function.escape-hatch.sdsl",
+          "match": "@(fn|rules|flow|sql)\\([^\\n]*\\)"
+        }
+      ]
+    },
+    "decorators": {
+      "patterns": [
+        {
+          "name": "storage.modifier.decorator.sdsl",
+          "match": "@[A-Za-z_][A-Za-z0-9_]*(\\([^\\n]*\\))?"
+        }
+      ]
+    },
+    "scalars": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.sdsl",
+          "begin": "\"",
+          "end": "\""
+        },
+        {
+          "name": "string.quoted.single.sdsl",
+          "begin": "'",
+          "end": "'"
+        },
+        {
+          "name": "constant.numeric.sdsl",
+          "match": "\\b\\d+(?:\\.\\d+)?\\b"
+        }
+      ]
+    }
+  }
+}

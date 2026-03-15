@@ -1,0 +1,59 @@
+# --- OS Files ---
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# --- IDE Settings ---
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# --- Node.js / Dependencies ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.eslintcache
+.stylelintcache
+
+# --- Build Outputs ---
+**/dist/
+**/target/
+**/build/
+**/bin/
+*.tsbuildinfo
+examples/**/.artifacts
+
+# --- Python ---
+__pycache__/
+.venv/
+.pytest_cache/
+*.pyc
+
+# --- Java / Maven ---
+.m2/
+
+# --- Loj Specific (Conventional Generated Outputs) ---
+# We generally want users to generate these locally
+**/generated/
+**/generated-fastapi/
+.artifacts/
+.rdsl-dev/
+.sdsl-dev/
+
+# --- Local Environment ---
+.env.local
+.env.*.local
+tmp/
+
+# --- Testing ---
+playwright-report/
+test-results/
+
+# --- Skills ---
+# Keep only the official authoring skill
+skills/*
+!skills/loj-authoring/
+!skills/loj-authoring/**

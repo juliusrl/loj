@@ -1,0 +1,27 @@
+{
+  "artifact": "rdsl.host-template",
+  "template": "react-vite",
+  "version": "0.1.0",
+  "title": "ReactDSL User Admin Host",
+  "defaults": {
+    "generatedDir": "../generated",
+    "apiBase": "http://127.0.0.1:3001",
+    "host": "127.0.0.1",
+    "port": 5173,
+    "previewPort": 4173
+  },
+  "managedFiles": [
+    ".rdsl-host/template.json",
+    "index.html",
+    "tsconfig.json",
+    "vite.config.ts",
+    "src/HostApp.tsx",
+    "src/main.tsx",
+    "src/styles.css",
+    "src/vite-env.d.ts"
+  ],
+  "starterFiles": [
+    "package.json",
+    "src/host-config.tsx"
+  ]
+}

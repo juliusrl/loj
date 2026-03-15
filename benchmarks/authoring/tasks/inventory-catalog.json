@@ -1,0 +1,8 @@
+{
+  "artifact": "rdsl.authoring-task",
+  "schemaVersion": "0.1.0",
+  "id": "inventory-catalog",
+  "lane": "docs-only",
+  "title": "Inventory catalog CRUD",
+  "prompt": "Create an internal catalog application called \"Inventory Catalog\". Use dark theme and jwt auth. Add a dashboard page titled \"Catalog Overview\" with a metric block for total products and a chart block for stock movement. Add navigation entries for the dashboard and the products resource. Define a Product model with name, sku, category, status, and updatedAt. Create a products resource on /api/products with list, edit, and create views. The list view must support filters for sku, category, and status; columns for name, sku, category, status, and updatedAt; create/edit/delete actions; and numbered pagination of 40 rows. The edit view must contain name, sku, category, and status fields, disable sku, require hasRole(currentUser, \"catalog_manager\") for allowIf and enforce, and on success invalidate products plus toast \"Product saved\". The create view must contain name, sku, category, and status and on success redirect to products.list plus toast \"Product created\"."
+}

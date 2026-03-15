@@ -1,0 +1,27 @@
+{
+  "name": "@loj/example-fullstack-flight-booking-proof",
+  "private": true,
+  "version": "0.5.0",
+  "scripts": {
+    "validate": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- validate loj.project.yaml",
+    "build:generated": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- build loj.project.yaml",
+    "validate:postgres": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- validate loj.postgres.project.yaml",
+    "build:generated:postgres": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- build loj.postgres.project.yaml",
+    "typecheck:generated:frontend": "node ./typecheck-generated-frontend.mjs",
+    "dev": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- dev loj.project.yaml",
+    "e2e": "npm run build --workspace=@loj-lang/cli && node e2e.mjs",
+    "record:e2e": "npm run build --workspace=@loj-lang/cli && LOJ_E2E_RECORD_VIDEO=1 LOJ_E2E_ARTIFACT_DIR=.artifacts/local-e2e node e2e.mjs",
+    "validate:fastapi": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- validate loj.fastapi.project.yaml",
+    "build:generated:fastapi": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- build loj.fastapi.project.yaml",
+    "validate:fastapi:postgres": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- validate loj.fastapi.postgres.project.yaml",
+    "build:generated:fastapi:postgres": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- build loj.fastapi.postgres.project.yaml",
+    "dev:fastapi": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- dev loj.fastapi.project.yaml",
+    "e2e:fastapi": "npm run build --workspace=@loj-lang/cli && LOJ_PROJECT_FILE=loj.fastapi.project.yaml node e2e.mjs",
+    "record:e2e:fastapi": "npm run build --workspace=@loj-lang/cli && LOJ_PROJECT_FILE=loj.fastapi.project.yaml LOJ_E2E_RECORD_VIDEO=1 LOJ_E2E_ARTIFACT_DIR=.artifacts/local-e2e-fastapi node e2e.mjs",
+    "measure:escape": "npm run build --workspace=@loj-lang/cli && node ./measure-escape.mjs",
+    "proof": "npm run validate && npm run build:generated && npm run typecheck:generated:frontend && npm run validate:fastapi && npm run build:generated:fastapi && npm run typecheck:generated:frontend && npm run measure:escape"
+  },
+  "devDependencies": {
+    "playwright": "^1.58.2"
+  }
+}

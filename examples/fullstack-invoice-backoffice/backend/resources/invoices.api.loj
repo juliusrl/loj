@@ -1,0 +1,6 @@
+resource invoices:
+  model: Invoice
+  api: /api/invoices
+  auth:
+    roles: [ADMIN, FINANCE, SALES]
+    policy: '@rules("./policies/invoice-access")'

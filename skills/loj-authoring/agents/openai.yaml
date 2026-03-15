@@ -1,0 +1,3 @@
+interface:
+  display_name: "Loj Authoring"
+  short_description: "Author `.web.loj`, `.api.loj`, and `loj.project.yaml` using canonical Loj patterns"

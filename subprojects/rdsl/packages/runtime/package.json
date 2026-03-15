@@ -1,0 +1,55 @@
+{
+  "name": "@loj-lang/rdsl-runtime",
+  "version": "0.5.0",
+  "description": "ReactDSL runtime package for generated React/TypeScript apps",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./components/DataTable": "./dist/components/DataTable.js",
+    "./components/FilterBar": "./dist/components/FilterBar.js",
+    "./components/Pagination": "./dist/components/Pagination.js",
+    "./components/FormField": "./dist/components/FormField.js",
+    "./components/Tag": "./dist/components/Tag.js",
+    "./components/Badge": "./dist/components/Badge.js",
+    "./components/ConfirmDialog": "./dist/components/ConfirmDialog.js",
+    "./components/GroupedDataTable": "./dist/components/GroupedDataTable.js",
+    "./components/PivotDataTable": "./dist/components/PivotDataTable.js",
+    "./components/WorkflowSummary": "./dist/components/WorkflowSummary.js",
+    "./hooks/navigation": "./dist/hooks/navigation.js",
+    "./hooks/useResource": "./dist/hooks/useResource.js",
+    "./hooks/useReadModel": "./dist/hooks/useReadModel.js",
+    "./hooks/useCollectionView": "./dist/hooks/useCollectionView.js",
+    "./hooks/useGroupedCollectionView": "./dist/hooks/useGroupedCollectionView.js",
+    "./hooks/resourceClient": "./dist/hooks/resourceClient.js",
+    "./hooks/useToast": "./dist/hooks/useToast.js",
+    "./hooks/useAuth": "./dist/hooks/useAuth.js",
+    "./hooks/useDocumentMetadata": "./dist/hooks/useDocumentMetadata.js",
+    "./policies/can": "./dist/policies/can.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@loj-lang/shared-contracts": "^0.5.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}

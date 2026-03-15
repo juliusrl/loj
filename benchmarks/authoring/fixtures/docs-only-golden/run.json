@@ -1,0 +1,9 @@
+{
+  "artifact": "rdsl.authoring-run",
+  "schemaVersion": "0.1.0",
+  "runId": "docs-only-golden",
+  "lane": "docs-only",
+  "model": "fixture-manual",
+  "provider": "local",
+  "wrapper": "docs-only"
+}

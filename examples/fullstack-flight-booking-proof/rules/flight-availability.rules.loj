@@ -1,0 +1,15 @@
+rules flightAvailability:
+  eligibility business-fares:
+    when: input.cabin != "BUSINESS" || currentUser.role in [AGENT, ADMIN]
+    message: "Only agents may search business fares"
+
+  validate passenger-limit:
+    when: input.passengerCount > 0 && input.passengerCount <= 6
+    message: "Passenger count must stay between 1 and 6"
+
+  validate business-capacity:
+    when: input.cabin != "BUSINESS" || input.passengerCount <= 2
+    message: "Business cabin proof results currently allow at most two passengers per search"
+
+  derive quotedFare:
+    value: item.baseFare * input.passengerCount

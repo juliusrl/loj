@@ -1,0 +1,37 @@
+resource passengers:
+  model: Passenger
+  api: /api/passengers
+
+  list:
+    title: "Passengers"
+    style: passengerListShell
+    columns:
+      - fullName @sortable
+      - age @sortable
+      - gender
+      - memberEmail
+      - seatPreference
+    actions:
+      - view
+      - edit
+
+  read:
+    title: "Passenger Detail"
+    style: passengerDetailShell
+    fields:
+      - fullName
+      - age
+      - gender
+      - memberEmail
+      - seatPreference
+
+  edit:
+    style: passengerFormShell
+    fields:
+      - fullName
+      - age
+      - gender @select
+      - memberEmail
+      - seatPreference @select
+    onSuccess:
+      - toast: "Passenger saved"

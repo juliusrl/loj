@@ -1,0 +1,12 @@
+app:
+  name: "Invoice Back Office Service"
+  package: "com.example.invoicebackoffice"
+
+compiler:
+  target: fastapi
+  language: python
+  profile: rest-sqlalchemy-auth
+
+imports:
+  - ./models/
+  - ./resources/

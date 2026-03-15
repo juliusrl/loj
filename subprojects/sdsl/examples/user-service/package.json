@@ -1,0 +1,15 @@
+{
+  "name": "@loj/example-user-service",
+  "private": true,
+  "version": "0.5.0",
+  "scripts": {
+    "validate": "npm run build --workspace=@loj-lang/sdsl-cli && npm run exec --workspace=@loj-lang/sdsl-cli -- validate app.api.loj",
+    "build:generated": "npm run build --workspace=@loj-lang/sdsl-cli && npm run exec --workspace=@loj-lang/sdsl-cli -- build app.api.loj --out-dir generated",
+    "validate:fastapi": "npm run build --workspace=@loj-lang/sdsl-cli && npm run exec --workspace=@loj-lang/sdsl-cli -- validate app.fastapi.api.loj",
+    "build:generated:fastapi": "npm run build --workspace=@loj-lang/sdsl-cli && npm run exec --workspace=@loj-lang/sdsl-cli -- build app.fastapi.api.loj --out-dir generated-fastapi",
+    "py:compile:fastapi": "npm run build:generated:fastapi && python3 -m compileall generated-fastapi/app generated-fastapi/tests",
+    "py:test:fastapi": "npm run build:generated:fastapi && node ./run-fastapi-tests.mjs",
+    "mvn:test": "npm run build:generated && mvn -Dmaven.repo.local=.m2/sdsl-user-service test -f generated/pom.xml",
+    "mvn:run": "npm run build:generated && mvn -f generated/pom.xml spring-boot:run"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "artifact": "rdsl.authoring-expected",
+  "schemaVersion": "0.1.0",
+  "taskId": "toast-user-approvals",
+  "budgets": {
+    "maxWarnings": 0,
+    "maxEscapePercent": 20,
+    "maxExprCount": 0,
+    "maxFnCount": 0,
+    "maxCustomCount": 0
+  },
+  "checks": [
+    { "id": "app.name", "type": "appNameEquals", "value": "Approval Desk" },
+    { "id": "compiler.target", "type": "compilerTargetEquals", "value": "react" },
+    { "id": "model.approval", "type": "modelExists", "model": "Approval" },
+    { "id": "model.approval.title", "type": "modelFieldExists", "model": "Approval", "field": "title", "fieldType": "string", "decorators": ["required"] },
+    { "id": "model.approval.state", "type": "modelFieldExists", "model": "Approval", "field": "state", "fieldType": "enum", "enumValues": ["pending", "approved", "rejected"] },
+    { "id": "model.approval.priority", "type": "modelFieldExists", "model": "Approval", "field": "priority", "fieldType": "enum", "enumValues": ["low", "high"] },
+    { "id": "resource.approvals", "type": "resourceExists", "resource": "approvals", "model": "Approval", "api": "/api/approvals", "views": ["list", "edit"] },
+    { "id": "resource.approvals.column.title", "type": "listColumnExists", "resource": "approvals", "field": "title" },
+    { "id": "resource.approvals.column.state", "type": "listColumnExists", "resource": "approvals", "field": "state" },
+    { "id": "resource.approvals.column.priority", "type": "listColumnExists", "resource": "approvals", "field": "priority" },
+    { "id": "resource.approvals.action.edit", "type": "actionExists", "resource": "approvals", "action": "edit" },
+    { "id": "resource.approvals.edit.title", "type": "viewFieldExists", "resource": "approvals", "view": "edit", "field": "title" },
+    { "id": "resource.approvals.edit.state", "type": "viewFieldExists", "resource": "approvals", "view": "edit", "field": "state" },
+    { "id": "resource.approvals.edit.priority", "type": "viewFieldExists", "resource": "approvals", "view": "edit", "field": "priority" },
+    { "id": "resource.approvals.edit.invalidate", "type": "effectExists", "resource": "approvals", "view": "edit", "effectType": "invalidate", "target": "approvals" },
+    {
+      "id": "resource.approvals.edit.toast",
+      "type": "effectExists",
+      "resource": "approvals",
+      "view": "edit",
+      "effectType": "toast",
+      "message": {
+        "key": "approvals.saved",
+        "defaultMessage": "Approval updated by {actor}",
+        "values": {
+          "actor": { "ref": "user.name" }
+        }
+      }
+    }
+  ]
+}

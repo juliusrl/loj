@@ -1,0 +1,30 @@
+{
+  "artifact": "rdsl.authoring-expected",
+  "schemaVersion": "0.1.0",
+  "taskId": "toast-static-preferences",
+  "budgets": {
+    "maxWarnings": 0,
+    "maxEscapePercent": 20,
+    "maxExprCount": 0,
+    "maxFnCount": 0,
+    "maxCustomCount": 0
+  },
+  "checks": [
+    { "id": "app.name", "type": "appNameEquals", "value": "Preference Center" },
+    { "id": "compiler.target", "type": "compilerTargetEquals", "value": "react" },
+    { "id": "model.preference", "type": "modelExists", "model": "Preference" },
+    { "id": "model.preference.label", "type": "modelFieldExists", "model": "Preference", "field": "label", "fieldType": "string", "decorators": ["required"] },
+    { "id": "model.preference.channel", "type": "modelFieldExists", "model": "Preference", "field": "channel", "fieldType": "enum", "enumValues": ["email", "sms", "push"] },
+    { "id": "model.preference.status", "type": "modelFieldExists", "model": "Preference", "field": "status", "fieldType": "enum", "enumValues": ["enabled", "disabled"] },
+    { "id": "resource.preferences", "type": "resourceExists", "resource": "preferences", "model": "Preference", "api": "/api/preferences", "views": ["list", "create"] },
+    { "id": "resource.preferences.column.label", "type": "listColumnExists", "resource": "preferences", "field": "label" },
+    { "id": "resource.preferences.column.channel", "type": "listColumnExists", "resource": "preferences", "field": "channel" },
+    { "id": "resource.preferences.column.status", "type": "listColumnExists", "resource": "preferences", "field": "status" },
+    { "id": "resource.preferences.action.create", "type": "actionExists", "resource": "preferences", "action": "create" },
+    { "id": "resource.preferences.create.label", "type": "viewFieldExists", "resource": "preferences", "view": "create", "field": "label" },
+    { "id": "resource.preferences.create.channel", "type": "viewFieldExists", "resource": "preferences", "view": "create", "field": "channel" },
+    { "id": "resource.preferences.create.status", "type": "viewFieldExists", "resource": "preferences", "view": "create", "field": "status" },
+    { "id": "resource.preferences.create.refresh", "type": "effectExists", "resource": "preferences", "view": "create", "effectType": "refresh", "target": "preferences" },
+    { "id": "resource.preferences.create.toast", "type": "effectExists", "resource": "preferences", "view": "create", "effectType": "toast", "message": "Preference saved" }
+  ]
+}

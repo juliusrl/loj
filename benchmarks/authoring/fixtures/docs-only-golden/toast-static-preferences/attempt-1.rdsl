@@ -1,0 +1,27 @@
+app:
+  name: "Preference Center"
+  theme: light
+  auth: session
+
+compiler:
+  target: react
+
+model Preference:
+  label: string @required
+  channel: enum(email, sms, push)
+  status: enum(enabled, disabled)
+
+resource preferences:
+  model: Preference
+  api: /api/preferences
+
+  list:
+    columns: [label, channel, status]
+    actions:
+      - create
+
+  create:
+    fields: [label, channel, status]
+    onSuccess:
+      - refresh: preferences
+      - toast: "Preference saved"

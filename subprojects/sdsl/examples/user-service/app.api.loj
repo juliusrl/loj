@@ -1,0 +1,7 @@
+app:
+  name: "User Service"
+  package: "com.example.userservice"
+
+imports:
+  - ./models/
+  - ./resources/

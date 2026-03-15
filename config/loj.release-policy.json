@@ -1,0 +1,20 @@
+{
+  "versionMode": "lockstep",
+  "versionSource": "root-package",
+  "releaseTagPrefix": "v",
+  "betaPrereleaseLabel": "beta",
+  "betaCandidateCommand": "npm run ci:beta-candidate",
+  "requiredPackageReadme": true,
+  "publishOrder": [
+    "@loj-lang/shared-contracts",
+    "@loj-lang/rdsl-compiler",
+    "@loj-lang/rdsl-runtime",
+    "@loj-lang/rdsl-host-react",
+    "@loj-lang/rdsl-cli",
+    "@loj-lang/sdsl-compiler",
+    "@loj-lang/sdsl-cli",
+    "@loj-lang/benchmark-core",
+    "@loj-lang/cli",
+    "loj-vscode"
+  ]
+}

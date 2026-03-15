@@ -1,0 +1,6 @@
+model InvoiceLineItem:
+  description: string @required @minLen(2)
+  category: enum(SUBSCRIPTION, SERVICES, SUPPORT) @required
+  quantity: integer @required
+  amount: decimal @required
+  invoice: belongsTo(Invoice) @required

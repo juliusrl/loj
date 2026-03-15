@@ -1,0 +1,22 @@
+{
+  "name": "@loj/example-fullstack-invoice-backoffice",
+  "private": true,
+  "version": "0.5.0",
+  "scripts": {
+    "validate": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- validate loj.project.yaml",
+    "build:generated": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- build loj.project.yaml",
+    "dev": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- dev loj.project.yaml",
+    "validate:fastapi": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- validate loj.fastapi.project.yaml",
+    "build:generated:fastapi": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- build loj.fastapi.project.yaml",
+    "dev:fastapi": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- dev loj.fastapi.project.yaml",
+    "validate:rules": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- rules validate backend/resources/policies/invoice-access.rules.loj",
+    "build:rules": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- rules build backend/resources/policies/invoice-access.rules.loj --out-dir generated/rules",
+    "publish-preview": "node publish-preview-assets.mjs",
+    "proof": "npm run build --workspace=@loj-lang/cli && npm run exec --workspace=@loj-lang/cli -- rules build backend/resources/policies/invoice-access.rules.loj --out-dir generated/rules && npm run exec --workspace=@loj-lang/cli -- build loj.project.yaml && node demo-pack.mjs && node publish-preview-assets.mjs",
+    "demo-pack": "npm run build --workspace=@loj-lang/cli && node demo-pack.mjs",
+    "demo-pack:fastapi": "npm run build --workspace=@loj-lang/cli && LOJ_PROJECT_FILE=loj.fastapi.project.yaml node demo-pack.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.50.1"
+  }
+}

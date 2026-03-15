@@ -1,0 +1,6 @@
+{
+  "version": "0.5.0",
+  "organization": "Loj",
+  "date": "March 2026",
+  "abstract": "Unified AI authoring skill for the Loj DSL framework. Covers frontend-family .web.loj (legacy .rdsl), backend-family .api.loj (legacy .sdsl), style .style.loj, linked .rules.loj and .flow.loj sub-DSL slices, and loj.project.yaml orchestration authoring, review, and debugging. Uses bundled references for current syntax, runtime, transport, project-shell, style, and generated-output guidance."
+}

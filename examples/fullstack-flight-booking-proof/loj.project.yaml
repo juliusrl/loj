@@ -1,0 +1,22 @@
+app:
+  name: flight-booking-proof
+
+targets:
+  frontend:
+    type: web
+    entry: frontend/app.web.loj
+    outDir: generated/frontend
+  backend:
+    type: api
+    entry: backend/app.api.loj
+    outDir: generated/backend
+
+dev:
+  host:
+    type: react-vite
+    target: frontend
+    dir: ../../subprojects/rdsl/examples/user-admin/host
+    apiBase: /api
+    proxyTarget: backend
+  server:
+    target: backend

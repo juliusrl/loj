@@ -1,0 +1,358 @@
+:root {
+  color-scheme: light;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(15, 118, 110, 0.18), transparent 32%),
+    linear-gradient(180deg, #f4f7f6 0%, #edf3f0 100%);
+  color: #17322f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.rdsl-host-shell {
+  min-height: 100vh;
+}
+
+.rdsl-host-status {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 20;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  max-width: min(420px, calc(100vw - 32px));
+  padding: 12px 14px;
+  border: 1px solid rgba(23, 50, 47, 0.14);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 16px 40px rgba(23, 50, 47, 0.12);
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.rdsl-host-status-main {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.rdsl-host-status-main span,
+.rdsl-host-status-main strong {
+  overflow-wrap: anywhere;
+}
+
+.rdsl-host-status-toggle {
+  border: 0;
+  background: rgba(21, 94, 239, 0.08);
+  color: #155eef;
+  border-radius: 999px;
+  min-width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  flex: 0 0 auto;
+  pointer-events: auto;
+}
+
+.rdsl-host-status-collapsed {
+  max-width: none;
+  padding: 8px 10px;
+  align-items: center;
+}
+
+.rdsl-host-status-collapsed .rdsl-host-status-main {
+  display: block;
+}
+
+.rdsl-host-toast-stack {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 30;
+  display: grid;
+  gap: 10px;
+  width: min(360px, calc(100vw - 32px));
+}
+
+.rdsl-host-toast {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  color: #ffffff;
+  box-shadow: 0 18px 36px rgba(23, 50, 47, 0.22);
+}
+
+.rdsl-host-toast-success {
+  background: #0f766e;
+}
+
+.rdsl-host-toast-error {
+  background: #b42318;
+}
+
+.rdsl-host-toast-info {
+  background: #155eef;
+}
+
+.rdsl-host-toast-close {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.rdsl-layout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.rdsl-sidebar {
+  padding: 28px 22px;
+  background: #12322f;
+  color: #f5fbfa;
+}
+
+.rdsl-sidebar-header h2 {
+  margin: 0 0 24px;
+  font-size: 26px;
+  line-height: 1.1;
+}
+
+.rdsl-nav {
+  display: grid;
+  gap: 20px;
+}
+
+.rdsl-nav-group {
+  display: grid;
+  gap: 10px;
+}
+
+.rdsl-nav-group-title {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(245, 251, 250, 0.72);
+}
+
+.rdsl-nav-item {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.rdsl-nav-item:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.rdsl-main {
+  padding: 88px 28px 32px;
+}
+
+.rdsl-page-header,
+.rdsl-view-header {
+  margin-bottom: 20px;
+}
+
+.rdsl-page-card,
+.rdsl-view-card {
+  padding: 22px;
+  border: 1px solid rgba(23, 50, 47, 0.1);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 20px 40px rgba(23, 50, 47, 0.08);
+}
+
+.rdsl-filter-bar,
+.rdsl-form-grid {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.rdsl-filter-bar {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.rdsl-filter-field,
+.rdsl-form-field {
+  display: grid;
+  gap: 8px;
+}
+
+.rdsl-filter-field input,
+.rdsl-filter-field select,
+.rdsl-form-field input,
+.rdsl-form-field select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid rgba(23, 50, 47, 0.16);
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.rdsl-form-hint {
+  color: rgba(23, 50, 47, 0.6);
+}
+
+.rdsl-data-table {
+  overflow-x: auto;
+}
+
+.rdsl-data-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.rdsl-data-table th,
+.rdsl-data-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid rgba(23, 50, 47, 0.1);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.rdsl-table-sort,
+.rdsl-btn,
+.rdsl-pagination button {
+  cursor: pointer;
+}
+
+.rdsl-table-sort,
+.rdsl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 12px;
+  border: 0;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+.rdsl-table-sort,
+.rdsl-btn-secondary,
+.rdsl-pagination button {
+  background: rgba(15, 118, 110, 0.12);
+  color: #0f5f58;
+}
+
+.rdsl-btn-danger {
+  background: rgba(180, 35, 24, 0.12);
+  color: #8f2017;
+}
+
+.rdsl-table-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rdsl-pagination {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.rdsl-pagination button {
+  border: 0;
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+
+.rdsl-tag,
+.rdsl-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.rdsl-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(11, 24, 23, 0.42);
+}
+
+.rdsl-dialog {
+  width: min(420px, calc(100vw - 32px));
+  padding: 22px;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 22px 48px rgba(11, 24, 23, 0.22);
+}
+
+.rdsl-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.rdsl-loading,
+.rdsl-error {
+  padding: 28px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.86);
+}
+
+@media (max-width: 960px) {
+  .rdsl-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .rdsl-sidebar {
+    padding-bottom: 14px;
+  }
+
+  .rdsl-main {
+    padding: 126px 18px 24px;
+  }
+
+  .rdsl-host-status {
+    left: 16px;
+    right: 16px;
+    max-width: none;
+  }
+}

@@ -1,0 +1,60 @@
+model Booking:
+  reference: string @required @minLen(4)
+  status: enum(DRAFT, READY, FAILED, TICKETED)
+  representativeName: string @required
+  representativeAge: integer @required
+  representativeGender: enum(MALE, FEMALE, OTHER) @required
+  contactPhone: string @required
+  contactEmail: string @required @email
+  outwardFlightNo: string @required
+  outwardTravelDate: date @required
+  outwardRouteCode: string @required
+  outwardDepartureAirportName: string @required
+  outwardArrivalAirportName: string @required
+  outwardDepartureTime: string @required
+  outwardArrivalTime: string @required
+  outwardFareBrand: string @required
+  outwardAvailabilityBand: string @required
+  outwardSeatsRemaining: integer @required
+  outwardBaggageSummary: string @required
+  outwardChangePolicySummary: string @required
+  outwardTicketingAdvisory: string @required
+  outwardVacancyMessage: string @required
+  outwardFareRulesSummary: string @required
+  outwardBoardingSummary: string @required
+  outwardRefundPolicySummary: string @required
+  outwardBaseFare: number @required
+  homewardFlightNo: string @required
+  homewardTravelDate: date @required
+  homewardRouteCode: string @required
+  homewardDepartureAirportName: string @required
+  homewardArrivalAirportName: string @required
+  homewardDepartureTime: string @required
+  homewardArrivalTime: string @required
+  homewardFareBrand: string @required
+  homewardAvailabilityBand: string @required
+  homewardSeatsRemaining: integer @required
+  homewardBaggageSummary: string @required
+  homewardChangePolicySummary: string @required
+  homewardTicketingAdvisory: string @required
+  homewardVacancyMessage: string @required
+  homewardFareRulesSummary: string @required
+  homewardBoardingSummary: string @required
+  homewardRefundPolicySummary: string @required
+  homewardBaseFare: number @required
+  confirmationSummary: string @required
+  failureRecoveryGuidance: string @required
+  ticketingDeadlineSummary: string @required
+  failureReasonSummary: string @required
+  recoveryChannelSummary: string @required
+  historyReviewSummary: string @required
+  failureEscalationGuidance: string @required
+  redoSearchGuidance: string @required
+  cabin: enum(ECONOMY, BUSINESS) @required
+  baseFare: number @required
+  serviceFee: number @required
+  taxAmount: number @required
+  vacancySurcharge: number @required
+  quotedFare: number @required
+  member: belongsTo(Member) @required
+  passengers: hasMany(Passenger, by: booking)

@@ -1,0 +1,40 @@
+workflow booking-lifecycle:
+  model: Booking
+  field: status
+  states:
+    DRAFT:
+      label: "Draft"
+    READY:
+      label: "Ready for ticketing"
+    FAILED:
+      label: "Ticketing failed"
+    TICKETED:
+      label: "Ticketed"
+  wizard:
+    steps:
+      - name: capture_booking
+        completesWith: DRAFT
+        surface: form
+      - name: confirm_booking
+        completesWith: READY
+        surface: read
+      - name: issue_ticket
+        completesWith: TICKETED
+        surface: workflow
+        allow: currentUser.role in [AGENT, ADMIN]
+  transitions:
+    confirm:
+      from: DRAFT
+      to: READY
+    fail_ticketing:
+      from: READY
+      to: FAILED
+      allow: currentUser.role in [AGENT, ADMIN]
+    reopen:
+      from: FAILED
+      to: DRAFT
+      allow: currentUser.role in [AGENT, ADMIN]
+    ticket:
+      from: READY
+      to: TICKETED
+      allow: currentUser.role in [AGENT, ADMIN]

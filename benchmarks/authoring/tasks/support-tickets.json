@@ -1,0 +1,8 @@
+{
+  "artifact": "rdsl.authoring-task",
+  "schemaVersion": "0.1.0",
+  "id": "support-tickets",
+  "lane": "docs-only",
+  "title": "Support tickets CRUD",
+  "prompt": "Create an internal support application called \"Support Tickets\". Use light theme and session auth. Add a dashboard page titled \"Support Overview\" with a metric block for open tickets and a chart block for resolution trend. Add navigation entries for the dashboard and the tickets resource. Define a Ticket model with subject, requesterEmail, priority, state, and createdAt. Create a tickets resource on /api/tickets with list, edit, and create views. The list view must support filters for requesterEmail, priority, and state; columns for subject, requesterEmail, priority, state, and createdAt; create/edit/delete actions; and numbered pagination of 50 rows. The edit view must contain subject, requesterEmail, priority, and state fields, disable requesterEmail, require hasRole(currentUser, \"support_agent\") for enabledIf, allowIf, and enforce, and on success refresh tickets, emit the event tickets.updated, and toast \"Ticket updated\". The create view must contain subject, requesterEmail, priority, and state and on success redirect to tickets.list plus toast \"Ticket created\"."
+}

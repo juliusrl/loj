@@ -1,0 +1,18 @@
+resource bookings:
+  model: Booking
+  api: /api/bookings
+  auth:
+    mode: authenticated
+    roles: [ADMIN, AGENT]
+  workflow: '@flow("../../workflows/booking-lifecycle")'
+
+  create:
+    rules: '@rules("../../rules/booking-create-api")'
+    includes:
+      - field: passengers
+        fields: [fullName, age, gender, memberEmail, seatPreference]
+
+  update:
+    includes:
+      - field: passengers
+        fields: [fullName, age, gender, memberEmail, seatPreference]

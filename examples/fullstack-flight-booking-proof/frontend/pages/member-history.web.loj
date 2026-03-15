@@ -1,0 +1,23 @@
+page memberHistory:
+  title: "Member Booking History"
+  path: /members/:id/history
+  style: historyPageShell
+  seo:
+    description: "Review member booking history, service notes, and recovery guidance across generated read and related surfaces."
+    image: '@asset("../assets/member-history-og.svg")'
+  blocks:
+    - type: custom
+      style: escapeMount
+      custom: "../components/ProofCssMount.tsx"
+    - type: metric
+      title: "History Items"
+      style: historyMetricCard
+      data: members.bookings.count
+    - type: metric
+      title: "Bookings"
+      style: historyMetricCard
+      data: members.bookings.count
+    - type: table
+      title: "Booking History"
+      style: historyResultShell
+      data: members.bookings

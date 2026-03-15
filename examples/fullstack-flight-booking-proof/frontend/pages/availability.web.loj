@@ -1,0 +1,133 @@
+page availability:
+  title: "Flight Availability"
+  type: dashboard
+  layout: grid(1)
+  style: availabilityPageShell
+  seo:
+    description: "Search outbound and homeward flights, compare grouped fare options, and seed the booking flow from selected itinerary results."
+    canonicalPath: /availability
+    image: '@asset("../assets/availability-og.svg")'
+  actions:
+    - create:
+        resource: bookings
+        label: "Book selected itinerary"
+        seed:
+          outwardFlightNo:
+            selection: outwardFlight.flightNo
+          outwardTravelDate:
+            selection: outwardFlight.travelDate
+          outwardRouteCode:
+            selection: outwardFlight.routeCode
+          outwardDepartureAirportName:
+            selection: outwardFlight.departureAirportName
+          outwardArrivalAirportName:
+            selection: outwardFlight.arrivalAirportName
+          outwardDepartureTime:
+            selection: outwardFlight.departureTime
+          outwardArrivalTime:
+            selection: outwardFlight.arrivalTime
+          outwardFareBrand:
+            selection: outwardFlight.fareBrand
+          outwardAvailabilityBand:
+            selection: outwardFlight.availabilityBand
+          outwardSeatsRemaining:
+            selection: outwardFlight.seatsRemaining
+          outwardBaggageSummary:
+            selection: outwardFlight.baggageSummary
+          outwardChangePolicySummary:
+            selection: outwardFlight.changePolicySummary
+          outwardTicketingAdvisory:
+            selection: outwardFlight.ticketingAdvisory
+          outwardVacancyMessage:
+            selection: outwardFlight.vacancyMessage
+          outwardFareRulesSummary:
+            selection: outwardFlight.fareRulesSummary
+          outwardBoardingSummary:
+            selection: outwardFlight.boardingSummary
+          outwardRefundPolicySummary:
+            selection: outwardFlight.refundPolicySummary
+          outwardBaseFare:
+            selection: outwardFlight.baseFare
+          homewardFlightNo:
+            selection: homewardFlight.flightNo
+          homewardTravelDate:
+            selection: homewardFlight.travelDate
+          homewardRouteCode:
+            selection: homewardFlight.routeCode
+          homewardDepartureAirportName:
+            selection: homewardFlight.departureAirportName
+          homewardArrivalAirportName:
+            selection: homewardFlight.arrivalAirportName
+          homewardDepartureTime:
+            selection: homewardFlight.departureTime
+          homewardArrivalTime:
+            selection: homewardFlight.arrivalTime
+          homewardFareBrand:
+            selection: homewardFlight.fareBrand
+          homewardAvailabilityBand:
+            selection: homewardFlight.availabilityBand
+          homewardSeatsRemaining:
+            selection: homewardFlight.seatsRemaining
+          homewardBaggageSummary:
+            selection: homewardFlight.baggageSummary
+          homewardChangePolicySummary:
+            selection: homewardFlight.changePolicySummary
+          homewardTicketingAdvisory:
+            selection: homewardFlight.ticketingAdvisory
+          homewardVacancyMessage:
+            selection: homewardFlight.vacancyMessage
+          homewardFareRulesSummary:
+            selection: homewardFlight.fareRulesSummary
+          homewardBoardingSummary:
+            selection: homewardFlight.boardingSummary
+          homewardRefundPolicySummary:
+            selection: homewardFlight.refundPolicySummary
+          homewardBaseFare:
+            selection: homewardFlight.baseFare
+          confirmationSummary:
+            literal: "Review both selected flights, fare rules, passenger details, and ticketing windows before confirming"
+          failureRecoveryGuidance:
+            literal: "If ticketing fails, reopen the booking, review the selected fares, and retry with another offer or travel date"
+          ticketingDeadlineSummary:
+            literal: "Issue tickets within the selected fare advisory window and reconfirm passenger count before final ticketing"
+          failureReasonSummary:
+            literal: "Failure usually means the selected seats, limited-band inventory, or agent-ticketing requirements changed before issue-ticket"
+          recoveryChannelSummary:
+            literal: "Primary recovery uses reopen plus a fresh fare comparison; escalation goes through the member recovery desk or airport support channel"
+          historyReviewSummary:
+            literal: "History review should capture both segments, the final fare choice, and the member recovery path used after any failed ticketing attempt"
+          failureEscalationGuidance:
+            literal: "If reopening does not resolve the issue, contact support with the route code, fare brand, and member number"
+          redoSearchGuidance:
+            literal: "Redo keeps the shared search query so the traveler can compare another outbound or homeward option"
+          cabin:
+            selection: outwardFlight.cabin
+  blocks:
+    - type: custom
+      style: escapeMount
+      custom: "../components/ProofCssMount.tsx"
+    - type: metric
+      title: "Matching Outbound Flights"
+      style: availabilityMetricCard
+      data: readModel.outwardFlightAvailability.count
+      queryState: availabilitySearch
+    - type: table
+      title: "Outbound Flights"
+      style: availabilityResultShell
+      data: readModel.outwardFlightAvailability.list
+      queryState: availabilitySearch
+      selectionState: outwardFlight
+      dateNavigation:
+        field: outwardDate
+        prevLabel: "Previous outbound day"
+        nextLabel: "Next outbound day"
+    - type: table
+      title: "Homeward Flights"
+      style: availabilityResultShell
+      data: readModel.homewardFlightAvailability.list
+      queryState: availabilitySearch
+      selectionState: homewardFlight
+      dateNavigation:
+        field: homewardDate
+        prevLabel: "Previous homeward day"
+        nextLabel: "Next homeward day"

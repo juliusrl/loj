@@ -1,0 +1,11 @@
+model Member:
+  name: string @required
+  email: string @required @email @unique
+  membershipNumber: string @required @unique
+  phone: string @required
+  preferredAirport: string @required
+  recoveryDeskChannel: string @required
+  disruptionSupportTier: string @required
+  supportNote: string
+  historyServiceNote: string
+  tier: enum(STANDARD, GOLD) @required

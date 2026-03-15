@@ -1,0 +1,27 @@
+app:
+  name: user-admin-fastapi
+
+targets:
+  frontend:
+    type: web
+    entry: ../../subprojects/rdsl/examples/user-admin/app.web.loj
+    outDir: generated/frontend
+  backend:
+    type: api
+    entry: ../../subprojects/sdsl/examples/user-service/app.fastapi.api.loj
+    outDir: generated/backend-fastapi
+
+dev:
+  host:
+    type: react-vite
+    target: frontend
+    dir: ../../subprojects/rdsl/examples/user-admin/host
+    apiBase: /api
+    host: 127.0.0.1
+    port: 5174
+    previewPort: 4174
+    proxyTarget: backend
+  server:
+    target: backend
+    host: 127.0.0.1
+    port: 3002

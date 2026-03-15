@@ -1,0 +1,44 @@
+{
+  "artifact": "rdsl.authoring-expected",
+  "schemaVersion": "0.1.0",
+  "taskId": "toast-create-invites",
+  "budgets": {
+    "maxWarnings": 0,
+    "maxEscapePercent": 20,
+    "maxExprCount": 0,
+    "maxFnCount": 0,
+    "maxCustomCount": 0
+  },
+  "checks": [
+    { "id": "app.name", "type": "appNameEquals", "value": "Invite Console" },
+    { "id": "compiler.target", "type": "compilerTargetEquals", "value": "react" },
+    { "id": "model.invite", "type": "modelExists", "model": "Invite" },
+    { "id": "model.invite.email", "type": "modelFieldExists", "model": "Invite", "field": "email", "fieldType": "string", "decorators": ["required", "email"] },
+    { "id": "model.invite.role", "type": "modelFieldExists", "model": "Invite", "field": "role", "fieldType": "enum", "enumValues": ["admin", "editor", "viewer"] },
+    { "id": "model.invite.status", "type": "modelFieldExists", "model": "Invite", "field": "status", "fieldType": "enum", "enumValues": ["pending", "sent"] },
+    { "id": "resource.invites", "type": "resourceExists", "resource": "invites", "model": "Invite", "api": "/api/invites", "views": ["list", "create"] },
+    { "id": "resource.invites.column.email", "type": "listColumnExists", "resource": "invites", "field": "email" },
+    { "id": "resource.invites.column.role", "type": "listColumnExists", "resource": "invites", "field": "role" },
+    { "id": "resource.invites.column.status", "type": "listColumnExists", "resource": "invites", "field": "status" },
+    { "id": "resource.invites.action.create", "type": "actionExists", "resource": "invites", "action": "create" },
+    { "id": "resource.invites.create.email", "type": "viewFieldExists", "resource": "invites", "view": "create", "field": "email" },
+    { "id": "resource.invites.create.role", "type": "viewFieldExists", "resource": "invites", "view": "create", "field": "role" },
+    { "id": "resource.invites.create.status", "type": "viewFieldExists", "resource": "invites", "view": "create", "field": "status" },
+    { "id": "resource.invites.create.redirect", "type": "effectExists", "resource": "invites", "view": "create", "effectType": "redirect", "target": "invites.list" },
+    {
+      "id": "resource.invites.create.toast",
+      "type": "effectExists",
+      "resource": "invites",
+      "view": "create",
+      "effectType": "toast",
+      "message": {
+        "key": "invites.sent",
+        "defaultMessage": "Invite for {email} sent by {actor}",
+        "values": {
+          "actor": { "ref": "user.name" },
+          "email": { "ref": "form.email" }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "scopeName": "source.loj-project",
+  "name": "Loj Project",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#values"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.loj-project",
+          "match": "#.*$"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.top-level.loj-project",
+          "match": "^(\\s*)(app|targets|dev)(\\s*:)"
+        },
+        {
+          "name": "keyword.control.section.loj-project",
+          "match": "^(\\s*)(type|entry|outDir|database|runtime|environment|host|server|target|dir|apiBase|proxyTarget|previewPort|vendor|mode|name|host|port|username|password|migrations|autoProvision|basePath|shutdown|timeout|health|readiness|drain|path|cors|origins|methods|headers|credentials|forwardedHeaders|trustedProxy|cidrs|requestSizeLimit)(\\s*:)"
+        },
+        {
+          "name": "support.type.target.loj-project",
+          "match": "\\b(web|api|rdsl|sdsl|react-vite)\\b"
+        },
+        {
+          "name": "support.type.database.loj-project",
+          "match": "\\b(h2|sqlite|postgres|mysql|mariadb|sqlserver|oracle|embedded|external|docker-compose|none|native-sql|flyway)\\b"
+        },
+        {
+          "name": "support.type.runtime.loj-project",
+          "match": "\\b(graceful|immediate|local|all|cidrs|standard)\\b"
+        },
+        {
+          "name": "constant.language.boolean.loj-project",
+          "match": "\\b(true|false)\\b"
+        }
+      ]
+    },
+    "values": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.loj-project",
+          "begin": "\"",
+          "end": "\""
+        },
+        {
+          "name": "string.quoted.single.loj-project",
+          "begin": "'",
+          "end": "'"
+        },
+        {
+          "name": "constant.numeric.loj-project",
+          "match": "\\b\\d+(?:\\.\\d+)?(?:ms|s|m|h|kb|mb|gb)?\\b"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "artifact": "rdsl.authoring-task",
+  "schemaVersion": "0.1.0",
+  "id": "toast-create-invites",
+  "lane": "docs-only",
+  "title": "Toast Create View Safe Refs",
+  "prompt": "Create an internal invite application called \"Invite Console\". Use light theme and jwt auth. Define an Invite model with email, role, and status. Create an invites resource on /api/invites with list and create views. The list view must show email, role, and status columns plus a create action. The create view must contain email, role, and status fields and on success redirect to invites.list plus show a descriptor toast with key invites.sent, defaultMessage \"Invite for {email} sent by {actor}\", values.email from form.email, and values.actor from user.name. Keep the toast valid for a create view: do not use record.* or params.id."
+}

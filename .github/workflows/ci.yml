@@ -1,0 +1,185 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  repo-build-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install workspace dependencies
+        run: npm ci
+
+      - name: Run shared build and test lanes
+        run: npm run ci:build-test
+
+  generated-spring-example:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Restore generated Spring local Maven cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            examples/user-service/.m2
+            subprojects/sdsl/examples/user-service/.m2
+          key: ${{ runner.os }}-sdsl-m2-${{ hashFiles('examples/user-service/app.sdsl', 'examples/user-service/**/*.sdsl', 'subprojects/sdsl/examples/user-service/app.sdsl', 'subprojects/sdsl/examples/user-service/**/*.sdsl', 'packages/sdsl-compiler/src/**', 'subprojects/sdsl/packages/compiler/src/**', 'packages/sdsl-cli/src/**', 'subprojects/sdsl/packages/cli/src/**') }}
+          restore-keys: |
+            ${{ runner.os }}-sdsl-m2-
+
+      - name: Install workspace dependencies
+        run: npm ci
+
+      - name: Run generated Spring example tests
+        run: npm run ci:generated-spring
+
+      - name: Upload generated Spring test reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-spring-surefire-reports
+          path: |
+            examples/user-service/generated/target/surefire-reports
+            subprojects/sdsl/examples/user-service/generated/target/surefire-reports
+          if-no-files-found: ignore
+
+  generated-fastapi-pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install workspace dependencies
+        run: npm ci
+
+      - name: Run generated FastAPI pytest lane
+        run: npm run ci:generated-fastapi-pytest
+
+      - name: Upload generated FastAPI pytest report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-fastapi-pytest-report
+          path: |
+            examples/user-service/generated-fastapi/pytest-report.xml
+            subprojects/sdsl/examples/user-service/generated-fastapi/pytest-report.xml
+          if-no-files-found: ignore
+
+  fullstack-release-example:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: Install workspace dependencies
+        run: npm ci
+
+      - name: Install host-local dependencies
+        run: npm run ci:install-rdsl-host-deps
+
+      - name: Install full-stack example dependencies
+        run: npm ci --prefix examples/fullstack-user-admin
+
+      - name: Install Playwright Chromium
+        run: npx --prefix examples/fullstack-user-admin playwright install --with-deps chromium
+
+      - name: Run browser-level full-stack E2E
+        env:
+          LOJ_E2E_ARTIFACT_DIR: .artifacts/ci-e2e
+        run: npm run ci:fullstack-e2e
+
+      - name: Upload browser failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fullstack-e2e-artifacts
+          path: examples/fullstack-user-admin/.artifacts/ci-e2e
+          if-no-files-found: ignore
+
+  release-packaging:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install workspace dependencies
+        run: npm ci
+
+      - name: Run release/package audit lane
+        run: npm run ci:release-packaging

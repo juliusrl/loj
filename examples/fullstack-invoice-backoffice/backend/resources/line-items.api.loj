@@ -1,0 +1,5 @@
+resource lineItems:
+  model: InvoiceLineItem
+  api: /api/line-items
+  auth:
+    roles: [ADMIN, FINANCE, SALES]

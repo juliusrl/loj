@@ -1,0 +1,30 @@
+app:
+  name: "Invoice Back Office"
+  theme: light
+  auth: jwt
+  navigation:
+    - group: "Back Office"
+      items:
+        - label: "Overview"
+          icon: dashboard
+          target: page.dashboard
+        - label: "Teams"
+          icon: users
+          target: resource.teams.list
+        - label: "Customers"
+          icon: users
+          target: resource.customers.list
+        - label: "Invoices"
+          icon: dashboard
+          target: resource.invoices.list
+        - label: "Line Items"
+          icon: dashboard
+          target: resource.lineItems.list
+
+compiler:
+  target: react
+
+imports:
+  - ./models/
+  - ./resources/
+  - ./pages/

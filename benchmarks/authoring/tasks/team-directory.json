@@ -1,0 +1,8 @@
+{
+  "artifact": "rdsl.authoring-task",
+  "schemaVersion": "0.1.0",
+  "id": "team-directory",
+  "lane": "docs-only",
+  "title": "Team directory CRUD",
+  "prompt": "Create an internal people application called \"Team Directory\". Use light theme and session auth. Add a dashboard page titled \"Team Overview\" with a metric block for total members and a chart block for new hires. Add navigation entries for the dashboard and the members resource. Define a Member model with fullName, email, role, status, and joinedAt. Create a members resource on /api/members with list, edit, and create views. The list view must support filters for email, role, and status; columns for fullName, email, role, status, and joinedAt; create/edit/delete actions; and numbered pagination of 30 rows. The edit view must contain fullName, email, role, and status fields, disable email, require hasRole(currentUser, \"manager\") for enabledIf and allowIf, and on success refresh members plus toast \"Member updated\". The create view must contain fullName, email, role, and status and on success redirect to members.list, open the inviteSent dialog, and toast \"Member invited\"."
+}

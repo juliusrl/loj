@@ -1,0 +1,78 @@
+app:
+  name: "Team Directory"
+  theme: light
+  auth: session
+  navigation:
+    - group: "People"
+      items:
+        - label: "Overview"
+          icon: dashboard
+          target: page.dashboard
+        - label: "Members"
+          icon: users
+          target: resource.members.list
+
+compiler:
+  target: react
+
+page dashboard:
+  title: "Team Overview"
+  type: dashboard
+  layout: grid(2)
+  blocks:
+    - type: metric
+      title: "Total Members"
+      data: query.members.count
+    - type: chart
+      title: "New Hires"
+      data: query.members.hiringTrend
+
+model Member:
+  fullName: string @required @minLen(2)
+  email: string @required @email @unique
+  role: enum(admin, manager, employee)
+  status: enum(active, invited, suspended)
+  joinedAt: datetime @auto
+
+resource members:
+  model: Member
+  api: /api/members
+
+  list:
+    title: "Members"
+    filters: [email, role, status]
+    columns:
+      - fullName @sortable
+      - email @sortable
+      - role @tag(admin:red, manager:blue, employee:gray)
+      - status @badge(active:green, invited:yellow, suspended:red)
+      - joinedAt @date
+    actions:
+      - create
+      - edit
+      - delete @confirm("Remove this member?")
+    pagination: { size: 30, style: numbered }
+
+  edit:
+    fields:
+      - fullName
+      - email @disabled
+      - role @select
+      - status @select
+    rules:
+      enabledIf: hasRole(currentUser, "manager")
+      allowIf: hasRole(currentUser, "manager")
+    onSuccess:
+      - refresh: members
+      - toast: "Member updated"
+
+  create:
+    fields:
+      - fullName
+      - email
+      - role @select
+      - status @select
+    onSuccess:
+      - redirect: members.list
+      - openDialog: inviteSent
+      - toast: "Member invited"

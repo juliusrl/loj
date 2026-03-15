@@ -1,0 +1,33 @@
+app:
+  name: "Flight Booking Proof"
+  theme: light
+  auth: jwt
+  style: '@style("./styles/theme")'
+  seo:
+    siteName: "Flight Booking Proof"
+    defaultTitle: "Flight Booking Proof"
+    titleTemplate: "{title} · Flight Booking Proof"
+    defaultDescription: "Full-stack Loj proof for flight search, booking workflow, member history, and generated ATRS-core semantics."
+    defaultImage: '@asset("./assets/og-default.svg")'
+    favicon: '@asset("./assets/favicon.svg")'
+  navigation:
+    - group: "Booking"
+      items:
+        - label: "Availability"
+          icon: dashboard
+          target: page.availability
+        - label: "Members"
+          icon: users
+          target: resource.members.list
+        - label: "Bookings"
+          icon: dashboard
+          target: resource.bookings.list
+
+compiler:
+  target: react
+
+imports:
+  - ./models/
+  - ./resources/
+  - ./read-models/
+  - ./pages/

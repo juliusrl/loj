@@ -1,0 +1,8 @@
+model Invoice:
+  number: string @required @minLen(3) @unique
+  status: enum(DRAFT, SENT, APPROVED, COMPLETED) @required
+  total: number @required
+  salesOwnerUsername: string @required
+  customer: belongsTo(Customer) @required
+  lineItems: hasMany(InvoiceLineItem, by: invoice)
+  issuedAt: datetime @auto

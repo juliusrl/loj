@@ -1,0 +1,269 @@
+tokens:
+  colors:
+    surface: "#ffffff"
+    surfaceSoft: "#f7f9fc"
+    surfaceMuted: "#eef4ff"
+    surfaceWarm: "#fff6e7"
+    surfaceCool: "#eef8f5"
+    border: "#d9dfeb"
+    borderStrong: "#9db2d1"
+    text: "#18212f"
+    textMuted: "#5a6880"
+    accent: "#0f5fff"
+    accentDeep: "#173d86"
+    accentSoft: "#dbe8ff"
+    supportSoft: "#dff5ef"
+    warningSoft: "#fff0cf"
+  spacing:
+    sm: 8
+    md: 14
+    lg: 20
+    xl: 24
+    xxl: 32
+  borderRadius:
+    md: 12
+    lg: 18
+    xl: 24
+  elevation:
+    card: 2
+    panel: 3
+    hero: 4
+  typography:
+    body:
+      fontSize: 16
+      fontWeight: 400
+      lineHeight: 24
+    heading:
+      fontSize: 20
+      fontWeight: 700
+      lineHeight: 28
+    label:
+      fontSize: 13
+      fontWeight: 600
+      lineHeight: 20
+
+style pageShell:
+  display: column
+  gap: lg
+  padding: lg
+  minHeight: 100
+  typography: body
+  color: text
+
+style availabilityPageShell:
+  extends: pageShell
+  maxWidth: 1280
+  backgroundColor: surface
+  borderRadius: xl
+  borderWidth: 1
+  borderColor: border
+  elevation: hero
+  escape:
+    css: |
+      width: 100%;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      background-image: radial-gradient(circle at top left, rgba(15, 95, 255, 0.14), transparent 34%), linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(243, 248, 255, 0.97));
+
+style historyPageShell:
+  extends: pageShell
+  maxWidth: 1180
+  backgroundColor: surfaceSoft
+  borderRadius: xl
+  borderWidth: 1
+  borderColor: border
+  elevation: panel
+  escape:
+    css: |
+      width: 100%;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      background-image: radial-gradient(circle at top right, rgba(70, 155, 128, 0.10), transparent 30%), linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 248, 246, 0.98));
+
+style metricCard:
+  display: column
+  gap: sm
+  padding: md
+  backgroundColor: surface
+  borderRadius: lg
+  borderWidth: 1
+  borderColor: border
+  elevation: card
+  color: text
+  escape:
+    css: |
+      position: relative;
+      overflow: hidden;
+
+style availabilityMetricCard:
+  extends: metricCard
+  backgroundColor: surfaceMuted
+  borderColor: borderStrong
+  elevation: panel
+  escape:
+    css: |
+      background-image: linear-gradient(180deg, rgba(15, 95, 255, 0.08), rgba(255, 255, 255, 0.96));
+
+style historyMetricCard:
+  extends: metricCard
+  backgroundColor: surfaceCool
+  borderColor: borderStrong
+  escape:
+    css: |
+      background-image: linear-gradient(180deg, rgba(70, 155, 128, 0.10), rgba(255, 255, 255, 0.98));
+
+style resultCard:
+  extends: metricCard
+  gap: md
+  padding: lg
+  maxWidth: 1180
+  borderRadius: xl
+  escape:
+    css: |
+      width: 100%;
+      margin: 0 auto;
+
+style availabilityResultShell:
+  extends: resultCard
+  backgroundColor: surface
+  borderColor: borderStrong
+  elevation: panel
+  escape:
+    css: |
+      width: 100%;
+      margin: 0 auto;
+      background-image: linear-gradient(180deg, rgba(219, 232, 255, 0.42), rgba(255, 255, 255, 0.98));
+
+style historyResultShell:
+  extends: resultCard
+  backgroundColor: surface
+  escape:
+    css: |
+      width: 100%;
+      margin: 0 auto;
+      background-image: linear-gradient(180deg, rgba(223, 245, 239, 0.42), rgba(255, 255, 255, 0.98));
+
+style listShell:
+  extends: metricCard
+  gap: md
+  padding: lg
+  maxWidth: 1160
+  borderRadius: xl
+  escape:
+    css: |
+      width: 100%;
+      margin: 0 auto;
+
+style detailShell:
+  extends: metricCard
+  gap: md
+  padding: lg
+  maxWidth: 920
+  borderRadius: xl
+  escape:
+    css: |
+      width: 100%;
+      margin: 0 auto;
+
+style formShell:
+  extends: metricCard
+  gap: md
+  padding: lg
+  maxWidth: 820
+  borderRadius: xl
+  escape:
+    css: |
+      width: 100%;
+      margin: 0 auto;
+
+style workflowShell:
+  extends: detailShell
+  backgroundColor: surfaceMuted
+
+style bookingListShell:
+  extends: listShell
+  backgroundColor: surface
+  borderColor: borderStrong
+  elevation: panel
+  escape:
+    css: |
+      background-image: linear-gradient(180deg, rgba(219, 232, 255, 0.35), rgba(255, 255, 255, 0.98));
+
+style bookingDetailShell:
+  extends: detailShell
+  backgroundColor: surface
+  borderColor: borderStrong
+  elevation: panel
+  escape:
+    css: |
+      background-image: linear-gradient(180deg, rgba(219, 232, 255, 0.22), rgba(255, 255, 255, 0.98));
+
+style bookingFormShell:
+  extends: formShell
+  backgroundColor: surfaceWarm
+  borderColor: borderStrong
+  elevation: panel
+  escape:
+    css: |
+      background-image: linear-gradient(180deg, rgba(255, 240, 207, 0.48), rgba(255, 255, 255, 0.98));
+
+style bookingWorkflowShell:
+  extends: workflowShell
+  borderColor: borderStrong
+  elevation: panel
+  escape:
+    css: |
+      background-image: linear-gradient(180deg, rgba(15, 95, 255, 0.10), rgba(255, 255, 255, 0.98));
+
+style memberListShell:
+  extends: listShell
+  backgroundColor: surfaceCool
+  borderColor: borderStrong
+  escape:
+    css: |
+      background-image: linear-gradient(180deg, rgba(223, 245, 239, 0.40), rgba(255, 255, 255, 0.98));
+
+style memberDetailShell:
+  extends: detailShell
+  backgroundColor: surfaceSoft
+  borderColor: borderStrong
+  escape:
+    css: |
+      background-image: linear-gradient(180deg, rgba(223, 245, 239, 0.26), rgba(255, 255, 255, 0.98));
+
+style memberFormShell:
+  extends: formShell
+  backgroundColor: surfaceSoft
+  borderColor: borderStrong
+  escape:
+    css: |
+      background-image: linear-gradient(180deg, rgba(223, 245, 239, 0.18), rgba(255, 255, 255, 0.98));
+
+style passengerListShell:
+  extends: listShell
+  backgroundColor: surfaceSoft
+  escape:
+    css: |
+      background-image: linear-gradient(180deg, rgba(238, 244, 255, 0.24), rgba(255, 255, 255, 0.98));
+
+style passengerDetailShell:
+  extends: detailShell
+  backgroundColor: surfaceSoft
+  escape:
+    css: |
+      background-image: linear-gradient(180deg, rgba(238, 244, 255, 0.20), rgba(255, 255, 255, 0.98));
+
+style passengerFormShell:
+  extends: formShell
+  backgroundColor: surfaceSoft
+  escape:
+    css: |
+      background-image: linear-gradient(180deg, rgba(238, 244, 255, 0.16), rgba(255, 255, 255, 0.98));
+
+style escapeMount:
+  display: stack
+  escape:
+    css: |
+      display: none;

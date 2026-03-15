@@ -1,0 +1,45 @@
+resource lineItems:
+  model: InvoiceLineItem
+  api: /api/line-items
+
+  list:
+    title: "Invoice Line Items"
+    filters: [description, category, invoice.number]
+    columns:
+      - description @sortable
+      - invoice.number @sortable
+      - category @tag(SUBSCRIPTION:blue, SERVICES:green, SUPPORT:gray)
+      - quantity @sortable
+      - amount @sortable
+    actions:
+      - create
+      - view
+      - edit
+      - delete @confirm("Delete this line item?")
+    pagination: { size: 20, style: numbered }
+
+  read:
+    title: "Line Item Detail"
+    fields:
+      - description
+      - invoice.number
+      - category
+      - quantity
+      - amount
+
+  edit:
+    fields:
+      - description
+      - category @select
+      - quantity
+      - amount
+      - invoice @select
+    onSuccess:
+      - refresh: lineItems
+      - toast: "Line item saved"
+
+  create:
+    fields: [description, category, quantity, amount, invoice]
+    onSuccess:
+      - redirect: lineItems.list
+      - toast: "Line item created"

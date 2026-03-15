@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Flight Availability">
+  <rect width="1200" height="630" fill="#f8fafc"/>
+  <rect x="48" y="48" width="1104" height="534" rx="32" fill="#ffffff" stroke="#d9dfeb" stroke-width="4"/>
+  <text x="88" y="176" fill="#2563eb" font-family="Segoe UI, Arial, sans-serif" font-size="34">Generated read-model search</text>
+  <text x="88" y="278" fill="#0f172a" font-family="Segoe UI, Arial, sans-serif" font-size="76" font-weight="700">Flight Availability</text>
+  <text x="88" y="360" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="34">Outbound and homeward grouped fare results with seeded booking handoff.</text>
+</svg>

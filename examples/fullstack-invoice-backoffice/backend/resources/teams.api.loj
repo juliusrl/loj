@@ -1,0 +1,5 @@
+resource teams:
+  model: Team
+  api: /api/teams
+  auth:
+    roles: [ADMIN, FINANCE, SALES]

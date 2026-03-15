@@ -1,0 +1,8 @@
+{
+  "artifact": "rdsl.authoring-task",
+  "schemaVersion": "0.1.0",
+  "id": "toast-user-approvals",
+  "lane": "docs-only",
+  "title": "Toast User Actor Values",
+  "prompt": "Create an internal approvals application called \"Approval Desk\". Use dark theme and session auth. Define an Approval model with title, state, and priority. Create an approvals resource on /api/approvals with list and edit views. The list view must show title, state, and priority columns plus an edit action. The edit view must contain title, state, and priority fields and on success invalidate approvals plus show a descriptor toast with key approvals.saved, defaultMessage \"Approval updated by {actor}\", and values.actor from user.name."
+}

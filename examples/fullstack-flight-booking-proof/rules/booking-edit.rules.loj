@@ -1,0 +1,67 @@
+rules bookingEdit:
+  eligibility editable:
+    when: record.status != TICKETED
+    message: "Ticketed bookings must transition through workflow instead of direct form edits"
+
+  validate representative-age:
+    when: formData.representativeAge >= 18
+    message: "Representative must be at least 18 years old"
+
+  validate passengers-present:
+    when: count(formData.passengers) > 0
+    message: "Add at least one passenger"
+
+  validate passenger-max:
+    when: count(formData.passengers) <= 6
+    message: "This proof keeps bookings at six passengers or fewer"
+
+  validate business-passenger-limit:
+    when: formData.cabin != BUSINESS || count(formData.passengers) <= 2
+    message: "Business cabin bookings in this proof are limited to two passengers"
+
+  validate segment-pair:
+    when: isNotEmpty(formData.outwardFlightNo) && isNotEmpty(formData.homewardFlightNo)
+    message: "Both selected flight summaries must remain present"
+
+  validate outward-capacity:
+    when: count(formData.passengers) <= formData.outwardSeatsRemaining
+    message: "Selected outbound flight no longer has enough seats for all passengers"
+
+  validate homeward-capacity:
+    when: count(formData.passengers) <= formData.homewardSeatsRemaining
+    message: "Selected homeward flight no longer has enough seats for all passengers"
+
+  validate outward-limited-band:
+    when: formData.outwardAvailabilityBand != "LIMITED" || count(formData.passengers) <= 2
+    message: "Limited outbound offers in this proof allow at most two passengers per booking"
+
+  validate homeward-limited-band:
+    when: formData.homewardAvailabilityBand != "LIMITED" || count(formData.passengers) <= 2
+    message: "Limited homeward offers in this proof allow at most two passengers per booking"
+
+  validate outward-limited-buffer:
+    when: formData.outwardAvailabilityBand != "LIMITED" || count(formData.passengers) < formData.outwardSeatsRemaining
+    message: "Limited outbound offers in this proof should leave at least one remaining seat after booking"
+
+  validate homeward-limited-buffer:
+    when: formData.homewardAvailabilityBand != "LIMITED" || count(formData.passengers) < formData.homewardSeatsRemaining
+    message: "Limited homeward offers in this proof should leave at least one remaining seat after booking"
+
+  validate agent-ticketing:
+    when: (formData.outwardTicketingAdvisory != "Agent ticketing only" && formData.homewardTicketingAdvisory != "Agent ticketing only") || currentUser.role in [AGENT, ADMIN]
+    message: "Agent-only ticketing offers require an agent session in this proof"
+
+  derive baseFare:
+    value: formData.outwardBaseFare + formData.homewardBaseFare
+
+  derive serviceFee:
+    value: count(formData.passengers) * 8
+
+  derive taxAmount:
+    value: count(formData.passengers) * 12
+
+  derive vacancySurcharge:
+    value: count(formData.passengers) * 5
+
+  derive quotedFare:
+    value: ((formData.outwardBaseFare + formData.homewardBaseFare) * count(formData.passengers)) + formData.serviceFee + formData.taxAmount + formData.vacancySurcharge

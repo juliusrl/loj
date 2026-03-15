@@ -1,0 +1,458 @@
+.rdsl-layout {
+  background:
+    radial-gradient(circle at top left, rgba(15, 95, 255, 0.08), transparent 28%),
+    linear-gradient(180deg, #f4f7fb 0%, #edf3fb 100%);
+}
+
+.rdsl-sidebar {
+  background:
+    linear-gradient(180deg, rgba(12, 39, 88, 0.96), rgba(16, 53, 112, 0.98)),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.04);
+}
+
+.rdsl-sidebar-header h2 {
+  letter-spacing: -0.03em;
+}
+
+.rdsl-nav-item {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.rdsl-nav-item:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.rdsl-main {
+  padding: 24px 32px;
+  background: radial-gradient(circle at top center, rgba(15, 95, 255, 0.03), transparent 40%);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+
+.rdsl-grid {
+  display: grid !important;
+  gap: 20px !important;
+  align-items: start !important;
+}
+
+.rdsl-block:not([class*="loj-style-"]) {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid rgba(24, 33, 47, 0.06);
+  box-shadow: 0 2px 12px rgba(24, 33, 47, 0.02);
+  overflow: hidden;
+  height: auto !important;
+  min-height: min-content !important;
+}
+
+
+.rdsl-block[class*="loj-style-"] {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
+}
+
+
+.rdsl-page-header,
+.rdsl-view-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px;
+  padding: 18px 22px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid rgba(24, 33, 47, 0.08);
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(8px);
+}
+
+.rdsl-page-header h1,
+.rdsl-view-header h1,
+.rdsl-view-header h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #142038;
+}
+
+.rdsl-page-header p,
+.rdsl-view-header p {
+  color: #5a6880;
+  margin-top: 4px;
+}
+
+
+.rdsl-block h3,
+.rdsl-related-panel-header h3,
+.rdsl-resource-list .rdsl-list-header h1,
+.rdsl-resource-read .rdsl-view-header h1,
+.rdsl-form h2 {
+  margin: 0;
+  letter-spacing: -0.03em;
+  color: #17304f;
+}
+
+.rdsl-metric {
+  padding: 20px 24px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  max-width: fit-content !important;
+  min-width: 220px;
+  border-left: 4px solid #0f5fff !important;
+}
+
+
+.rdsl-metric h3 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #5a6880;
+  margin: 0;
+}
+
+.rdsl-metric-value {
+  font-size: 2.1rem;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  color: #0f5fff;
+  line-height: 1;
+}
+
+
+.rdsl-filter-bar {
+  padding: 16px 18px;
+  border: 1px solid rgba(23, 61, 134, 0.1);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 14px !important;
+  align-items: flex-end !important;
+  margin-bottom: 16px;
+}
+
+.rdsl-filter-field,
+.rdsl-form-field {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  flex: 1;
+  min-width: 170px;
+}
+
+.rdsl-filter-field > span,
+.rdsl-form-field > span,
+.rdsl-form-field label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #51607a;
+  margin-left: 4px;
+}
+
+
+.rdsl-filter-field input,
+.rdsl-filter-field select,
+.rdsl-form-field input,
+.rdsl-form-field select {
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid rgba(23, 61, 134, 0.12);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.rdsl-filter-field input:focus,
+.rdsl-form-field input:focus {
+  border-color: #0f5fff;
+  background: white;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(15, 95, 255, 0.1);
+}
+
+
+.rdsl-data-table {
+  border: 1px solid rgba(24, 33, 47, 0.08);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.96);
+  overflow-x: auto;
+  box-shadow: 0 3px 12px rgba(24, 33, 47, 0.04);
+}
+
+.rdsl-data-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent;
+  table-layout: auto;
+}
+
+.rdsl-data-table thead {
+  background: linear-gradient(180deg, #f8fbff, #f1f6ff);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+
+.rdsl-data-table th {
+  padding: 12px 14px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #51607a;
+  white-space: nowrap;
+  border-bottom: 1px solid rgba(24, 33, 47, 0.08);
+}
+
+.rdsl-data-table td {
+  padding: 13px 14px;
+  color: #1a2435;
+  border-bottom: 1px solid rgba(24, 33, 47, 0.04);
+}
+
+
+.rdsl-data-table tbody tr:hover {
+  background: rgba(15, 95, 255, 0.04);
+}
+
+.rdsl-table-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px;
+  margin-bottom: 0px !important;
+}
+
+
+.rdsl-btn {
+  border-radius: 999px;
+  box-shadow: none;
+  height: 38px !important;
+  line-height: normal !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 16px !important;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  align-self: center !important;
+  white-space: nowrap;
+}
+
+.rdsl-btn-primary {
+  background: linear-gradient(180deg, #256df8, #0f5fff);
+  color: white;
+  border: none;
+}
+
+.rdsl-btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 95, 255, 0.25);
+  filter: brightness(1.05);
+}
+
+.rdsl-btn-primary:disabled {
+  background: #d9dfeb;
+  color: #9db2d1;
+  cursor: not-allowed;
+}
+
+
+.rdsl-related-panel,
+.rdsl-related-list,
+.rdsl-workflow-summary,
+.rdsl-read-fields {
+  border-radius: 14px;
+}
+
+.rdsl-workflow-summary {
+  padding: 14px;
+  border: 1px solid rgba(23, 61, 134, 0.12);
+  background: linear-gradient(180deg, rgba(236, 243, 255, 0.82), rgba(255, 255, 255, 0.98));
+}
+
+.rdsl-read-actions {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(23, 61, 134, 0.08);
+}
+
+.rdsl-read-actions:last-child {
+  border-bottom: none;
+}
+
+.rdsl-read-fields {
+  padding: 14px;
+  border: 1px solid rgba(24, 33, 47, 0.08);
+  background: rgba(255, 255, 255, 0.80);
+}
+
+.rdsl-read-field dt {
+  color: #5b687d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.rdsl-read-field dd {
+  color: #172235;
+}
+
+.rdsl-form-include {
+  padding: 16px;
+  border: 1px dashed rgba(23, 61, 134, 0.24);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(248, 251, 255, 0.88), rgba(255, 255, 255, 0.98));
+}
+
+.rdsl-form-include-header,
+.rdsl-form-include-item-header {
+  align-items: center;
+  gap: 12px;
+}
+
+.rdsl-form-include-item {
+  padding: 14px;
+  border: 1px solid rgba(24, 33, 47, 0.08);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.rdsl-form-actions {
+  padding-top: 16px;
+  border-top: 1px solid rgba(24, 33, 47, 0.08);
+}
+
+.rdsl-pagination {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px;
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.4);
+  border-top: 1px solid rgba(24, 33, 47, 0.08);
+}
+
+.rdsl-pagination button,
+.rdsl-pagination span {
+  height: 38px !important;
+  min-width: 38px;
+  border-radius: 12px;
+  border: 1px solid rgba(23, 61, 134, 0.12);
+  background: white;
+  color: #1a2e4e;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  align-self: center !important;
+}
+
+
+.rdsl-pagination button:hover:not(:disabled) {
+  background: #f0f5ff !important;
+  border-color: #0f5fff !important;
+  color: #0f5fff !important;
+}
+
+.rdsl-pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #f7f9fc !important;
+}
+
+.rdsl-pagination button[aria-current="page"] {
+  background: #0f5fff !important;
+  border-color: #0f5fff !important;
+  color: white !important;
+}
+
+.rdsl-table-pager {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 14px;
+  margin-bottom: 8px;
+}
+
+
+.rdsl-table-pager .rdsl-btn {
+  padding: 8px 24px;
+  height: auto;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1a2a47;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(24, 33, 47, 0.12);
+  transition: all 0.2s ease;
+}
+
+.rdsl-table-pager .rdsl-btn:hover {
+  background: rgba(240, 245, 255, 0.95);
+  border-color: rgba(15, 95, 255, 0.3);
+  color: #0f5fff;
+}
+
+.rdsl-table-pager-current {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #415067;
+  min-width: 120px;
+  text-align: center;
+}
+
+.rdsl-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  margin: 12px 0;
+  border-radius: 16px;
+  background: rgba(245, 248, 255, 0.4);
+  border: 1px dashed rgba(24, 33, 47, 0.12);
+  color: #5a6880;
+  font-size: 0.98rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.rdsl-error {
+  padding: 16px 20px;
+  margin: 16px 0;
+  border-radius: 12px;
+  background: rgba(255, 240, 240, 0.8);
+  border: 1px solid rgba(255, 100, 100, 0.3);
+  color: #cc0000;
+  font-weight: 500;
+  font-size: 0.95rem;
+}

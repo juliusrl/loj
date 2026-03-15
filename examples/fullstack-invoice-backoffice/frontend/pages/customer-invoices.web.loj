@@ -1,0 +1,10 @@
+page customerInvoices:
+  title: "Customer Invoices"
+  path: /customers/:id/invoices
+  blocks:
+    - type: metric
+      title: "Invoice Count"
+      data: customers.invoices.count
+    - type: table
+      title: "Invoices"
+      data: customers.invoices

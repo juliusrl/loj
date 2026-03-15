@@ -1,0 +1,10 @@
+page invoiceLineItems:
+  title: "Invoice Line Items"
+  path: /invoices/:id/line-items
+  blocks:
+    - type: metric
+      title: "Line Item Count"
+      data: invoices.lineItems.count
+    - type: table
+      title: "Line Items"
+      data: invoices.lineItems

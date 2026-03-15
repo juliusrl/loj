@@ -1,0 +1,7 @@
+model Passenger:
+  fullName: string @required
+  age: integer @required
+  gender: enum(MALE, FEMALE, OTHER) @required
+  memberEmail: string @email
+  seatPreference: enum(WINDOW, AISLE, MIDDLE)
+  booking: belongsTo(Booking) @required

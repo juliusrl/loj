@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Member Booking History">
+  <rect width="1200" height="630" fill="#f1f5f9"/>
+  <rect x="48" y="48" width="1104" height="534" rx="32" fill="#ffffff" stroke="#cbd5e1" stroke-width="4"/>
+  <text x="88" y="176" fill="#0f766e" font-family="Segoe UI, Arial, sans-serif" font-size="34">Generated member surfaces</text>
+  <text x="88" y="278" fill="#0f172a" font-family="Segoe UI, Arial, sans-serif" font-size="72" font-weight="700">Member Booking History</text>
+  <text x="88" y="360" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="34">Read, related, workflow, and recovery guidance rendered from current family primitives.</text>
+</svg>

@@ -1,0 +1,13 @@
+app:
+  name: "Flight Booking Proof Service"
+  package: "com.example.flightbookingproof"
+
+compiler:
+  target: fastapi
+  language: python
+  profile: rest-sqlalchemy-auth
+
+imports:
+  - ./models/
+  - ./resources/
+  - ./read-models/

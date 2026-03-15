@@ -1,0 +1,78 @@
+app:
+  name: "Plan Console"
+  theme: dark
+  auth: jwt
+  navigation:
+    - group: "Billing"
+      items:
+        - label: "Overview"
+          icon: dashboard
+          target: page.dashboard
+        - label: "Plans"
+          icon: credit-card
+          target: resource.plans.list
+
+compiler:
+  target: react
+
+page dashboard:
+  title: "Revenue Overview"
+  type: dashboard
+  layout: grid(2)
+  blocks:
+    - type: metric
+      title: "Active Plans"
+      data: query.plans.activeCount
+    - type: chart
+      title: "Subscription Upgrades"
+      data: query.subscriptions.upgrades
+
+model Plan:
+  name: string @required @minLen(2)
+  code: string @required @unique
+  billingCycle: enum(monthly, yearly)
+  status: enum(active, archived)
+  updatedAt: datetime @auto
+
+resource plans:
+  model: Plan
+  api: /api/plans
+
+  list:
+    title: "Plans"
+    filters: [code, billingCycle, status]
+    columns:
+      - name @sortable
+      - code @sortable
+      - billingCycle @tag(monthly:blue, yearly:green)
+      - status @badge(active:green, archived:red)
+      - updatedAt @date
+    actions:
+      - create
+      - edit
+      - delete @confirm("Archive this plan?")
+    pagination: { size: 15, style: numbered }
+
+  edit:
+    fields:
+      - name
+      - code @disabled
+      - billingCycle @select
+      - status @select
+    rules:
+      visibleIf: hasRole(currentUser, "billing_admin")
+      allowIf: hasRole(currentUser, "billing_admin")
+      enforce: hasRole(currentUser, "billing_admin")
+    onSuccess:
+      - refresh: plans
+      - toast: "Plan updated"
+
+  create:
+    fields:
+      - name
+      - code
+      - billingCycle @select
+      - status @select
+    onSuccess:
+      - redirect: plans.list
+      - toast: "Plan created"

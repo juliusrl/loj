@@ -1,0 +1,52 @@
+resource members:
+  model: Member
+  api: /api/members
+
+  list:
+    title: "Members"
+    style: memberListShell
+    filters: [name, email, membershipNumber, preferredAirport, recoveryDeskChannel, tier]
+    columns:
+      - name @sortable
+      - email @sortable
+      - membershipNumber @sortable
+      - preferredAirport @sortable
+      - recoveryDeskChannel @sortable
+      - tier @badge(STANDARD:gray, GOLD:yellow)
+      - bookings.count @sortable
+    actions:
+      - create
+      - view
+      - edit
+    pagination: { size: 20, style: numbered }
+
+  read:
+    title: "Member Detail"
+    style: memberDetailShell
+    fields:
+      - name
+      - email
+      - membershipNumber
+      - phone
+      - preferredAirport
+      - recoveryDeskChannel
+      - disruptionSupportTier
+      - supportNote
+      - historyServiceNote
+      - tier
+      - bookings.count
+    related:
+      - bookings
+
+  create:
+    style: memberFormShell
+    fields: [name, email, membershipNumber, phone, preferredAirport, recoveryDeskChannel, disruptionSupportTier, supportNote, historyServiceNote, tier @select]
+    onSuccess:
+      - redirect: members.list
+      - toast: "Member created"
+
+  edit:
+    style: memberFormShell
+    fields: [name, email, membershipNumber, phone, preferredAirport, recoveryDeskChannel, disruptionSupportTier, supportNote, historyServiceNote, tier @select]
+    onSuccess:
+      - toast: "Member saved"

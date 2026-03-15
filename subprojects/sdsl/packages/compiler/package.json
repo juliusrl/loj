@@ -1,0 +1,43 @@
+{
+  "name": "@loj-lang/sdsl-compiler",
+  "version": "0.5.0",
+  "description": "Backend-family compiler for .api.loj sources (legacy alias: .sdsl); current codegen: Spring Boot + Java and FastAPI + Python",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./parser": "./dist/parser.js",
+    "./normalize": "./dist/normalize.js",
+    "./validator": "./dist/validator.js",
+    "./codegen": "./dist/codegen.js",
+    "./ir": "./dist/ir.js",
+    "./project-paths": "./dist/project-paths.js",
+    "./targets": "./dist/targets.js",
+    "./source-files": "./dist/source-files.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@loj-lang/rdsl-compiler": "^0.5.0",
+    "@loj-lang/shared-contracts": "^0.5.0",
+    "yaml": "^2.7.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}

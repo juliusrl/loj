@@ -1,0 +1,16 @@
+{
+  "name": "@loj/example-user-admin",
+  "private": true,
+  "version": "0.5.0",
+  "scripts": {
+    "build:generated": "npm run build --workspace=@loj-lang/rdsl-cli && npm run exec --workspace=@loj-lang/rdsl-cli -- build app.web.loj --out-dir generated",
+    "dev:generated": "npm run build --workspace=@loj-lang/rdsl-cli && npm run exec --workspace=@loj-lang/rdsl-cli -- dev app.web.loj --out-dir .rdsl-dev/generated",
+    "demo:dev": "npm run build --workspace=@loj-lang/rdsl-cli && npm run build --workspace=@loj-lang/rdsl-runtime && node demo-dev.mjs",
+    "mock-api": "node mock-server.mjs",
+    "host:sync": "npm run build --workspace=@loj-lang/rdsl-cli && npm run exec --workspace=@loj-lang/rdsl-cli -- host sync-react host --title \"ReactDSL User Admin Host\"",
+    "host:dev": "npm run build:generated && npm run build --workspace=@loj-lang/rdsl-runtime && npm --prefix host run dev",
+    "host:build": "npm run build:generated && npm run build --workspace=@loj-lang/rdsl-runtime && npm --prefix host run build",
+    "host:preview": "npm --prefix host run preview",
+    "test": "node --test demo-dev.test.mjs"
+  }
+}

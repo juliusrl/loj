@@ -1,0 +1,5 @@
+resource users:
+  model: User
+  api: /api/users
+  auth:
+    roles: [ADMIN]

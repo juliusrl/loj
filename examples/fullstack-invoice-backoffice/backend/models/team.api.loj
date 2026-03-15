@@ -1,0 +1,3 @@
+model Team:
+  name: string @required @minLen(2)
+  region: enum(NA, EMEA, APAC) @required

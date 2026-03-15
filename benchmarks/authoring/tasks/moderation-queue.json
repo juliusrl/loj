@@ -1,0 +1,8 @@
+{
+  "artifact": "rdsl.authoring-task",
+  "schemaVersion": "0.1.0",
+  "id": "moderation-queue",
+  "lane": "docs-only",
+  "title": "Moderation queue CRUD",
+  "prompt": "Create an internal moderation tool called \"Moderation Queue\". Use light theme and session auth. Add a dashboard page titled \"Review Overview\" with a metric block for pending reviews and a chart block for review volume. Add navigation entries for the dashboard and the reviews resource. Define a Review model with title, authorEmail, state, priority, and submittedAt. Create a reviews resource on /api/reviews with list, edit, and create views. The list view must support filters for authorEmail, state, and priority; columns for title, authorEmail, state, priority, and submittedAt; create/edit/delete actions; and numbered pagination of 25 rows. The edit view must contain title, authorEmail, state, and priority fields, disable authorEmail, require hasRole(currentUser, \"moderator\") for allowIf and enforce, and on success refresh reviews plus toast \"Review updated\". The create view must contain title, authorEmail, state, and priority and on success redirect to reviews.list plus toast \"Review created\"."
+}

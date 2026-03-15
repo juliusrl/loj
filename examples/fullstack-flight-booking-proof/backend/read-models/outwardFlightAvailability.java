@@ -1,0 +1,21 @@
+// loj-measure:begin mock-data
+List<OutwardFlightAvailabilityReadModelResult> rows = List.of(
+  new OutwardFlightAvailabilityReadModelResult("LJ100", "HND-CTS", "HND", "CTS", "Haneda", "Sapporo (CTS)", "08:15", "09:50", input.outwardDate(), "ECONOMY", "Saver", new BigDecimal("110"), BigDecimal.ZERO, 2, "LIMITED", "1 checked bag", "Changes with fee", "Ticket within 30 minutes", "Only 2 seats left on this fare", "Basic changes plus seat-assignment fee", "Boarding group C with standard check-in lane", "Refund as credit after the service-fee window"),
+  new OutwardFlightAvailabilityReadModelResult("LJ100", "HND-CTS", "HND", "CTS", "Haneda", "Sapporo (CTS)", "08:15", "09:50", input.outwardDate(), "ECONOMY", "Flex", new BigDecimal("120"), BigDecimal.ZERO, 4, "AVAILABLE", "1 checked bag", "Changes allowed", "Ticket by end of day", "Good availability for this departure", "Same-day change permitted once", "Boarding group B with earlier bag-drop cutoff", "Refund to original payment before ticketing closes"),
+  new OutwardFlightAvailabilityReadModelResult("LJ100", "HND-CTS", "HND", "CTS", "Haneda", "Sapporo (CTS)", "08:15", "09:50", input.outwardDate(), "ECONOMY", "Plus", new BigDecimal("145"), BigDecimal.ZERO, 4, "AVAILABLE", "2 checked bags", "Changes allowed", "Ticket by end of day", "Good availability with extra baggage", "Priority boarding and same-day change", "Priority boarding with overhead-bin guarantee", "Refund as credit with baggage upsell kept open"),
+  new OutwardFlightAvailabilityReadModelResult("LJ210", "HND-CTS", "HND", "CTS", "Haneda", "Sapporo (CTS)", "11:40", "13:15", input.outwardDate(), "BUSINESS", "Business Saver", new BigDecimal("240"), BigDecimal.ZERO, 2, "LIMITED", "2 checked bags", "Changes with fee", "Agent ticketing only", "Business cabin nearly full", "Lounge access with change fee", "Priority lane plus lounge reception handoff", "Refund review required through the agency desk"),
+  new OutwardFlightAvailabilityReadModelResult("LJ210", "HND-CTS", "HND", "CTS", "Haneda", "Sapporo (CTS)", "11:40", "13:15", input.outwardDate(), "BUSINESS", "Business Flex", new BigDecimal("280"), BigDecimal.ZERO, 2, "LIMITED", "2 checked bags", "Changes allowed", "Agent ticketing only", "Business flex seats almost sold out", "Lounge access with flexible changes", "Priority lane plus lounge escort at check-in", "Refund to travel credit after agency review"),
+  new OutwardFlightAvailabilityReadModelResult("LJ320", "KIX-OKA", "KIX", "OKA", "Kansai", "Naha", "09:30", "12:05", input.outwardDate(), "ECONOMY", "Saver", new BigDecimal("140"), BigDecimal.ZERO, 3, "AVAILABLE", "1 checked bag", "Changes with fee", "Ticket by end of day", "Three seats left on saver fare", "Discount fare with standard boarding", "Boarding group C with standard boarding lane", "Refund as credit once the saver hold expires"),
+  new OutwardFlightAvailabilityReadModelResult("LJ320", "KIX-OKA", "KIX", "OKA", "Kansai", "Naha", "09:30", "12:05", input.outwardDate(), "ECONOMY", "Flex", new BigDecimal("150"), BigDecimal.ZERO, 6, "AVAILABLE", "1 checked bag", "Changes allowed", "Ticket by end of day", "Best choice for larger parties", "Flexible fare with standard baggage", "Boarding group B for smoother family boarding", "Refund to original payment before the outbound closes"),
+  new OutwardFlightAvailabilityReadModelResult("LJ430", "KIX-OKA", "KIX", "OKA", "Kansai", "Naha", "14:20", "16:55", input.outwardDate(), "BUSINESS", "Business Saver", new BigDecimal("310"), BigDecimal.ZERO, 1, "LIMITED", "2 checked bags", "Changes with fee", "Ticket within 15 minutes", "Last business seat for this departure", "Priority handling with short ticketing window", "Priority lane with gate-side recovery support", "Refund review required because the final seat is protected")
+);
+// loj-measure:end mock-data
+
+// loj-measure:begin business-logic
+return rows.stream()
+  .filter((row) -> row.departureCode().equalsIgnoreCase(input.departureCode()))
+  .filter((row) -> row.arrivalCode().equalsIgnoreCase(input.arrivalCode()))
+  .filter((row) -> input.cabin() == null || input.cabin().isBlank() || row.cabin().equalsIgnoreCase(input.cabin()))
+  .filter((row) -> row.seatsRemaining() >= input.passengerCount())
+  .toList();
+// loj-measure:end business-logic

@@ -1,0 +1,120 @@
+{
+  "scopeName": "source.rdsl",
+  "name": "ReactDSL",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#entities"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#escapeHatches"
+    },
+    {
+      "include": "#decorators"
+    },
+    {
+      "include": "#scalars"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.rdsl",
+          "match": "#.*$"
+        }
+      ]
+    },
+    "entities": {
+      "patterns": [
+        {
+          "name": "entity.name.type.model.rdsl",
+          "match": "^(\\s*)(model)(\\s+)([A-Za-z_][A-Za-z0-9_]*)(\\s*:)",
+          "captures": {
+            "2": { "name": "storage.type.model.rdsl" },
+            "4": { "name": "entity.name.type.rdsl" }
+          }
+        },
+        {
+          "name": "entity.name.resource.rdsl",
+          "match": "^(\\s*)(resource|page|readModel)(\\s+)([A-Za-z_][A-Za-z0-9_-]*)(\\s*:)",
+          "captures": {
+            "2": { "name": "storage.type.definition.rdsl" },
+            "4": { "name": "entity.name.section.rdsl" }
+          }
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.top-level.rdsl",
+          "match": "^(\\s*)(app|compiler|imports|tokens)(\\s*:)"
+        },
+        {
+          "name": "keyword.control.section.rdsl",
+          "match": "^(\\s*)(navigation|list|read|edit|create|rules|workflow|related|onSuccess|fields|columns|blocks|actions|pagination|filter|filters|inputs|result|handler|api|path|data|metric|custom|queryState|selectionState|dateNavigation|seo|style|includes|auth|model|field|states|transitions|surface|completesWith|source|colors|spacing|borderRadius|elevation|typography|escape|css|extends|display|gap|padding|minHeight|maxWidth|backgroundColor|borderWidth|borderColor|borderRadius|fontSize|fontWeight|lineHeight|color|opacity|alignItems|justifyContent|width)(\\s*:)"
+        },
+        {
+          "name": "keyword.other.copy.rdsl",
+          "match": "^(\\s*)(title|label|group|description|siteName|defaultTitle|titleTemplate|defaultDescription|defaultImage|favicon|image|canonicalPath|noIndex|prevLabel|nextLabel)(\\s*:)"
+        },
+        {
+          "name": "support.type.scalar.rdsl",
+          "match": "\\b(string|text|number|integer|long|decimal|boolean|datetime|date)\\b"
+        },
+        {
+          "name": "support.type.enum.rdsl",
+          "match": "\\benum\\([^\\n)]*\\)"
+        },
+        {
+          "name": "support.type.relation.rdsl",
+          "match": "\\b(belongsTo|hasMany)\\([^\\n)]*\\)"
+        },
+        {
+          "name": "constant.language.boolean.rdsl",
+          "match": "\\b(true|false)\\b"
+        }
+      ]
+    },
+    "escapeHatches": {
+      "patterns": [
+        {
+          "name": "support.function.escape-hatch.rdsl",
+          "match": "@(fn|custom|expr|rules|flow|asset|style)\\([^\\n]*\\)"
+        }
+      ]
+    },
+    "decorators": {
+      "patterns": [
+        {
+          "name": "storage.modifier.decorator.rdsl",
+          "match": "@[A-Za-z_][A-Za-z0-9_]*(\\([^\\n]*\\))?"
+        }
+      ]
+    },
+    "scalars": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.rdsl",
+          "begin": "\"",
+          "end": "\""
+        },
+        {
+          "name": "string.quoted.single.rdsl",
+          "begin": "'",
+          "end": "'"
+        },
+        {
+          "name": "constant.numeric.rdsl",
+          "match": "\\b\\d+(?:\\.\\d+)?\\b"
+        }
+      ]
+    }
+  }
+}

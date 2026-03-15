@@ -1,0 +1,79 @@
+app:
+  name: "Support Tickets"
+  theme: light
+  auth: session
+  navigation:
+    - group: "Support"
+      items:
+        - label: "Overview"
+          icon: dashboard
+          target: page.dashboard
+        - label: "Tickets"
+          icon: inbox
+          target: resource.tickets.list
+
+compiler:
+  target: react
+
+page dashboard:
+  title: "Support Overview"
+  type: dashboard
+  layout: grid(2)
+  blocks:
+    - type: metric
+      title: "Open Tickets"
+      data: query.tickets.openCount
+    - type: chart
+      title: "Resolution Trend"
+      data: query.tickets.resolutionTrend
+
+model Ticket:
+  subject: string @required @minLen(4)
+  requesterEmail: string @required @email
+  priority: enum(low, normal, high)
+  state: enum(open, pending, resolved)
+  createdAt: datetime @auto
+
+resource tickets:
+  model: Ticket
+  api: /api/tickets
+
+  list:
+    title: "Tickets"
+    filters: [requesterEmail, priority, state]
+    columns:
+      - subject @sortable
+      - requesterEmail @sortable
+      - priority @tag(low:gray, normal:blue, high:red)
+      - state @badge(open:yellow, pending:orange, resolved:green)
+      - createdAt @date
+    actions:
+      - create
+      - edit
+      - delete @confirm("Delete this ticket?")
+    pagination: { size: 50, style: numbered }
+
+  edit:
+    fields:
+      - subject
+      - requesterEmail @disabled
+      - priority @select
+      - state @select
+    rules:
+      enabledIf: hasRole(currentUser, "support_agent")
+      allowIf: hasRole(currentUser, "support_agent")
+      enforce: hasRole(currentUser, "support_agent")
+    onSuccess:
+      - refresh: tickets
+      - emitEvent: tickets.updated
+      - toast: "Ticket updated"
+
+  create:
+    fields:
+      - subject
+      - requesterEmail
+      - priority @select
+      - state @select
+    onSuccess:
+      - redirect: tickets.list
+      - toast: "Ticket created"

@@ -1,0 +1,8 @@
+{
+  "artifact": "rdsl.authoring-task",
+  "schemaVersion": "0.1.0",
+  "id": "plan-console",
+  "lane": "docs-only",
+  "title": "Subscription plan CRUD",
+  "prompt": "Create an internal billing application called \"Plan Console\". Use dark theme and jwt auth. Add a dashboard page titled \"Revenue Overview\" with a metric block for active plans and a chart block for subscription upgrades. Add navigation entries for the dashboard and the plans resource. Define a Plan model with name, code, billingCycle, status, and updatedAt. Create a plans resource on /api/plans with list, edit, and create views. The list view must support filters for code, billingCycle, and status; columns for name, code, billingCycle, status, and updatedAt; create/edit/delete actions; and numbered pagination of 15 rows. The edit view must contain name, code, billingCycle, and status fields, disable code, require hasRole(currentUser, \"billing_admin\") for visibleIf, allowIf, and enforce, and on success refresh plans plus toast \"Plan updated\". The create view must contain name, code, billingCycle, and status and on success redirect to plans.list plus toast \"Plan created\"."
+}

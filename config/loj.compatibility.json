@@ -1,0 +1,34 @@
+{
+  "phase3CompatibilityMode": "no-bridge",
+  "publicLegacyPackagesReleased": false,
+  "legacyPackageScope": "@reactdsl/*",
+  "currentPackageScope": "@loj-lang/*",
+  "allowedLegacyScopeRefFiles": [
+    "docs/loj-beta-roadmap.md",
+    "docs/loj-core-phase-3-execution-plan.md",
+    "docs/archive/loj-core-transition-plan.md",
+    "docs/loj-transport-contract.md",
+    "docs/recommended-project-structure.md",
+    "scripts/phase3-preflight.mjs"
+  ],
+  "allowedLegacyCommandAliasFiles": [
+    "config/loj.compatibility.json",
+    "docs/loj-project-file-contract.md",
+    "docs/archive/loj-vscode-language-split-plan.md",
+    "packages/loj-vscode/package.json",
+    "packages/loj-vscode/src/extension.ts"
+  ],
+  "allowedLegacyCommandAliases": [
+    "reactdsl.inspectCurrentNode",
+    "reactdsl.showCurrentIssues",
+    "reactdsl.traceCurrentGeneratedLocation"
+  ],
+  "legacySuffixAliases": [
+    ".rdsl",
+    ".sdsl"
+  ],
+  "notes": [
+    "Phase 3 landed before any public @reactdsl/* npm release, so the repo keeps no bridge packages.",
+    "Legacy compatibility is intentionally limited to historical docs, preflight/release messaging, and VSCode command aliases through the current beta cycle."
+  ]
+}

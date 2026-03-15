@@ -1,0 +1,56 @@
+readModel outwardFlightAvailability:
+  api: /api/outward-flight-availability
+  rules: '@rules("../../rules/flight-availability")'
+  inputs:
+    departureCode: string @required
+    arrivalCode: string @required
+    outwardDate: date @required
+    homewardDate: date @required
+    cabin: string
+    passengerCount: integer @required
+  result:
+    flightNo: string
+    routeCode: string
+    departureCode: string
+    arrivalCode: string
+    departureAirportName: string
+    arrivalAirportName: string
+    departureTime: string
+    arrivalTime: string
+    travelDate: date
+    cabin: string
+    fareBrand: string
+    baseFare: number
+    quotedFare: number
+    seatsRemaining: integer
+    availabilityBand: string
+    baggageSummary: string
+    changePolicySummary: string
+    ticketingAdvisory: string
+    vacancyMessage: string
+    fareRulesSummary: string
+    boardingSummary: string
+    refundPolicySummary: string
+  list:
+    groupBy: [flightNo, departureAirportName, departureTime, arrivalAirportName, arrivalTime, travelDate, cabin]
+    pivotBy: fareBrand
+    columns:
+      - flightNo
+      - departureAirportName
+      - departureTime
+      - arrivalAirportName
+      - arrivalTime
+      - travelDate @date
+      - cabin
+      - fareBrand
+      - availabilityBand
+      - seatsRemaining
+      - vacancyMessage
+      - quotedFare
+      - baggageSummary
+      - changePolicySummary
+      - ticketingAdvisory
+      - fareRulesSummary
+      - boardingSummary
+      - refundPolicySummary
+    pagination: { size: 10, style: numbered }

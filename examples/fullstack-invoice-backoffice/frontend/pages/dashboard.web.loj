@@ -1,0 +1,17 @@
+page dashboard:
+  title: "Operations Overview"
+  type: dashboard
+  layout: grid(2)
+  blocks:
+    - type: metric
+      title: "Customers"
+      data: query.customers.count
+    - type: metric
+      title: "Invoices"
+      data: query.invoices.count
+    - type: table
+      title: "Customer Coverage"
+      data: customers.list
+    - type: table
+      title: "Invoice Queue"
+      data: invoices.list

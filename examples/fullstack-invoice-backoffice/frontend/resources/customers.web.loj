@@ -1,0 +1,43 @@
+resource customers:
+  model: Customer
+  api: /api/customers
+
+  list:
+    title: "Customers"
+    filters: [name, tier, team.name]
+    columns:
+      - name @sortable
+      - team.name @sortable
+      - tier @tag(STRATEGIC:blue, GROWTH:green, LONG_TAIL:gray)
+      - invoices.count @sortable
+    actions:
+      - create
+      - view
+      - edit
+      - delete @confirm("Delete this customer?")
+    pagination: { size: 10, style: numbered }
+
+  read:
+    title: "Customer Detail"
+    fields:
+      - name
+      - tier
+      - team.name
+      - invoices.count
+    related:
+      - invoices
+
+  edit:
+    fields:
+      - name
+      - tier @select
+      - team @select
+    onSuccess:
+      - refresh: customers
+      - toast: "Customer saved"
+
+  create:
+    fields: [name, tier, team]
+    onSuccess:
+      - redirect: customers.list
+      - toast: "Customer created"

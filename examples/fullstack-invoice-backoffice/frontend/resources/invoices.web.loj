@@ -1,0 +1,51 @@
+resource invoices:
+  model: Invoice
+  api: /api/invoices
+
+  list:
+    title: "Invoices"
+    filters: [number, status, customer.name, salesOwnerUsername]
+    columns:
+      - number @sortable
+      - customer.name @sortable
+      - status @badge(DRAFT:gray, SENT:yellow, APPROVED:blue, COMPLETED:green)
+      - salesOwnerUsername @sortable
+      - lineItems.count @sortable
+      - total @sortable
+      - issuedAt @date
+    actions:
+      - create
+      - view
+      - edit
+      - delete @confirm("Delete this invoice?")
+    pagination: { size: 20, style: numbered }
+
+  read:
+    title: "Invoice Detail"
+    fields:
+      - number
+      - customer.name
+      - status
+      - salesOwnerUsername
+      - total
+      - lineItems.count
+      - issuedAt
+    related:
+      - lineItems
+
+  edit:
+    fields:
+      - number @disabled(mode == "edit")
+      - status @select
+      - customer @select
+      - salesOwnerUsername
+      - total
+    onSuccess:
+      - refresh: invoices
+      - toast: "Invoice saved"
+
+  create:
+    fields: [number, status, customer, salesOwnerUsername, total]
+    onSuccess:
+      - redirect: invoices.list
+      - toast: "Invoice created"

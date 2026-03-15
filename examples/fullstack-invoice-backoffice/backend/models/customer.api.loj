@@ -1,0 +1,4 @@
+model Customer:
+  name: string @required @minLen(2)
+  tier: enum(STRATEGIC, GROWTH, LONG_TAIL) @required
+  team: belongsTo(Team) @required

@@ -1,0 +1,40 @@
+{
+  "name": "@loj-lang/rdsl-compiler",
+  "version": "0.5.0",
+  "description": "Frontend-family compiler for .web.loj sources (legacy alias: .rdsl)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./parser": "./dist/parser.js",
+    "./validator": "./dist/validator.js",
+    "./ir": "./dist/ir.js",
+    "./codegen": "./dist/codegen.js",
+    "./manifest": "./dist/manifest.js",
+    "./source-files": "./dist/source-files.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@loj-lang/shared-contracts": "^0.5.0",
+    "yaml": "^2.7.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}

@@ -1,0 +1,12 @@
+app:
+  name: "User Service"
+  package: "com.example.userservice"
+
+compiler:
+  target: fastapi
+  language: python
+  profile: rest-sqlalchemy-auth
+
+imports:
+  - ./models/
+  - ./resources/

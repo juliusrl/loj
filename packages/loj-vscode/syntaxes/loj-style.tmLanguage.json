@@ -1,0 +1,73 @@
+{
+  "scopeName": "source.loj-style",
+  "name": "Loj Style",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#entities" },
+    { "include": "#keywords" },
+    { "include": "#scalars" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.loj-style",
+          "match": "#.*$"
+        }
+      ]
+    },
+    "entities": {
+      "patterns": [
+        {
+          "name": "entity.name.tokens.loj-style",
+          "match": "^(\\s*)(tokens)(\\s*:)",
+          "captures": {
+            "2": { "name": "storage.type.definition.loj-style" }
+          }
+        },
+        {
+          "name": "entity.name.style.loj-style",
+          "match": "^(\\s*)(style)(\\s+)([A-Za-z_][A-Za-z0-9_-]*)(\\s*:)",
+          "captures": {
+            "2": { "name": "storage.type.definition.loj-style" },
+            "4": { "name": "entity.name.section.loj-style" }
+          }
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.section.loj-style",
+          "match": "^(\\s*)(colors|spacing|borderRadius|elevation|typography|escape|css|extends|display|gap|padding|minHeight|maxWidth|backgroundColor|borderWidth|borderColor|fontSize|fontWeight|lineHeight|color|opacity|alignItems|justifyContent|width|elevation|typography)(\\s*:)"
+        },
+        {
+          "name": "constant.language.display.loj-style",
+          "match": "\\b(column|row)\\b"
+        }
+      ]
+    },
+    "scalars": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.loj-style",
+          "begin": "\"",
+          "end": "\""
+        },
+        {
+          "name": "string.quoted.single.loj-style",
+          "begin": "'",
+          "end": "'"
+        },
+        {
+          "name": "constant.numeric.loj-style",
+          "match": "\\b\\d+(?:\\.\\d+)?\\b"
+        },
+        {
+          "name": "constant.other.color.loj-style",
+          "match": "#[0-9A-Fa-f]{3,8}\\b"
+        }
+      ]
+    }
+  }
+}

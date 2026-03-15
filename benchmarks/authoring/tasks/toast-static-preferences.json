@@ -1,0 +1,8 @@
+{
+  "artifact": "rdsl.authoring-task",
+  "schemaVersion": "0.1.0",
+  "id": "toast-static-preferences",
+  "lane": "docs-only",
+  "title": "Static Toast Preferences",
+  "prompt": "Create an internal settings application called \"Preference Center\". Use light theme and session auth. Define a Preference model with label, channel, and status. Create a preferences resource on /api/preferences with list and create views. The list view must show label, channel, and status columns plus a create action. The create view must contain label, channel, and status fields and on success refresh preferences plus toast \"Preference saved\"."
+}
