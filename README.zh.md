@@ -9,6 +9,18 @@
 > [!NOTE]
 > **官方网站即将上线：** 我正在建设 [loj.org](https://loj.org)，它将作为交互式文档、在线演练场和社区案例展示的官方入口。
 
+## 快速开始
+
+```bash
+npm install -g @loj-lang/cli
+loj --help
+```
+
+如果不想全局安装：
+
+```bash
+npx @loj-lang/cli --help
+```
 
 Loj 是一个面向业务系统的 AI 原生 DSL 家族。它的目标不是通用的 vibe-coded 页面，而是用一组小而稳的、目标中立的原语来表达业务意图，再将它编译成框架侧最合适的前后端代码，并保留可追踪的 escape hatch。
 
@@ -253,6 +265,9 @@ npx @loj-lang/cli agent export codex --out-dir ./tooling/skills
 # 从本地或远程 skill bundle 源安装
 npx @loj-lang/cli agent add codex --from ./tooling/skills/loj-authoring
 
+# 直接从 GitHub Release 资产安装
+npx @loj-lang/cli agent add codex --from https://github.com/juliusrl/loj/releases/download/v0.5.0/loj-authoring-0.5.0.tgz
+
 # 安装到任意显式 skills 目录
 npx @loj-lang/cli agent install generic --skills-dir ~/.my-agent/skills
 ```
@@ -260,6 +275,16 @@ npx @loj-lang/cli agent install generic --skills-dir ~/.my-agent/skills
 当前直接拉取路径都通过已发布的 CLI 包：
 - bundled 安装：`loj agent install ...`
 - 远程/本地 bundle 安装：`loj agent add ...`
+
+## VSCode 扩展
+
+当前 VSCode Beta 通过 VSIX release asset 分发：
+
+- `loj-vscode-0.5.0.vsix`
+
+可从 GitHub Release 页面下载，然后在 VSCode 中执行：
+
+- `Extensions: Install from VSIX...`
 
 ## 许可证
 

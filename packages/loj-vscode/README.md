@@ -34,3 +34,8 @@ npm run build --workspace=packages/loj-vscode
 npm run test --workspace=packages/loj-vscode
 cd packages/loj-vscode && vsce package --no-dependencies
 ```
+
+Release install:
+
+- Download `loj-vscode-0.5.0.vsix` from the GitHub release assets
+- In VSCode run `Extensions: Install from VSIX...`

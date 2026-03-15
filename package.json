@@ -53,6 +53,7 @@
     "demo:loj:booking-proof:proof": "npm run proof --workspace=@loj/example-fullstack-flight-booking-proof",
     "demo:loj:booking-proof:measure": "npm run measure:escape --workspace=@loj/example-fullstack-flight-booking-proof",
     "local:prepublish:smoke": "node scripts/local-prepublish-smoke.mjs",
+    "package:skill": "node scripts/package-skill-bundle.mjs",
     "snapshot:public": "node scripts/create-public-snapshot.mjs",
     "benchmark:authoring:prompts": "npm run build --workspace=@loj-lang/benchmark-core && npm run exec --workspace=@loj-lang/benchmark-core -- export-prompts",
     "benchmark:authoring:fixtures": "npm run build --workspace=@loj-lang/benchmark-core && npm run exec --workspace=@loj-lang/benchmark-core -- run --submissions benchmarks/authoring/fixtures/docs-only-golden --report-dir benchmarks/reports/local-fixture",

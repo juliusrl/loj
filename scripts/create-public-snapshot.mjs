@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { execFileSync, spawnSync } from 'node:child_process';
-import { cpSync, existsSync, mkdirSync, rmSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -45,7 +45,7 @@ function printHelp() {
 
 Options:
   --out-dir <dir>   Output directory (default: ../loj-public-snapshot)
-  --force           Remove the output directory first if it already exists
+  --force           Accepted for compatibility; existing output directories are synced in place by default
   --git-init        Initialize a fresh git repository inside the snapshot
 
 The snapshot includes current tracked/untracked working-tree files except anything
@@ -84,13 +84,17 @@ function runGit(args, input = '') {
 }
 
 function ensureOutDir(outDir, force) {
-  if (existsSync(outDir)) {
-    if (!force) {
-      throw new Error(`Output directory already exists: ${outDir}\nUse --force to replace it.`);
-    }
-    rmSync(outDir, { recursive: true, force: true });
+  if (!existsSync(outDir)) {
+    mkdirSync(outDir, { recursive: true });
+    return;
   }
-  mkdirSync(outDir, { recursive: true });
+
+  for (const entry of readdirSync(outDir, { withFileTypes: true })) {
+    if (entry.name === '.git') {
+      continue;
+    }
+    rmSync(resolve(outDir, entry.name), { recursive: true, force: true });
+  }
 }
 
 function copyFiles(files, outDir) {

@@ -4,8 +4,8 @@ import {
   ReactDslHostStatus,
   ReactDslHostToasts,
   resolveHostApiBase,
-} from '@loj-lang/rdsl-host-react';
-import type { AuthState, ToastMessage } from '@loj-lang/rdsl-runtime';
+} from '@loj/rdsl-host-react';
+import type { AuthState, ToastMessage } from '@loj/rdsl-runtime';
 
 declare global {
   interface Window {

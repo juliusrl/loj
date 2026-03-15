@@ -8,12 +8,12 @@
     "docs/loj-core-phase-3-execution-plan.md",
     "docs/archive/loj-core-transition-plan.md",
     "docs/loj-transport-contract.md",
-    "docs/recommended-project-structure.md",
+    "docs/internal-release/release-package-hardening.md",
     "scripts/phase3-preflight.mjs"
   ],
   "allowedLegacyCommandAliasFiles": [
     "config/loj.compatibility.json",
-    "docs/loj-project-file-contract.md",
+    "docs/internal-release/compatibility-policy.md",
     "docs/archive/loj-vscode-language-split-plan.md",
     "packages/loj-vscode/package.json",
     "packages/loj-vscode/src/extension.ts"

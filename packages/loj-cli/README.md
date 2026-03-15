@@ -65,6 +65,9 @@ npx @loj-lang/cli agent install codex --scope project
 # add a skill bundle from a local or remote source
 npx @loj-lang/cli agent add codex --from ./tooling/skills/loj-authoring
 
+# add directly from the GitHub release asset
+npx @loj-lang/cli agent add codex --from https://github.com/juliusrl/loj/releases/download/v0.5.0/loj-authoring-0.5.0.tgz
+
 # install into any explicit skills directory
 npx @loj-lang/cli agent install generic --skills-dir ~/.my-agent/skills
 

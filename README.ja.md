@@ -9,6 +9,18 @@
 > [!NOTE]
 > **公式サイト近日公開予定：** [loj.org](https://loj.org) を準備中です。インタラクティブなドキュメント、プレイグラウンド、コミュニティ事例を紹介する公式ポータルとなります。
 
+## Quick Start
+
+```bash
+npm install -g @loj-lang/cli
+loj --help
+```
+
+グローバルインストールなしの場合：
+
+```bash
+npx @loj-lang/cli --help
+```
 
 Lojは業務システムを対象にしたAIネイティブDSLファミリーです。目標は汎用のvibe-codedなページ生成ではなく、小さく安定したターゲット中立プリミティブで業務意図を表現し、それをフレームワークに最適なフロントエンド/バックエンドコードへコンパイルしつつ、追跡可能なescape hatchを残すことです。
 
@@ -253,6 +265,9 @@ npx @loj-lang/cli agent export codex --out-dir ./tooling/skills
 # ローカルまたはリモートの skill bundle source から追加
 npx @loj-lang/cli agent add codex --from ./tooling/skills/loj-authoring
 
+# GitHub Release asset から直接インストール
+npx @loj-lang/cli agent add codex --from https://github.com/juliusrl/loj/releases/download/v0.5.0/loj-authoring-0.5.0.tgz
+
 # 任意の明示 skills ディレクトリへインストール
 npx @loj-lang/cli agent install generic --skills-dir ~/.my-agent/skills
 ```
@@ -260,6 +275,16 @@ npx @loj-lang/cli agent install generic --skills-dir ~/.my-agent/skills
 現在の直接取得パスはいずれも published CLI package 経由です：
 - bundled install: `loj agent install ...`
 - remote/local bundle install: `loj agent add ...`
+
+## VSCode 拡張
+
+現在の VSCode beta は VSIX release asset として配布しています：
+
+- `loj-vscode-0.5.0.vsix`
+
+GitHub Release ページから取得し、VSCode で次を実行してください：
+
+- `Extensions: Install from VSIX...`
 
 ## ライセンス
 

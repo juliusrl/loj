@@ -9,6 +9,18 @@
 > [!NOTE]
 > **Official Website Coming Soon:** I am building [loj.org](https://loj.org) to serve as the canonical home for interactive documentation, playground, and community showcases.
 
+## Quick Start
+
+```bash
+npm install -g @loj-lang/cli
+loj --help
+```
+
+Without a global install:
+
+```bash
+npx @loj-lang/cli --help
+```
 
 Loj is an AI-native DSL family for building business systems with a small set of target-neutral primitives. The goal is not generic vibe-coded pages. The goal is to keep business intent narrow and stable, then compile it into framework-specific frontend and backend code with traceable escape hatches.
 
@@ -253,6 +265,9 @@ npx @loj-lang/cli agent export codex --out-dir ./tooling/skills
 # install from a local or remote skill bundle source
 npx @loj-lang/cli agent add codex --from ./tooling/skills/loj-authoring
 
+# install directly from the GitHub release asset
+npx @loj-lang/cli agent add codex --from https://github.com/juliusrl/loj/releases/download/v0.5.0/loj-authoring-0.5.0.tgz
+
 # install into any explicit skills directory
 npx @loj-lang/cli agent install generic --skills-dir ~/.my-agent/skills
 ```
@@ -260,6 +275,16 @@ npx @loj-lang/cli agent install generic --skills-dir ~/.my-agent/skills
 The current direct pull path is through the published CLI package:
 - bundled install: `loj agent install ...`
 - remote/local bundle install: `loj agent add ...`
+
+## VSCode Extension
+
+The current VSCode beta is distributed as a VSIX release asset:
+
+- `loj-vscode-0.5.0.vsix`
+
+Install it from the GitHub release page or in VSCode via:
+
+- `Extensions: Install from VSIX...`
 
 ## License
 

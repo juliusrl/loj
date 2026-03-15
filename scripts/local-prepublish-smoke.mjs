@@ -41,7 +41,7 @@ const BANNED_SKILL_REFERENCES = [
   'trace-manifest.md',
   'loj-project-file-contract.md',
   'loj-transport-contract.md',
-  '',
+  'internal-release/',
 ];
 
 function parseArgs(argv) {
