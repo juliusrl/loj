@@ -9,6 +9,58 @@
 > [!NOTE]
 > **Official Website Coming Soon:** I am building [loj.org](https://loj.org) to serve as the canonical home for interactive documentation, playground, and community showcases.
 
+<details>
+<summary><strong>Minimal source vs generated UI</strong></summary>
+
+<table>
+  <tr>
+    <td valign="top" width="52%">
+
+```loj
+// examples/fullstack-minimal-users/frontend/app.web.loj
+app:
+  name: "Minimal Users"
+  navigation:
+    - group: "Admin"
+      items:
+        - label: "Users"
+          target: resource.users.list
+
+model User:
+  name: string @required
+  email: string @required @email
+
+resource users:
+  model: User
+  api: /api/users
+  list:
+    title: "Users"
+
+// examples/fullstack-minimal-users/backend/app.api.loj
+app:
+  name: "Minimal Users API"
+  package: "com.example.minimalusers"
+
+model User:
+  name: string @required
+  email: string @required @email
+
+resource users:
+  model: User
+  api: /api/users
+```
+
+This exact minimal example lives under [examples/fullstack-minimal-users](examples/fullstack-minimal-users/README.md). From a small source surface like this, Loj expands into a generated React admin shell plus a generated Spring Boot or FastAPI backend.
+
+  </td>
+  <td valign="top" width="48%">
+    <img src="docs/public-proof-assets/readme-user-admin-preview.svg" alt="Generated admin-style UI preview" />
+  </td>
+  </tr>
+</table>
+
+</details>
+
 ## Quick Start
 
 ```bash

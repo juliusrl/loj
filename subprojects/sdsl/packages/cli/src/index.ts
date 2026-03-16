@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import * as nodeFs from 'node:fs';
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, watch, writeFileSync } from 'node:fs';
 import { basename, dirname, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -880,6 +881,20 @@ function writeUsage(write: (text: string) => void): void {
   write(`  sdsl dev <source${CANONICAL_SDSL_SOURCE_SUFFIX}|source.sdsl> [--out-dir <dir>] [--project-root <dir>] [--json]\n`);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+function realpathCompat(path: string): string {
+  return (nodeFs as typeof nodeFs & { realpathSync(path: string): string }).realpathSync(path);
+}
+
+const currentModulePath = decodeURIComponent(new URL(import.meta.url).pathname);
+const invokedCliPath = process.argv[1];
+let isDirectCliEntry = false;
+if (invokedCliPath) {
+  try {
+    isDirectCliEntry = realpathCompat(invokedCliPath) === realpathCompat(currentModulePath);
+  } catch {
+    isDirectCliEntry = import.meta.url === pathToFileURL(invokedCliPath).href;
+  }
+}
+if (isDirectCliEntry) {
   process.exitCode = runCli(process.argv.slice(2));
 }

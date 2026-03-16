@@ -1,6 +1,6 @@
 {
   "name": "@loj-lang/sdsl-compiler",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Backend-family compiler for .api.loj sources (legacy alias: .sdsl); current codegen: Spring Boot + Java and FastAPI + Python",
   "type": "module",
   "main": "./dist/index.js",

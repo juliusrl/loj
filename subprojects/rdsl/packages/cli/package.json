@@ -1,6 +1,6 @@
 {
   "name": "@loj-lang/rdsl-cli",
-  "version": "0.5.0",
+  "version": "0.5.3",
   "description": "ReactDSL developer CLI",
   "type": "module",
   "main": "./dist/index.js",

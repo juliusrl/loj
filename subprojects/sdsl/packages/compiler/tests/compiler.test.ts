@@ -1532,6 +1532,7 @@ resource publicAnnouncements:
     expect(controller?.content).toContain('@RequestMapping("/api/users")');
     expect(controller?.content).toContain('@PreAuthorize("hasAnyRole(\'ADMIN\')")');
     expect(controller?.content).toContain('new ListEnvelope<>(service.list())');
+    expect(controller?.content).not.toContain('import com.example.userservice.security.PolicyPrincipal;');
     expect(entity?.content).toContain('@Entity');
     expect(entity?.content).toContain('@Table(name = "user_records"');
     expect(entity?.content).toContain('@Enumerated(EnumType.STRING)');

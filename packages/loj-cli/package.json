@@ -1,6 +1,6 @@
 {
   "name": "@loj-lang/cli",
-  "version": "0.5.0",
+  "version": "0.5.5",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/juliusrl/loj.git",
@@ -37,9 +37,9 @@
   },
   "dependencies": {
     "@loj-lang/rdsl-compiler": "^0.5.0",
-    "@loj-lang/rdsl-cli": "^0.5.0",
-    "@loj-lang/sdsl-compiler": "^0.5.0",
-    "@loj-lang/sdsl-cli": "^0.5.0",
+    "@loj-lang/rdsl-cli": "^0.5.3",
+    "@loj-lang/sdsl-compiler": "^0.5.1",
+    "@loj-lang/sdsl-cli": "^0.5.4",
     "yaml": "^2.7.0"
   },
   "devDependencies": {

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import * as nodeFs from 'node:fs';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, watch, writeFileSync } from 'node:fs';
 import { basename, dirname, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -22,7 +23,7 @@ import {
   serializeProjectCache,
   stripRdslSourceSuffix,
 } from '@loj-lang/rdsl-compiler';
-import { createReactDslViteHostTemplate } from '../../host-react/dist/template.js';
+import { createReactDslViteHostTemplate } from '@loj-lang/rdsl-host-react/template';
 import type {
   CompileError,
   CompileResult,
@@ -36,7 +37,7 @@ import type {
   TraceNodeEntry,
   HostFileEntry,
 } from '@loj-lang/rdsl-compiler';
-import type { CreateReactDslViteHostTemplateOptions, ReactDslHostTemplateFile } from '../../host-react/dist/template.js';
+import type { CreateReactDslViteHostTemplateOptions, ReactDslHostTemplateFile } from '@loj-lang/rdsl-host-react/template';
 
 export interface CliIO {
   cwd?: string;
@@ -1517,6 +1518,20 @@ function writeDevReadFailure(
   context.stderr(`${message}\n`);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+function realpathCompat(path: string): string {
+  return (nodeFs as typeof nodeFs & { realpathSync(path: string): string }).realpathSync(path);
+}
+
+const currentModulePath = decodeURIComponent(new URL(import.meta.url).pathname);
+const invokedCliPath = process.argv[1];
+let isDirectCliEntry = false;
+if (invokedCliPath) {
+  try {
+    isDirectCliEntry = realpathCompat(invokedCliPath) === realpathCompat(currentModulePath);
+  } catch {
+    isDirectCliEntry = import.meta.url === pathToFileURL(invokedCliPath).href;
+  }
+}
+if (isDirectCliEntry) {
   process.exitCode = runCli(process.argv.slice(2));
 }

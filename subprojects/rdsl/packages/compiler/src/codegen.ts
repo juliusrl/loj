@@ -4658,9 +4658,9 @@ function generateAppEntry(ir: IRApp): GeneratedFile {
   if (ir.style) {
     lines.push(`import './styles/generated-styles.css';`);
   }
-  lines.push(`import { getCurrentAppPathname } from '@loj-lang/rdsl-runtime/hooks/navigation';`);
+  lines.push(`import { getCurrentAppPathname, prefixAppBasePath } from '@loj-lang/rdsl-runtime/hooks/navigation';`);
   lines.push(`import { AdminLayout } from './layout/AdminLayout';`);
-  lines.push(`import { matchRoute } from './router';`);
+  lines.push(`import { matchRoute, routes } from './router';`);
   lines.push(``);
   lines.push(`export function App() {`);
   lines.push(`  const [pathname, setPathname] = React.useState(() => getCurrentAppPathname());`);
@@ -4672,6 +4672,19 @@ function generateAppEntry(ir: IRApp): GeneratedFile {
   lines.push(`  }, []);`);
   lines.push(``);
   lines.push(`  const matchedRoute = matchRoute(pathname);`);
+  lines.push(`  const defaultRoutePath = React.useMemo(() => {`);
+  lines.push(`    const staticRoute = routes.find((route) => !route.path.includes('/:'));`);
+  lines.push(`    return staticRoute?.path ?? routes[0]?.path ?? null;`);
+  lines.push(`  }, []);`);
+  lines.push(``);
+  lines.push(`  React.useEffect(() => {`);
+  lines.push(`    if (pathname !== '/' || matchedRoute || !defaultRoutePath || defaultRoutePath === pathname) {`);
+  lines.push(`      return;`);
+  lines.push(`    }`);
+  lines.push(`    window.history.replaceState(window.history.state, '', prefixAppBasePath(defaultRoutePath));`);
+  lines.push(`    setPathname(defaultRoutePath);`);
+  lines.push(`  }, [defaultRoutePath, matchedRoute, pathname]);`);
+  lines.push(``);
   lines.push(`  const ResolvedRoute = matchedRoute?.component;`);
   lines.push(`  const routeParams = matchedRoute?.params ?? {};`);
   lines.push(`  return (`);

@@ -1,0 +1,49 @@
+app:
+  name: "Minimal Users"
+  theme: light
+  auth: jwt
+  navigation:
+    - group: "Admin"
+      items:
+        - label: "Users"
+          icon: users
+          target: resource.users.list
+
+compiler:
+  target: react
+
+model User:
+  name: string @required
+  email: string @required @email
+
+resource users:
+  model: User
+  api: /api/users
+
+  list:
+    title: "Users"
+    columns:
+      - name
+      - email
+    actions:
+      - create
+      - view
+      - edit
+
+  read:
+    title: "User Detail"
+    fields:
+      - name
+      - email
+
+  create:
+    fields: [name, email]
+    onSuccess:
+      - redirect: users.list
+      - toast: "User created"
+
+  edit:
+    fields: [name, email]
+    onSuccess:
+      - refresh: users
+      - toast: "User saved"

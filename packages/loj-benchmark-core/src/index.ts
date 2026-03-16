@@ -18,6 +18,7 @@ import type {
   IRResource,
   RuleValue,
 } from '@loj-lang/rdsl-compiler/ir';
+import * as nodeFs from 'node:fs';
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -1805,6 +1806,20 @@ function formatRate(rate: number): string {
   return `${(rate * 100).toFixed(2)}%`;
 }
 
-if (process.argv[1] && import.meta.url === new URL(process.argv[1], 'file:').href) {
+function realpathCompat(path: string): string {
+  return (nodeFs as typeof nodeFs & { realpathSync(path: string): string }).realpathSync(path);
+}
+
+const currentModulePath = fileURLToPath(import.meta.url);
+const invokedCliPath = process.argv[1];
+let isDirectCliEntry = false;
+if (invokedCliPath) {
+  try {
+    isDirectCliEntry = realpathCompat(invokedCliPath) === realpathCompat(currentModulePath);
+  } catch {
+    isDirectCliEntry = import.meta.url === new URL(invokedCliPath, 'file:').href;
+  }
+}
+if (isDirectCliEntry) {
   process.exitCode = runCli(process.argv.slice(2));
 }

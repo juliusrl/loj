@@ -1,0 +1,11 @@
+app:
+  name: "Minimal Users API"
+  package: "com.example.minimalusers"
+
+model User:
+  name: string @required
+  email: string @required @email
+
+resource users:
+  model: User
+  api: /api/users

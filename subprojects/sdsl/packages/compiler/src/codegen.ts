@@ -1179,6 +1179,7 @@ function generateController(ir: IRSdslProgram, resource: IRResource, model: IRMo
   const hasRulesPolicy = resource.auth.policy?.source === 'rules';
   const hasCreateRules = Boolean(resource.create?.rules);
   const hasWorkflow = Boolean(resource.workflow);
+  const needsPolicyPrincipal = hasPolicy || hasCreateRules || hasWorkflow;
   const nestedCreate = analyzeNestedCreateResource(ir, resource, model);
   const nestedUpdate = analyzeNestedUpdateResource(ir, resource, model);
   const createRequestClass = nestedCreate ? resourceCreateRequestClassName(resource) : `${model.name}Request`;
@@ -1198,7 +1199,6 @@ function generateController(ir: IRSdslProgram, resource: IRResource, model: IRMo
     `import ${ir.app.packageName}.api.ListEnvelope;`,
     `import ${ir.app.packageName}.dto.${model.name}Request;`,
     `import ${ir.app.packageName}.dto.${model.name}Response;`,
-    `import ${ir.app.packageName}.security.PolicyPrincipal;`,
     `import ${ir.app.packageName}.service.${model.name}Service;`,
     'import jakarta.validation.Valid;',
     'import java.util.List;',
@@ -1223,6 +1223,9 @@ function generateController(ir: IRSdslProgram, resource: IRResource, model: IRMo
   }
   if (nestedUpdate) {
     imports.push(`import ${ir.app.packageName}.dto.${resourceUpdateRequestClassName(resource)};`);
+  }
+  if (needsPolicyPrincipal) {
+    imports.push(`import ${ir.app.packageName}.security.PolicyPrincipal;`);
   }
   if (hasPolicy) {
     imports.push(`import ${ir.app.packageName}.security.${policyClassName(resource)};`);

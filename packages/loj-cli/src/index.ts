@@ -14,6 +14,7 @@ import { basename, dirname, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import YAML from 'yaml';
 import { runCli as runReactCli } from '@loj-lang/rdsl-cli';
+import { compileProject as compileFrontendProject } from '@loj-lang/rdsl-compiler';
 import { runCli as runSpringCli } from '@loj-lang/sdsl-cli';
 import { compileProject as compileBackendProject } from '@loj-lang/sdsl-compiler';
 import type { IRSdslProgram } from '@loj-lang/sdsl-compiler';
@@ -93,6 +94,16 @@ interface DoctorCommandOptions {
   projectFile: string;
   json: boolean;
   targetAliases: string[];
+}
+
+type GraphSurface = 'source' | 'frontend' | 'backend' | 'all';
+
+interface GraphCommandOptions {
+  projectFile: string;
+  json: boolean;
+  targetAliases: string[];
+  surface: GraphSurface;
+  outDir?: string;
 }
 
 interface RebuildCommandOptions {
@@ -560,7 +571,7 @@ const fastApiDevRunnerPath = fileURLToPath(new URL('./fastapi-dev-runner.js', im
 const springDebugPort = 5005;
 const fastApiDebugPort = 5678;
 const localDebugHost = '127.0.0.1';
-const lojVersion = '0.5.0';
+const lojVersion = '0.5.5';
 const lojReleaseName = 'Logos';
 
 function formatLojVersionLabel(): string {
@@ -755,6 +766,8 @@ export function runCli(args: string[], io: CliIO = {}): number {
       return handleStop(parseStopArgs(rest), context);
     case 'doctor':
       return handleDoctor(parseDoctorArgs(rest), context);
+    case 'graph':
+      return handleGraph(parseGraphArgs(rest), context);
     case 'rules':
       return handleRules(parseRulesArgs(rest), context);
     case 'flow':
@@ -2029,6 +2042,135 @@ function handleRules(
   return 0;
 }
 
+interface GraphDocument {
+  id: string;
+  title: string;
+  mermaid: string;
+}
+
+interface GraphPayloadTargetSummary {
+  alias: string;
+  type: 'web' | 'api';
+  entry: string;
+}
+
+function handleGraph(
+  options: GraphCommandOptions | CommandParseError,
+  context: CommandContext,
+): number {
+  if ('error' in options) {
+    context.stderr(`${options.error}\n`);
+    return 1;
+  }
+
+  const loaded = loadProject(options.projectFile, context.cwd, context.env);
+  if ('error' in loaded) {
+    writeFailure(loaded.error, context.stderr, context.stdout, options.json);
+    return 1;
+  }
+  const selectedTargets = selectProjectTargets(loaded.project, options.targetAliases);
+  if ('error' in selectedTargets) {
+    writeFailure(selectedTargets.error, context.stderr, context.stdout, options.json);
+    return 1;
+  }
+
+  const activeProject = selectedTargets.project;
+  const graphDocuments: GraphDocument[] = [];
+  const compileErrors: string[] = [];
+
+  if (options.surface === 'source' || options.surface === 'all') {
+    const sourceGraphs = buildProjectSourceGraphs(activeProject);
+    if ('error' in sourceGraphs) {
+      compileErrors.push(sourceGraphs.error);
+    } else {
+      graphDocuments.push(...sourceGraphs.documents);
+    }
+  }
+
+  if (options.surface === 'frontend' || options.surface === 'all') {
+    for (const target of activeProject.targets.filter((entry) => entry.type === 'rdsl')) {
+      const frontendGraph = buildFrontendGeneratedGraph(target, activeProject.projectDir);
+      if ('error' in frontendGraph) {
+        compileErrors.push(frontendGraph.error);
+        continue;
+      }
+      graphDocuments.push(frontendGraph.document);
+    }
+  }
+
+  if (options.surface === 'backend' || options.surface === 'all') {
+    for (const target of activeProject.targets.filter((entry) => entry.type === 'sdsl')) {
+      const backendGraph = buildBackendGeneratedGraph(target, activeProject.projectDir);
+      if ('error' in backendGraph) {
+        compileErrors.push(backendGraph.error);
+        continue;
+      }
+      graphDocuments.push(backendGraph.document);
+    }
+  }
+
+  if (compileErrors.length > 0) {
+    if (options.json) {
+      writeJsonArtifact(context.stdout, 'loj.graph.result', {
+        success: false,
+        projectFile: options.projectFile,
+        surface: options.surface,
+        app: { name: activeProject.appName },
+        targets: activeProject.targets.map((target) => ({
+          alias: target.alias,
+          type: presentTargetType(target.type),
+          entry: target.entry,
+        })),
+        errors: compileErrors,
+        graphs: [],
+      });
+      return 1;
+    }
+    writeFailure(compileErrors.join('\n'), context.stderr, context.stdout, false);
+    return 1;
+  }
+
+  if (options.json) {
+    writeJsonArtifact(context.stdout, 'loj.graph.result', {
+      success: true,
+      projectFile: options.projectFile,
+      surface: options.surface,
+      app: { name: activeProject.appName },
+      targets: activeProject.targets.map((target): GraphPayloadTargetSummary => ({
+        alias: target.alias,
+        type: presentTargetType(target.type),
+        entry: target.entry,
+      })),
+      graphs: graphDocuments,
+    });
+    return 0;
+  }
+
+  if (options.outDir) {
+    const absoluteOutDir = resolve(context.cwd, options.outDir);
+    mkdirSync(absoluteOutDir, { recursive: true });
+    for (const graph of graphDocuments) {
+      const graphFile = resolve(absoluteOutDir, `${graph.id}.mmd`);
+      writeFileSync(graphFile, `${graph.mermaid}\n`, 'utf8');
+    }
+  }
+
+  writeCliBanner(context.stdout, 'loj graph', 'emit mermaid architecture views for the selected project');
+  context.stdout(`Project graph: ${normalizePath(resolveProjectAbsoluteFile(options.projectFile, context.cwd))}\n\n`);
+  for (const graph of graphDocuments) {
+    context.stdout(`${graph.title}\n`);
+    context.stdout('```mermaid\n');
+    context.stdout(`${graph.mermaid}\n`);
+    context.stdout('```\n\n');
+  }
+  writeCliSection(context.stdout, 'next', [
+    ...(options.outDir ? [`wrote mermaid files to: ${normalizePath(options.outDir)}`] : []),
+    `copy a graph into docs or release notes`,
+    `re-run with JSON output: loj graph ${options.projectFile} --json`,
+  ]);
+  return 0;
+}
+
 function handleFlow(
   options: FlowHelpCommand | FlowValidateCommandOptions | FlowBuildCommandOptions | CommandParseError,
   context: CommandContext,
@@ -2271,8 +2413,48 @@ function parseDoctorArgs(args: string[]): DoctorCommandOptions | CommandParseErr
   return parsed;
 }
 
+function parseGraphArgs(args: string[]): GraphCommandOptions | CommandParseError {
+  if (args.length === 0) {
+    return { error: 'Usage: loj graph <loj.project.yaml> [--surface source|frontend|backend|all] [--target <alias>] [--out-dir <dir>] [--json]' };
+  }
+  let surface: GraphSurface = 'all';
+  let outDir: string | undefined;
+  const filteredArgs: string[] = [];
+  for (let index = 0; index < args.length; index += 1) {
+    const arg = args[index];
+    if (arg === '--surface') {
+      const value = (args[index + 1] ?? '').trim();
+      if (value !== 'source' && value !== 'frontend' && value !== 'backend' && value !== 'all') {
+        return { error: 'loj graph --surface must be one of: source, frontend, backend, all' };
+      }
+      surface = value;
+      index += 1;
+      continue;
+    }
+    if (arg === '--out-dir') {
+      const value = (args[index + 1] ?? '').trim();
+      if (!value) {
+        return { error: 'loj graph --out-dir must be a non-empty path' };
+      }
+      outDir = value;
+      index += 1;
+      continue;
+    }
+    filteredArgs.push(arg);
+  }
+  const parsed = parseProjectTargetArgs('graph', filteredArgs);
+  if ('error' in parsed) {
+    return parsed;
+  }
+  return {
+    ...parsed,
+    surface,
+    outDir,
+  };
+}
+
 function parseProjectTargetArgs(
-  command: 'build' | 'dev' | 'rebuild' | 'status' | 'doctor',
+  command: 'build' | 'dev' | 'rebuild' | 'status' | 'doctor' | 'graph',
   args: string[],
   options: { debug?: boolean } = {},
 ): { projectFile: string; json: boolean; targetAliases: string[]; debug?: boolean } | CommandParseError {
@@ -5195,6 +5377,394 @@ function compileBackendIrForTarget(
   }
 }
 
+function compileFrontendSemanticForTarget(
+  target: LojTargetConfig,
+  projectDir: string,
+): { ir: Record<string, unknown>; files: Array<{ path: string }>; sourceFiles: string[]; moduleGraph?: Record<string, string[]> } | { error: string } {
+  try {
+    const compiled = compileFrontendProject({
+      entryFile: target.entry,
+      projectRoot: '.',
+      readFile(fileName: string) {
+        return readFileSync(resolve(projectDir, fileName), 'utf8');
+      },
+      listFiles(directory: string) {
+        const absoluteDirectory = resolve(projectDir, directory);
+        return nodeFs.readdirSync(absoluteDirectory)
+          .map((entry: string) => normalizePath(directory === '.' ? entry : `${directory}/${entry}`));
+      },
+    });
+    if (!compiled.success || !compiled.ir) {
+      const firstError = compiled.errors[0];
+      return {
+        error: `failed to compile frontend graph for target "${target.alias}"${firstError ? `: ${firstError.message}` : ''}`,
+      };
+    }
+    return {
+      ir: compiled.ir as unknown as Record<string, unknown>,
+      files: compiled.files.map((file) => ({ path: file.path })),
+      sourceFiles: compiled.semanticManifest?.sourceFiles ?? [target.entry],
+      moduleGraph: compiled.semanticManifest?.moduleGraph,
+    };
+  } catch (error) {
+    return {
+      error: `failed to compile frontend graph for target "${target.alias}": ${error instanceof Error ? error.message : String(error)}`,
+    };
+  }
+}
+
+function buildProjectSourceGraphs(
+  project: LojProjectConfig,
+): { documents: GraphDocument[] } | { error: string } {
+  const documents: GraphDocument[] = [];
+  for (const target of project.targets) {
+    if (target.type === 'rdsl') {
+      const compiled = compileFrontendSemanticForTarget(target, project.projectDir);
+      if ('error' in compiled) {
+        return compiled;
+      }
+      documents.push({
+        id: `${target.alias}.source`,
+        title: `Source graph (${target.alias})`,
+        mermaid: buildFrontendSourceMermaid(project, target, compiled.ir, compiled.sourceFiles, compiled.moduleGraph),
+      });
+      continue;
+    }
+    const compiled = compileBackendIrForTarget(target, project.projectDir);
+    if ('error' in compiled) {
+      return compiled;
+    }
+    documents.push({
+      id: `${target.alias}.source`,
+      title: `Source graph (${target.alias})`,
+      mermaid: buildBackendSourceMermaid(project, target, compiled.ir),
+    });
+  }
+  return { documents };
+}
+
+function buildFrontendGeneratedGraph(
+  target: LojTargetConfig,
+  projectDir: string,
+): { document: GraphDocument } | { error: string } {
+  const compiled = compileFrontendSemanticForTarget(target, projectDir);
+  if ('error' in compiled) {
+    return compiled;
+  }
+  return {
+    document: {
+      id: `${target.alias}.frontend`,
+      title: `Generated frontend graph (${target.alias})`,
+      mermaid: buildFrontendGeneratedMermaid(target, compiled.files),
+    },
+  };
+}
+
+function buildBackendGeneratedGraph(
+  target: LojTargetConfig,
+  projectDir: string,
+): { document: GraphDocument } | { error: string } {
+  const compiled = compileBackendProject({
+    entryFile: target.entry,
+    projectRoot: '.',
+    readFile(fileName: string) {
+      return readFileSync(resolve(projectDir, fileName), 'utf8');
+    },
+    listFiles(directory: string) {
+      const absoluteDirectory = resolve(projectDir, directory);
+      return nodeFs.readdirSync(absoluteDirectory)
+        .map((entry: string) => normalizePath(directory === '.' ? entry : `${directory}/${entry}`));
+    },
+  });
+  if (!compiled.success) {
+    const firstError = compiled.errors[0];
+    return {
+      error: `failed to compile backend graph for target "${target.alias}"${firstError ? `: ${firstError.message}` : ''}`,
+    };
+  }
+  return {
+    document: {
+      id: `${target.alias}.backend`,
+      title: `Generated backend graph (${target.alias})`,
+      mermaid: buildBackendGeneratedMermaid(target, compiled.files.map((file) => ({ path: file.path }))),
+    },
+  };
+}
+
+function buildFrontendSourceMermaid(
+  project: LojProjectConfig,
+  target: LojTargetConfig,
+  ir: Record<string, unknown>,
+  sourceFiles: string[],
+  moduleGraph?: Record<string, string[]>,
+): string {
+  const lines = ['flowchart TD'];
+  const appId = mermaidNodeId(`app.${target.alias}`);
+  lines.push(`  ${appId}[${mermaidLabel(`${project.appName} / ${target.alias}`)}]`);
+  const entryId = mermaidNodeId(`entry.${target.alias}`);
+  lines.push(`  ${entryId}[${mermaidLabel(target.entry)}]`);
+  lines.push(`  ${appId} --> ${entryId}`);
+
+  const models = toNamedList(ir.models);
+  const resources = toNamedList(ir.resources);
+  const readModels = toNamedList(ir.readModels);
+  const pages = toNamedList(ir.pages);
+
+  for (const file of sourceFiles) {
+    const fileId = mermaidNodeId(`sourceFile.${target.alias}.${file}`);
+    lines.push(`  ${fileId}[${mermaidLabel(file)}]`);
+    lines.push(`  ${entryId} -.imports.-> ${fileId}`);
+  }
+  if (moduleGraph) {
+    for (const [from, imports] of Object.entries(moduleGraph)) {
+      const fromId = mermaidNodeId(`sourceFile.${target.alias}.${from}`);
+      for (const imported of imports) {
+        const importedId = mermaidNodeId(`sourceFile.${target.alias}.${imported}`);
+        lines.push(`  ${fromId} -.imports.-> ${importedId}`);
+      }
+    }
+  }
+
+  for (const model of models) {
+    const modelId = mermaidNodeId(`model.${target.alias}.${model.name}`);
+    lines.push(`  ${modelId}[${mermaidLabel(`model ${model.name}`)}]`);
+    lines.push(`  ${appId} --> ${modelId}`);
+  }
+  for (const resource of resources) {
+    const resourceId = mermaidNodeId(`resource.${target.alias}.${resource.name}`);
+    lines.push(`  ${resourceId}[${mermaidLabel(`resource ${resource.name}`)}]`);
+    lines.push(`  ${appId} --> ${resourceId}`);
+    if (typeof resource.model === 'string') {
+      lines.push(`  ${resourceId} --> ${mermaidNodeId(`model.${target.alias}.${resource.model}`)}`);
+    }
+    const workflow = resource.workflow;
+    if (workflow && typeof workflow === 'object' && typeof (workflow as { resolvedPath?: unknown }).resolvedPath === 'string') {
+      const workflowPath = (workflow as { resolvedPath: string }).resolvedPath;
+      const workflowId = mermaidNodeId(`workflow.${target.alias}.${workflowPath}`);
+      lines.push(`  ${workflowId}[${mermaidLabel(`workflow ${basename(workflowPath)}`)}]`);
+      lines.push(`  ${resourceId} --> ${workflowId}`);
+    }
+  }
+  for (const readModel of readModels) {
+    const readModelId = mermaidNodeId(`readModel.${target.alias}.${readModel.name}`);
+    lines.push(`  ${readModelId}[${mermaidLabel(`readModel ${readModel.name}`)}]`);
+    lines.push(`  ${appId} --> ${readModelId}`);
+    const rules = readModel.rules;
+    if (rules && typeof rules === 'object' && typeof (rules as { resolvedPath?: unknown }).resolvedPath === 'string') {
+      const rulesPath = (rules as { resolvedPath: string }).resolvedPath;
+      const rulesId = mermaidNodeId(`rules.${target.alias}.${rulesPath}`);
+      lines.push(`  ${rulesId}[${mermaidLabel(`rules ${basename(rulesPath)}`)}]`);
+      lines.push(`  ${readModelId} --> ${rulesId}`);
+    }
+  }
+  for (const page of pages) {
+    const pageId = mermaidNodeId(`page.${target.alias}.${page.name}`);
+    lines.push(`  ${pageId}[${mermaidLabel(`page ${page.name}`)}]`);
+    lines.push(`  ${appId} --> ${pageId}`);
+    const blocks = Array.isArray(page.blocks) ? page.blocks : [];
+    for (const block of blocks) {
+      if (!block || typeof block !== 'object' || typeof (block as { id?: unknown }).id !== 'string') {
+        continue;
+      }
+      const blockTitle = typeof (block as { title?: unknown }).title === 'string'
+        ? (block as { title: string }).title
+        : (block as { blockType?: unknown }).blockType === 'string'
+          ? (block as { blockType: string }).blockType
+          : 'block';
+      const blockId = mermaidNodeId(`pageBlock.${target.alias}.${(block as { id: string }).id}`);
+      lines.push(`  ${blockId}[${mermaidLabel(`block ${blockTitle}`)}]`);
+      lines.push(`  ${pageId} --> ${blockId}`);
+      const data = (block as { data?: unknown }).data;
+      if (typeof data === 'string') {
+        lines.push(`  ${blockId} --> ${mermaidNodeId(`readModel.${target.alias}.${data}`)}`);
+      }
+    }
+  }
+  return lines.join('\n');
+}
+
+function buildBackendSourceMermaid(
+  project: LojProjectConfig,
+  target: LojTargetConfig,
+  ir: IRSdslProgram,
+): string {
+  const lines = ['flowchart TD'];
+  const appId = mermaidNodeId(`app.${target.alias}`);
+  lines.push(`  ${appId}[${mermaidLabel(`${project.appName} / ${target.alias}`)}]`);
+  const entryId = mermaidNodeId(`entry.${target.alias}`);
+  lines.push(`  ${entryId}[${mermaidLabel(target.entry)}]`);
+  lines.push(`  ${appId} --> ${entryId}`);
+
+  for (const sourceFile of ir.sourceFiles) {
+    const sourceId = mermaidNodeId(`sourceFile.${target.alias}.${sourceFile}`);
+    lines.push(`  ${sourceId}[${mermaidLabel(sourceFile)}]`);
+    lines.push(`  ${entryId} -.imports.-> ${sourceId}`);
+  }
+  for (const [from, imports] of Object.entries(ir.moduleGraph)) {
+    const fromId = mermaidNodeId(`sourceFile.${target.alias}.${from}`);
+    for (const imported of imports) {
+      const importedId = mermaidNodeId(`sourceFile.${target.alias}.${imported}`);
+      lines.push(`  ${fromId} -.imports.-> ${importedId}`);
+    }
+  }
+
+  for (const model of ir.models) {
+    const modelId = mermaidNodeId(`model.${target.alias}.${model.name}`);
+    lines.push(`  ${modelId}[${mermaidLabel(`model ${model.name}`)}]`);
+    lines.push(`  ${appId} --> ${modelId}`);
+  }
+  for (const resource of ir.resources) {
+    const resourceId = mermaidNodeId(`resource.${target.alias}.${resource.name}`);
+    lines.push(`  ${resourceId}[${mermaidLabel(`resource ${resource.name}`)}]`);
+    lines.push(`  ${appId} --> ${resourceId}`);
+    lines.push(`  ${resourceId} --> ${mermaidNodeId(`model.${target.alias}.${resource.model}`)}`);
+    if (resource.workflow) {
+      const workflowId = mermaidNodeId(`workflow.${target.alias}.${resource.workflow.resolvedPath}`);
+      lines.push(`  ${workflowId}[${mermaidLabel(`workflow ${basename(resource.workflow.resolvedPath)}`)}]`);
+      lines.push(`  ${resourceId} --> ${workflowId}`);
+    }
+    if (resource.create?.rules) {
+      const rulesId = mermaidNodeId(`createRules.${target.alias}.${resource.create.rules.resolvedPath}`);
+      lines.push(`  ${rulesId}[${mermaidLabel(`create.rules ${basename(resource.create.rules.resolvedPath)}`)}]`);
+      lines.push(`  ${resourceId} --> ${rulesId}`);
+    }
+  }
+  for (const readModel of ir.readModels) {
+    const readModelId = mermaidNodeId(`readModel.${target.alias}.${readModel.name}`);
+    lines.push(`  ${readModelId}[${mermaidLabel(`readModel ${readModel.name}`)}]`);
+    lines.push(`  ${appId} --> ${readModelId}`);
+    const handlerId = mermaidNodeId(`handler.${target.alias}.${readModel.name}`);
+    lines.push(`  ${handlerId}[${mermaidLabel(`${readModel.handler.source} ${basename(readModel.handler.resolvedPath)}`)}]`);
+    lines.push(`  ${readModelId} --> ${handlerId}`);
+    if (readModel.rules) {
+      const rulesId = mermaidNodeId(`rules.${target.alias}.${readModel.rules.resolvedPath}`);
+      lines.push(`  ${rulesId}[${mermaidLabel(`rules ${basename(readModel.rules.resolvedPath)}`)}]`);
+      lines.push(`  ${readModelId} --> ${rulesId}`);
+    }
+  }
+  return lines.join('\n');
+}
+
+function buildFrontendGeneratedMermaid(
+  target: LojTargetConfig,
+  files: ReadonlyArray<{ path: string }>,
+): string {
+  const lines = ['flowchart TD'];
+  const appId = mermaidNodeId(`generated.frontend.${target.alias}`);
+  lines.push(`  ${appId}[${mermaidLabel(`generated frontend ${target.alias}`)}]`);
+  const groups = groupGeneratedFrontendFiles(files.map((file) => file.path));
+  for (const [groupName, groupFiles] of groups) {
+    const groupId = mermaidNodeId(`generated.frontend.${target.alias}.${groupName}`);
+    lines.push(`  ${groupId}[${mermaidLabel(`${groupName} (${groupFiles.length})`)}]`);
+    lines.push(`  ${appId} --> ${groupId}`);
+    for (const file of groupFiles.slice(0, 8)) {
+      const fileId = mermaidNodeId(`generated.frontend.file.${target.alias}.${file}`);
+      lines.push(`  ${fileId}[${mermaidLabel(basename(file))}]`);
+      lines.push(`  ${groupId} --> ${fileId}`);
+    }
+    if (groupFiles.length > 8) {
+      const moreId = mermaidNodeId(`generated.frontend.more.${target.alias}.${groupName}`);
+      lines.push(`  ${moreId}[${mermaidLabel(`… ${groupFiles.length - 8} more`)}]`);
+      lines.push(`  ${groupId} --> ${moreId}`);
+    }
+  }
+  return lines.join('\n');
+}
+
+function buildBackendGeneratedMermaid(
+  target: LojTargetConfig,
+  files: ReadonlyArray<{ path: string }>,
+): string {
+  const lines = ['flowchart TD'];
+  const backendId = mermaidNodeId(`generated.backend.${target.alias}`);
+  lines.push(`  ${backendId}[${mermaidLabel(`generated backend ${target.alias}`)}]`);
+  const groups = groupGeneratedBackendFiles(files.map((file) => file.path));
+  for (const [groupName, groupFiles] of groups) {
+    const groupId = mermaidNodeId(`generated.backend.${target.alias}.${groupName}`);
+    lines.push(`  ${groupId}[${mermaidLabel(`${groupName} (${groupFiles.length})`)}]`);
+    lines.push(`  ${backendId} --> ${groupId}`);
+    for (const file of groupFiles.slice(0, 8)) {
+      const fileId = mermaidNodeId(`generated.backend.file.${target.alias}.${file}`);
+      lines.push(`  ${fileId}[${mermaidLabel(basename(file))}]`);
+      lines.push(`  ${groupId} --> ${fileId}`);
+    }
+    if (groupFiles.length > 8) {
+      const moreId = mermaidNodeId(`generated.backend.more.${target.alias}.${groupName}`);
+      lines.push(`  ${moreId}[${mermaidLabel(`… ${groupFiles.length - 8} more`)}]`);
+      lines.push(`  ${groupId} --> ${moreId}`);
+    }
+  }
+  return lines.join('\n');
+}
+
+function groupGeneratedFrontendFiles(files: ReadonlyArray<string>): Map<string, string[]> {
+  const groups = new Map<string, string[]>();
+  for (const file of files.slice().sort()) {
+    const normalized = normalizePath(file);
+    const group = normalized.startsWith('pages/')
+      ? 'pages'
+      : normalized.startsWith('models/')
+        ? 'models'
+        : normalized.startsWith('layout/')
+          ? 'layout'
+      : normalized.startsWith('views/')
+        ? 'views'
+        : normalized.startsWith('styles/')
+          ? 'styles'
+          : normalized.startsWith('frontend/')
+            ? 'host-files'
+            : normalized.startsWith('components/')
+              ? 'components'
+              : normalized === 'App.tsx' || normalized === 'router.tsx' || normalized === 'GENERATED.md'
+                ? 'app-shell'
+                : 'other';
+    const entries = groups.get(group) ?? [];
+    entries.push(normalized);
+    groups.set(group, entries);
+  }
+  return groups;
+}
+
+function groupGeneratedBackendFiles(files: ReadonlyArray<string>): Map<string, string[]> {
+  const groups = new Map<string, string[]>();
+  for (const file of files.slice().sort()) {
+    const normalized = normalizePath(file);
+    const group = normalized.includes('/controller/') || normalized.startsWith('app/routes/') || normalized.startsWith('app/routers/')
+      ? 'routes-controllers'
+      : normalized.includes('/service/') || normalized.startsWith('app/services/')
+        ? 'services'
+        : normalized.includes('/model/') || normalized.includes('/entity/') || normalized.startsWith('app/models/')
+          ? 'models'
+          : normalized.includes('/dto/') || normalized.startsWith('app/dto/')
+            ? 'dto'
+            : normalized.includes('/workflow/') || normalized.startsWith('app/workflow/')
+              ? 'workflow'
+              : normalized.includes('/rules/') || normalized.startsWith('app/rules/') || normalized.startsWith('app/custom/rules/')
+                ? 'rules'
+                : normalized.startsWith('app/custom/read_models/') || normalized.includes('/readmodel/')
+                  ? 'read-models'
+                  : 'support';
+    const entries = groups.get(group) ?? [];
+    entries.push(normalized);
+    groups.set(group, entries);
+  }
+  return groups;
+}
+
+function mermaidNodeId(value: string): string {
+  return value.replace(/[^A-Za-z0-9_]/g, '_');
+}
+
+function mermaidLabel(value: string): string {
+  return value.replace(/"/g, '#quot;');
+}
+
+function toNamedList(value: unknown): Array<Record<string, unknown>> {
+  return Array.isArray(value)
+    ? value.filter((entry): entry is Record<string, unknown> => isRecord(entry) && typeof entry.name === 'string')
+    : [];
+}
+
 function validateDatabaseConfigForTargetRuntime(
   target: LojTargetConfig,
   targetTriple: string | undefined,
@@ -6684,6 +7254,7 @@ function writeUsage(write: (text: string) => void): void {
     '  loj validate <loj.project.yaml> [--json]',
     '  loj build <loj.project.yaml> [--json]',
     '  loj dev <loj.project.yaml> [--target <alias>] [--debug] [--json]',
+    '  loj graph <loj.project.yaml> [--surface source|frontend|backend|all] [--target <alias>] [--out-dir <dir>] [--json]',
     '  loj rebuild <loj.project.yaml> [--target <alias>] [--json]',
     '  loj restart <loj.project.yaml> [--service host|server|all] [--json]',
     '  loj status <loj.project.yaml> [--target <alias>] [--json]',
@@ -6700,6 +7271,7 @@ function writeUsage(write: (text: string) => void): void {
     'Common project-shell loop:',
     '  loj doctor <loj.project.yaml>   # validate dependencies, generated outputs, and linked artifacts',
     '  loj dev <loj.project.yaml>      # watch the project and run managed host/backend services',
+    '  loj graph <loj.project.yaml>    # emit mermaid architecture views for source and generated targets',
     '  loj rebuild <loj.project.yaml>  # rebuild selected targets without restarting the whole loop',
     '  loj restart <loj.project.yaml>  # restart host/server processes inside the active loop',
     '  loj status <loj.project.yaml>   # inspect current URLs, probes, services, and debugger endpoints',
@@ -6755,6 +7327,20 @@ function writeAgentUsage(write: (text: string) => void): void {
   ].join('\n'));
 }
 
-if (import.meta.url === new URL(process.argv[1] ?? '', 'file:').href) {
+function realpathCompat(path: string): string {
+  return (nodeFs as typeof nodeFs & { realpathSync(path: string): string }).realpathSync(path);
+}
+
+const currentModulePath = fileURLToPath(import.meta.url);
+const invokedCliPath = process.argv[1];
+let isDirectCliEntry = false;
+if (invokedCliPath) {
+  try {
+    isDirectCliEntry = realpathCompat(invokedCliPath) === realpathCompat(currentModulePath);
+  } catch {
+    isDirectCliEntry = import.meta.url === new URL(invokedCliPath, 'file:').href;
+  }
+}
+if (isDirectCliEntry) {
   process.exitCode = runCli(process.argv.slice(2));
 }

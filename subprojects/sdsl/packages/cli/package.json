@@ -1,6 +1,6 @@
 {
   "name": "@loj-lang/sdsl-cli",
-  "version": "0.5.0",
+  "version": "0.5.4",
   "description": "Backend-family developer CLI for .api.loj projects (legacy alias: .sdsl)",
   "type": "module",
   "main": "./dist/index.js",
@@ -30,7 +30,7 @@
     "test": "npm run build --workspace=@loj-lang/sdsl-compiler && vitest run"
   },
   "dependencies": {
-    "@loj-lang/sdsl-compiler": "^0.5.0"
+    "@loj-lang/sdsl-compiler": "^0.5.1"
   },
   "devDependencies": {
     "typescript": "^5.7.0",

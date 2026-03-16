@@ -422,6 +422,196 @@ describe('loj-cli', () => {
     expect(stdout.join('')).toContain('backend (api)');
   });
 
+  it('emits source mermaid graphs for selected project targets', () => {
+    const cwd = mkdtempSync(join(tmpdir(), 'loj-cli-graph-source-'));
+    mkdirSync(join(cwd, 'frontend', 'workflows'), { recursive: true });
+    mkdirSync(join(cwd, 'backend', 'workflows'), { recursive: true });
+
+    writeFileSync(join(cwd, 'frontend', 'app.web.loj'), `
+app:
+  name: "Booking Frontend"
+
+compiler:
+  target: react
+
+model Booking:
+  status: enum(DRAFT, READY)
+
+resource bookings:
+  model: Booking
+  api: /api/bookings
+  workflow: '@flow("./workflows/booking-lifecycle")'
+`, 'utf8');
+
+    writeFileSync(join(cwd, 'frontend', 'workflows', 'booking-lifecycle.flow.loj'), `
+workflow bookingLifecycle:
+  model: Booking
+  field: status
+  states:
+    DRAFT:
+      label: "Draft"
+    READY:
+      label: "Ready"
+  transitions:
+    submit:
+      from: DRAFT
+      to: READY
+`, 'utf8');
+
+    writeFileSync(join(cwd, 'backend', 'app.api.loj'), `
+app:
+  name: "Booking Service"
+  package: "com.example.booking"
+
+model Booking:
+  status: enum(DRAFT, READY)
+
+resource bookings:
+  model: Booking
+  api: /api/bookings
+  workflow: '@flow("./workflows/booking-lifecycle")'
+`, 'utf8');
+
+    writeFileSync(join(cwd, 'backend', 'workflows', 'booking-lifecycle.flow.loj'), `
+workflow bookingLifecycle:
+  model: Booking
+  field: status
+  states:
+    DRAFT:
+      label: "Draft"
+    READY:
+      label: "Ready"
+  transitions:
+    submit:
+      from: DRAFT
+      to: READY
+`, 'utf8');
+
+    writeFileSync(join(cwd, 'loj.project.yaml'), `
+app:
+  name: booking-demo
+
+targets:
+  frontend:
+    type: web
+    entry: frontend/app.web.loj
+  backend:
+    type: api
+    entry: backend/app.api.loj
+`, 'utf8');
+
+    const stdout: string[] = [];
+    expect(runCli(['graph', 'loj.project.yaml', '--surface', 'source', '--json'], {
+      cwd,
+      stdout: (text) => stdout.push(text),
+    })).toBe(0);
+
+    const payload = JSON.parse(stdout.join('')) as {
+      artifact: string;
+      success: boolean;
+      graphs: Array<{ id: string; mermaid: string }>;
+    };
+    expect(payload.artifact).toBe('loj.graph.result');
+    expect(payload.success).toBe(true);
+    expect(payload.graphs.some((graph) => graph.id === 'frontend.source' && graph.mermaid.includes('resource bookings'))).toBe(true);
+    expect(payload.graphs.some((graph) => graph.id === 'backend.source' && graph.mermaid.includes('workflow booking-lifecycle.flow.loj'))).toBe(true);
+  });
+
+  it('emits generated frontend and backend graph buckets', () => {
+    const cwd = createTempProject();
+    const stdout: string[] = [];
+
+    expect(runCli(['graph', 'loj.project.yaml', '--json'], {
+      cwd,
+      stdout: (text) => stdout.push(text),
+    })).toBe(0);
+
+    const payload = JSON.parse(stdout.join('')) as {
+      success: boolean;
+      graphs: Array<{ id: string; mermaid: string }>;
+    };
+    expect(payload.success).toBe(true);
+    expect(payload.graphs.some((graph) => graph.id === 'frontend.frontend' && graph.mermaid.includes('models ('))).toBe(true);
+    expect(payload.graphs.some((graph) => graph.id === 'backend.backend' && graph.mermaid.includes('routes-controllers ('))).toBe(true);
+  });
+
+  it('writes mermaid graph files into an output directory', () => {
+    const cwd = createTempProject();
+    const stdout: string[] = [];
+
+    expect(runCli(['graph', 'loj.project.yaml', '--surface', 'frontend', '--out-dir', 'docs/graphs'], {
+      cwd,
+      stdout: (text) => stdout.push(text),
+    })).toBe(0);
+
+    expect(existsSync(join(cwd, 'docs', 'graphs', 'frontend.frontend.mmd'))).toBe(true);
+    expect(readUtf8(join(cwd, 'docs', 'graphs', 'frontend.frontend.mmd'))).toContain('generated frontend frontend');
+    expect(stdout.join('')).toContain('wrote mermaid files to: docs/graphs');
+  });
+
+  it('treats graph out-dir as cwd-relative instead of re-prefixing the project root', () => {
+    const parent = mkdtempSync(join(tmpdir(), 'loj-cli-graph-parent-'));
+    const projectName = 'demo-project';
+    const cwd = join(parent, projectName);
+    mkdirSync(cwd, { recursive: true });
+    mkdirSync(join(cwd, 'frontend'), { recursive: true });
+    mkdirSync(join(cwd, 'backend'), { recursive: true });
+
+    writeFileSync(join(cwd, 'frontend', 'app.web.loj'), `
+app:
+  name: "Graph Demo"
+
+compiler:
+  target: react
+
+model User:
+  name: string @required
+
+resource users:
+  model: User
+  api: /api/users
+`, 'utf8');
+
+    writeFileSync(join(cwd, 'backend', 'app.api.loj'), `
+app:
+  name: "Graph Demo API"
+  package: "com.example.graphdemo"
+
+model User:
+  name: string @required
+
+resource users:
+  model: User
+  api: /api/users
+`, 'utf8');
+
+    writeFileSync(join(cwd, 'loj.project.yaml'), `
+app:
+  name: graph-demo
+
+targets:
+  frontend:
+    type: web
+    entry: frontend/app.web.loj
+    outDir: generated/frontend
+  backend:
+    type: api
+    entry: backend/app.api.loj
+    outDir: generated/backend
+`, 'utf8');
+
+    const stdout: string[] = [];
+    const repoRelativeOutDir = `${projectName}/docs/graphs`;
+    expect(runCli(['graph', `${projectName}/loj.project.yaml`, '--surface', 'frontend', '--out-dir', repoRelativeOutDir], {
+      cwd: parent,
+      stdout: (text) => stdout.push(text),
+    })).toBe(0);
+
+    expect(existsSync(join(parent, projectName, 'docs', 'graphs', 'frontend.frontend.mmd'))).toBe(true);
+    expect(existsSync(join(parent, projectName, projectName, 'docs', 'graphs', 'frontend.frontend.mmd'))).toBe(false);
+    expect(stdout.join('')).toContain(`wrote mermaid files to: ${repoRelativeOutDir}`);
+  });
+
   it('warns when a project target uses legacy rdsl/sdsl naming', () => {
     const cwd = createTempProject();
     writeFileSync(join(cwd, 'frontend', 'app.rdsl'), readFileSync(join(cwd, 'frontend', 'app.web.loj'), 'utf8'), 'utf8');

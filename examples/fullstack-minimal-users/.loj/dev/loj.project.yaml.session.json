@@ -1,0 +1,49 @@
+{
+  "artifact": "loj.dev.session",
+  "schemaVersion": 1,
+  "projectFile": "/mnt/e/dsl/examples/fullstack-minimal-users/loj.project.yaml",
+  "app": {
+    "name": "minimal-users"
+  },
+  "pid": 251552,
+  "startedAt": "2026-03-16T09:32:32.301Z",
+  "updatedAt": "2026-03-16T09:32:33.921Z",
+  "debug": false,
+  "targets": [
+    {
+      "alias": "frontend",
+      "type": "web",
+      "entry": "frontend/app.web.loj",
+      "outDir": "generated/frontend"
+    },
+    {
+      "alias": "backend",
+      "type": "api",
+      "entry": "backend/app.api.loj",
+      "outDir": "generated/backend"
+    }
+  ],
+  "dev": {
+    "hostUrl": "http://0.0.0.0:5173",
+    "backendUrl": "http://0.0.0.0:3001",
+    "apiBase": "/api",
+    "proxyUrl": "http://0.0.0.0:3001",
+    "hostDir": "../../subprojects/rdsl/examples/user-admin/host"
+  },
+  "debuggers": [],
+  "services": [
+    {
+      "kind": "host",
+      "targetAlias": "frontend",
+      "url": "http://0.0.0.0:5173",
+      "description": "frontend host"
+    },
+    {
+      "kind": "server",
+      "targetAlias": "backend",
+      "url": "http://0.0.0.0:3001",
+      "description": "backend server"
+    }
+  ],
+  "databases": []
+}
