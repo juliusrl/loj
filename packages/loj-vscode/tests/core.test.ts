@@ -28,6 +28,7 @@ import {
   formatSemanticAssistStatusBarTooltip,
   listProjectDiagnostics,
   normalizeFsPath,
+  resolveCompilerProjectRoot,
   selectSemanticAssistResult,
   shouldShowCurrentIssuesCommand,
   toGeneratedFilePath,
@@ -144,6 +145,63 @@ describe('vscode extension core helpers', () => {
       '/workspace/other/app.web.loj',
       (fileName) => existing.has(normalizeFsPath(fileName)),
     )).toBeNull();
+  });
+
+  it('uses the nearest loj.project.yaml directory as compiler project root for linked style files', () => {
+    const tempDir = mkdtempSync(join(tmpdir(), 'loj-vscode-style-project-root-'));
+    const projectFile = join(tempDir, 'loj.project.yaml');
+    const entryFile = join(tempDir, 'frontend', 'app.web.loj');
+
+    mkdirSync(join(tempDir, 'frontend', 'styles'), { recursive: true });
+    writeFileSync(projectFile, `app:
+  name: booking-demo
+`, 'utf8');
+    writeFileSync(entryFile, `app:
+  name: "Booking Demo"
+`, 'utf8');
+
+    const snapshots = createSnapshotMap([]);
+    expect(resolveCompilerProjectRoot(entryFile, snapshots)).toBe(normalizeFsPath(tempDir));
+  });
+
+  it('does not flag workflow links that resolve through the project root outside frontend/', () => {
+    const tempDir = mkdtempSync(join(tmpdir(), 'loj-vscode-flow-project-root-'));
+    const projectFile = join(tempDir, 'loj.project.yaml');
+    const entryFile = join(tempDir, 'frontend', 'app.web.loj');
+    const modelFile = join(tempDir, 'frontend', 'models', 'booking.web.loj');
+    const resourceFile = join(tempDir, 'frontend', 'resources', 'bookings.web.loj');
+    const workflowFile = join(tempDir, 'workflows', 'booking-lifecycle.flow.loj');
+
+    mkdirSync(join(tempDir, 'frontend', 'models'), { recursive: true });
+    mkdirSync(join(tempDir, 'frontend', 'resources'), { recursive: true });
+    mkdirSync(join(tempDir, 'workflows'), { recursive: true });
+    writeFileSync(projectFile, `app:
+  name: booking-demo
+`, 'utf8');
+    writeFileSync(entryFile, `app:
+  name: "Booking Demo"
+
+imports:
+  - ./models/booking.web.loj
+  - ./resources/bookings.web.loj
+`, 'utf8');
+    writeFileSync(modelFile, `model Booking:
+  reference: string
+`, 'utf8');
+    writeFileSync(resourceFile, `resource bookings:
+  model: Booking
+  api: /api/bookings
+  workflow:
+    source: '@flow("../../workflows/booking-lifecycle")'
+`, 'utf8');
+    writeFileSync(workflowFile, `workflow BookingLifecycle:
+  states: [DRAFT]
+`, 'utf8');
+
+    const result = compileProjectState(entryFile, createSnapshotMap([]));
+    const messages = result.errors.map((error) => error.message);
+    expect(messages.some((message) => message.includes('resolves outside the project root'))).toBe(false);
+    expect(messages.some((message) => message.includes('did not resolve; expected'))).toBe(false);
   });
 
   it('finds the root entry file for a module discovered through a directory import', () => {

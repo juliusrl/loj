@@ -23,6 +23,8 @@ import type {
 import {
   listDirectoryEntries,
   normalizeFsPath,
+  resolveCompilerFilePath,
+  resolveCompilerProjectRoot,
   type CompileIssueLike,
   type DocumentSnapshot,
   type ProjectDiagnostic,
@@ -56,10 +58,12 @@ export function compileSdslProjectState(
   entryFile: string,
   snapshots: Map<string, string>,
 ): CompileResult {
+  const projectRoot = resolveCompilerProjectRoot(entryFile, snapshots);
   return compileProject({
     entryFile: normalizeFsPath(entryFile),
+    projectRoot,
     readFile(fileName) {
-      const normalizedFile = normalizeFsPath(fileName);
+      const normalizedFile = resolveCompilerFilePath(fileName, projectRoot);
       const snapshot = snapshots.get(normalizedFile);
       if (snapshot !== undefined) {
         return snapshot;
@@ -67,7 +71,7 @@ export function compileSdslProjectState(
       return readFileSync(normalizedFile, 'utf8');
     },
     listFiles(directory) {
-      return listDirectoryEntries(directory, snapshots);
+      return listDirectoryEntries(resolveCompilerFilePath(directory, projectRoot), snapshots);
     },
   });
 }

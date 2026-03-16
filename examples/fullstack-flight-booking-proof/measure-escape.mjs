@@ -21,13 +21,29 @@ const webLojFiles = collectFiles(resolve(exampleDir, 'frontend'), (filePath) => 
 const apiLojFiles = collectFiles(resolve(exampleDir, 'backend'), (filePath) => filePath.endsWith('.api.loj'));
 const rulesLojFiles = collectFiles(resolve(exampleDir, 'rules'), (filePath) => filePath.endsWith('.rules.loj'));
 const flowLojFiles = collectFiles(resolve(exampleDir, 'workflows'), (filePath) => filePath.endsWith('.flow.loj'));
+const styleLojFiles = collectFiles(resolve(exampleDir, 'frontend'), (filePath) => filePath.endsWith('.style.loj'));
+const frontendRawCssFiles = collectFiles(resolve(exampleDir, 'frontend'), (filePath) => extname(filePath) === '.css');
+const frontendCustomCodeFiles = collectFiles(
+  resolve(exampleDir, 'frontend'),
+  (filePath) => ['.ts', '.tsx', '.js', '.jsx'].includes(extname(filePath)),
+);
+const frontendAssetMarkupFiles = collectFiles(
+  resolve(exampleDir, 'frontend', 'assets'),
+  (filePath) => ['.svg', '.html'].includes(extname(filePath)),
+);
 const generatedReactFiles = collectFiles(
   resolve(exampleDir, 'generated', 'frontend'),
   (filePath) => ['.ts', '.tsx'].includes(extname(filePath)),
 );
+const generatedFrontendTsFiles = generatedReactFiles.filter((filePath) => extname(filePath) === '.ts');
+const generatedFrontendTsxFiles = generatedReactFiles.filter((filePath) => extname(filePath) === '.tsx');
 const generatedFrontendStyleFiles = collectFiles(
   resolve(exampleDir, 'generated', 'frontend'),
   (filePath) => extname(filePath) === '.css',
+);
+const generatedFrontendAssetMarkupFiles = collectFiles(
+  resolve(exampleDir, 'generated', 'frontend'),
+  (filePath) => ['.svg', '.html'].includes(extname(filePath)),
 );
 
 const sharedSourceVolume = {
@@ -36,15 +52,32 @@ const sharedSourceVolume = {
   familySourceLines: countLinesForFiles([...webLojFiles, ...apiLojFiles]),
   rulesLojLines: countLinesForFiles(rulesLojFiles),
   flowLojLines: countLinesForFiles(flowLojFiles),
+  styleLojLines: countLinesForFiles(styleLojFiles),
   linkedSubDslLines: countLinesForFiles([...rulesLojFiles, ...flowLojFiles]),
-  totalLojLines: countLinesForFiles([...webLojFiles, ...apiLojFiles, ...rulesLojFiles, ...flowLojFiles]),
+  totalLojLines: countLinesForFiles([...webLojFiles, ...apiLojFiles, ...rulesLojFiles, ...flowLojFiles, ...styleLojFiles]),
   projectShellLines: countLinesForFiles([
     resolve(exampleDir, 'loj.project.yaml'),
     resolve(exampleDir, 'loj.fastapi.project.yaml'),
   ]),
+  handwrittenFrontendCustomCodeLines: countLinesForFiles(frontendCustomCodeFiles),
+  handwrittenFrontendRawCssLines: countLinesForFiles(frontendRawCssFiles),
+  handwrittenFrontendAssetMarkupLines: countLinesForFiles(frontendAssetMarkupFiles),
+  handwrittenFrontendEscapeLines: countLinesForFiles([...frontendCustomCodeFiles, ...frontendRawCssFiles]),
+  handwrittenSharedSourceLines: countLinesForFiles([
+    ...webLojFiles,
+    ...apiLojFiles,
+    ...rulesLojFiles,
+    ...flowLojFiles,
+    ...styleLojFiles,
+    ...frontendCustomCodeFiles,
+    ...frontendRawCssFiles,
+  ]),
+  generatedFrontendTsLines: countLinesForFiles(generatedFrontendTsFiles),
+  generatedFrontendTsxLines: countLinesForFiles(generatedFrontendTsxFiles),
   generatedReactLines: countLinesForFiles(generatedReactFiles),
   generatedFrontendStyleLines: countLinesForFiles(generatedFrontendStyleFiles),
-  generatedFrontendLines: countLinesForFiles([...generatedReactFiles, ...generatedFrontendStyleFiles]),
+  generatedFrontendAssetMarkupLines: countLinesForFiles(generatedFrontendAssetMarkupFiles),
+  generatedFrontendLines: countLinesForFiles([...generatedReactFiles, ...generatedFrontendStyleFiles, ...generatedFrontendAssetMarkupFiles]),
 };
 
 const measuredVariants = Object.fromEntries(variants.map((variant) => [variant.key, measureVariant(variant)]));
@@ -104,7 +137,7 @@ function measureVariant(variant) {
     collectFiles(variant.generatedBackendDir, (filePath) => isBackendGeneratedCodeFile(filePath, variant.key)),
   );
   const totals = {
-    handwrittenLines: sharedSourceVolume.totalLojLines + targetLocalLines,
+    handwrittenLines: sharedSourceVolume.handwrittenSharedSourceLines + sharedSourceVolume.projectShellLines + targetLocalLines,
     generatedLines: sharedSourceVolume.generatedFrontendLines + generatedBackendLines,
   };
   return {
@@ -120,21 +153,38 @@ function measureVariant(variant) {
       familySourceLines: sharedSourceVolume.familySourceLines,
       rulesLojLines: sharedSourceVolume.rulesLojLines,
       flowLojLines: sharedSourceVolume.flowLojLines,
+      styleLojLines: sharedSourceVolume.styleLojLines,
       linkedSubDslLines: sharedSourceVolume.linkedSubDslLines,
       totalLojLines: sharedSourceVolume.totalLojLines,
       projectShellLines: sharedSourceVolume.projectShellLines,
+      handwrittenFrontendCustomCodeLines: sharedSourceVolume.handwrittenFrontendCustomCodeLines,
+      handwrittenFrontendRawCssLines: sharedSourceVolume.handwrittenFrontendRawCssLines,
+      handwrittenFrontendAssetMarkupLines: sharedSourceVolume.handwrittenFrontendAssetMarkupLines,
+      handwrittenFrontendEscapeLines: sharedSourceVolume.handwrittenFrontendEscapeLines,
+      handwrittenSharedSourceLines: sharedSourceVolume.handwrittenSharedSourceLines,
       targetLocalMockDataLines,
       targetLocalBusinessLogicLines,
       targetLocalSupportLines,
       targetLocalLines,
+      targetLocalNativeCodeLines: targetLocalLines,
+      generatedFrontendTsLines: sharedSourceVolume.generatedFrontendTsLines,
+      generatedFrontendTsxLines: sharedSourceVolume.generatedFrontendTsxLines,
       generatedReactLines: sharedSourceVolume.generatedReactLines,
       generatedFrontendStyleLines: sharedSourceVolume.generatedFrontendStyleLines,
+      generatedFrontendAssetMarkupLines: sharedSourceVolume.generatedFrontendAssetMarkupLines,
       generatedFrontendLines: sharedSourceVolume.generatedFrontendLines,
       generatedBackendLines,
       totals: {
         ...totals,
         handwrittenToGeneratedRatio: formatRatio(totals.handwrittenLines, totals.generatedLines),
         lojToGeneratedReactRatio: formatRatio(sharedSourceVolume.totalLojLines, sharedSourceVolume.generatedReactLines),
+        handwrittenSharedToGeneratedFrontendRatio: formatRatio(
+          sharedSourceVolume.handwrittenSharedSourceLines + sharedSourceVolume.projectShellLines,
+          sharedSourceVolume.generatedFrontendLines,
+        ),
+        finalCodeLines: sharedSourceVolume.generatedFrontendLines + generatedBackendLines,
+        authoringAndNativeLines:
+          sharedSourceVolume.handwrittenSharedSourceLines + sharedSourceVolume.projectShellLines + targetLocalLines,
       },
     },
   };
@@ -308,24 +358,36 @@ function renderMarkdown(report) {
   lines.push(`Shared API \`.api.loj\` lines: **${report.sharedCodeVolume.apiLojLines}**`);
   lines.push(`Shared rules \`.rules.loj\` lines: **${report.sharedCodeVolume.rulesLojLines}**`);
   lines.push(`Shared flow \`.flow.loj\` lines: **${report.sharedCodeVolume.flowLojLines}**`);
+  lines.push(`Shared style \`.style.loj\` lines: **${report.sharedCodeVolume.styleLojLines}**`);
   lines.push(`Shared total Loj lines: **${report.sharedCodeVolume.totalLojLines}**`);
   lines.push(`Shared project-shell lines: **${report.sharedCodeVolume.projectShellLines}**`);
+  lines.push(`Shared handwritten frontend custom code lines: **${report.sharedCodeVolume.handwrittenFrontendCustomCodeLines}**`);
+  lines.push(`Shared handwritten raw CSS lines: **${report.sharedCodeVolume.handwrittenFrontendRawCssLines}**`);
+  lines.push(`Shared handwritten frontend asset-markup lines: **${report.sharedCodeVolume.handwrittenFrontendAssetMarkupLines}**`);
+  lines.push(`Shared handwritten source + native escape total lines: **${report.sharedCodeVolume.handwrittenSharedSourceLines}**`);
+  lines.push(`Shared generated frontend TS lines: **${report.sharedCodeVolume.generatedFrontendTsLines}**`);
+  lines.push(`Shared generated frontend TSX lines: **${report.sharedCodeVolume.generatedFrontendTsxLines}**`);
   lines.push(`Shared generated React lines: **${report.sharedCodeVolume.generatedReactLines}**`);
   lines.push(`Shared generated frontend style lines: **${report.sharedCodeVolume.generatedFrontendStyleLines}**`);
+  lines.push(`Shared generated frontend asset-markup lines: **${report.sharedCodeVolume.generatedFrontendAssetMarkupLines}**`);
   lines.push(`Shared generated frontend total lines: **${report.sharedCodeVolume.generatedFrontendLines}**`);
   lines.push('');
-  lines.push('| Variant | Escape mock-data | Escape business logic | Escape support/wiring | Generated backend | Handwritten total | Generated total | Loj / React | Handwritten / generated |');
-  lines.push('| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |');
+  lines.push('| Variant | Target mock-data | Target business logic | Target support/wiring | Target native total | Generated backend | Final generated total | Authoring+native total | Loj / React | Shared handwritten / generated frontend | Handwritten / generated |');
+  lines.push('| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |');
   for (const [key, variant] of Object.entries(report.variants)) {
-    lines.push(`| ${key} | ${variant.codeVolume.targetLocalMockDataLines} | ${variant.codeVolume.targetLocalBusinessLogicLines} | ${variant.codeVolume.targetLocalSupportLines} | ${variant.codeVolume.generatedBackendLines} | ${variant.codeVolume.totals.handwrittenLines} | ${variant.codeVolume.totals.generatedLines} | ${variant.codeVolume.totals.lojToGeneratedReactRatio} | ${variant.codeVolume.totals.handwrittenToGeneratedRatio} |`);
+    lines.push(`| ${key} | ${variant.codeVolume.targetLocalMockDataLines} | ${variant.codeVolume.targetLocalBusinessLogicLines} | ${variant.codeVolume.targetLocalSupportLines} | ${variant.codeVolume.targetLocalNativeCodeLines} | ${variant.codeVolume.generatedBackendLines} | ${variant.codeVolume.totals.finalCodeLines} | ${variant.codeVolume.totals.authoringAndNativeLines} | ${variant.codeVolume.totals.lojToGeneratedReactRatio} | ${variant.codeVolume.totals.handwrittenSharedToGeneratedFrontendRatio} | ${variant.codeVolume.totals.handwrittenToGeneratedRatio} |`);
   }
   lines.push('');
   lines.push('Code-volume buckets:');
-  lines.push('- Loj source = `.web.loj` + `.api.loj` + `.rules.loj` + `.flow.loj`');
+  lines.push('- Loj source = `.web.loj` + `.api.loj` + `.rules.loj` + `.flow.loj` + `.style.loj`');
+  lines.push('- handwritten frontend custom code = repo-local `.ts/.tsx/.js/.jsx` files under `frontend/`');
+  lines.push('- handwritten raw CSS = repo-local `.css` files under `frontend/`');
+  lines.push('- handwritten frontend asset markup = repo-local `.svg/.html` assets under `frontend/assets/`');
   lines.push('- escape mock-data / business-logic lines = explicit `loj-measure` markers inside target-local handlers');
   lines.push('- escape support/wiring = target-local lines not marked as mock-data or business-logic');
-  lines.push('- generated React = non-empty lines under `generated/frontend/` (`.ts` / `.tsx`)');
+  lines.push('- generated frontend TS/TSX = non-empty lines under `generated/frontend/` (`.ts` / `.tsx`)');
   lines.push('- generated frontend styles = non-empty lines under `generated/frontend/` (`.css`)');
+  lines.push('- generated frontend asset markup = non-empty lines under `generated/frontend/` (`.svg` / `.html`)');
   lines.push('- generated backend = non-empty lines under the variant backend output (`.java` or `.py`)');
   return lines.join('\n');
 }

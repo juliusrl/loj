@@ -230,12 +230,14 @@ export function compileProjectState(
   cache?: ProjectCache,
   changedFiles?: Iterable<string>,
 ): CompileResult {
+  const projectRoot = resolveCompilerProjectRoot(entryFile, snapshots);
   return compileProject({
     entryFile: normalizeFsPath(entryFile),
+    projectRoot,
     cache,
     changedFiles,
     readFile(fileName) {
-      const normalizedFile = normalizeFsPath(fileName);
+      const normalizedFile = resolveCompilerFilePath(fileName, projectRoot);
       const snapshot = snapshots.get(normalizedFile);
       if (snapshot !== undefined) {
         return snapshot;
@@ -243,9 +245,29 @@ export function compileProjectState(
       return readFileSync(normalizedFile, 'utf8');
     },
     listFiles(directory) {
-      return listDirectoryEntries(directory, snapshots);
+      return listDirectoryEntries(resolveCompilerFilePath(directory, projectRoot), snapshots);
     },
   });
+}
+
+export function resolveCompilerProjectRoot(entryFile: string, snapshots: Map<string, string>): string {
+  const normalizedEntry = normalizeFsPath(entryFile);
+  const projectFile = findNearestAncestorProjectFile(
+    normalizedEntry,
+    (fileName) => snapshots.has(normalizeFsPath(fileName)) || existsSync(normalizeFsPath(fileName)),
+  );
+  return normalizeFsPath(projectFile ? dirname(projectFile) : dirname(normalizedEntry));
+}
+
+export function resolveCompilerFilePath(fileName: string, projectRoot: string): string {
+  const normalizedFile = normalizeFsPath(fileName);
+  if (normalizedFile.startsWith('/')) {
+    return normalizedFile;
+  }
+  if (/^[A-Za-z]:\//.test(normalizedFile)) {
+    return normalizedFile;
+  }
+  return normalizeFsPath(resolve(projectRoot, normalizedFile));
 }
 
 export function collectCompileDiagnostics(
